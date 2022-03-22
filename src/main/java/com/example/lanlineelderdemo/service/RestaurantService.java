@@ -18,7 +18,12 @@ import java.util.Optional;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
+    /**
+     * CREATE
+     * 어드민 페이지 -> 식당 등록 기능
+     */
     public Long registerRestaurant(RegisterRequestServiceDto registerRequestServiceDto) {
+        validateRestaurantNameDuplicate(registerRequestServiceDto);
         Restaurant restaurant = Restaurant.createRestaurant()
                 .name(registerRequestServiceDto.getName())
                 .location(registerRequestServiceDto.getLocation())
@@ -34,6 +39,16 @@ public class RestaurantService {
         return restaurant.getId();
     }
 
+    private void validateRestaurantNameDuplicate(RegisterRequestServiceDto registerRequestServiceDto) {
+        if (restaurantRepository.findByName(registerRequestServiceDto.getName()).isEmpty()) {
+            throw new IllegalStateException("같은 이름으로 이미 가게가 등록되어 있습니다.");
+        }
+    }
+
+    /**
+     * UPDATE
+     * 어드민 페이지 -> 식당 정보 수정 기능
+     */
     public void updateRestaurant(Long restaurantId, UpdateRequestServiceDto updateRequestServiceDto) {
         Restaurant findRestaurant = getRestaurantUsingId(restaurantId);
         findRestaurant.update(updateRequestServiceDto.getLocation(), updateRequestServiceDto.getCategory(),
@@ -62,6 +77,7 @@ public class RestaurantService {
     public List<String> searchRestaurants(SearchRequestServiceDto searchRequestServiceDto) {
         // 동적쿼리로 검색을 한다. 결과를 5개만 받아온다. 이건 Repository에서 만들어야 하는 기능이다.
         // 가게 이름만 받아오자.
+        return null;
     }
 
 }
