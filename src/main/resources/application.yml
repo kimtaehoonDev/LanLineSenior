@@ -1,0 +1,13 @@
+spring:
+  # DB 연결
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/h2-database/lan-line-elder-demo
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
+logging:
+  level:
+    org.hibernate.type: trace
