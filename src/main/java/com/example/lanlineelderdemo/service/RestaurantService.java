@@ -65,6 +65,7 @@ public class RestaurantService {
         Restaurant findRestaurant = wrappingRestaurant.get();
         return findRestaurant;
     }
+
     /**
      * 삭제 Restaurant 만들 필요 있나.
      */
@@ -75,6 +76,7 @@ public class RestaurantService {
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
      */
     public List<String> searchRestaurants(SearchRequestServiceDto searchRequestServiceDto) {
+
         // 동적쿼리로 검색을 한다. 결과를 5개만 받아온다. 이건 Repository에서 만들어야 하는 기능이다.
         // 가게 이름만 받아오자.
         return null;
