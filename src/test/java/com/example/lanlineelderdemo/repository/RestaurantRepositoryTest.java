@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -34,6 +38,47 @@ class RestaurantRepositoryTest {
 
         Restaurant findRestaurant = restaurantRepository.findAll().get(0);
         Assertions.assertThat(findRestaurant.getName()).isEqualTo(restaurant.getName());
+    }
+
+    @Test
+    void 식당_검색() {
+        Restaurant restaurant = Restaurant.createRestaurant()
+                .name("교촌치킨 전대점")
+                .location(Location.BACK_DOOR)
+                .category(FoodCategory.CHICKEN)
+                .adminComment("맛있어요~ 분위기 거의 푸라닭")
+                .canEatSingle(false)
+                .hasCostPerformance(false)
+                .isAtmosphere(true)
+                .maxCost(30000)
+                .minCost(15000)
+                .build();
+
+        Restaurant restaurant2 = Restaurant.createRestaurant()
+                .name("쭈군")
+                .location(Location.BACK_DOOR)
+                .category(FoodCategory.KOREAN)
+                .adminComment("사이드메뉴도 좋고 맛있어용!")
+                .canEatSingle(false)
+                .hasCostPerformance(false)
+                .isAtmosphere(true)
+                .maxCost(30000)
+                .minCost(20000)
+                .build();
+        restaurantRepository.save(restaurant);
+        restaurantRepository.save(restaurant2);
+
+        SearchRequestRepositoryDto search = new SearchRequestRepositoryDto();
+        search.setCanEatSingle(false);
+        search.setIsAtmosphere(true); //체크 안한건 false 아니라 null?
+        search.setLocations(new ArrayList<>(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE)));
+        search.setHasCostPerformance(false);
+        search.setMaxCostLine(16000);
+        search.setUnselectedCategories(new ArrayList<>());
+        List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchDto(search);
+
+        Assertions.assertThat(restaurantList.size()).isEqualTo(1);
+        Assertions.assertThat(restaurantList.get(0).getName()).isEqualTo(restaurant.getName());
     }
 
 }

@@ -1,15 +1,13 @@
 package com.example.lanlineelderdemo.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id","name","location","category"})
 public class Restaurant {
     // TODO 공통 그거로 createDate, updateDate 등록해주기.
 
