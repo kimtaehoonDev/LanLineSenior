@@ -1,9 +1,9 @@
 package com.example.lanlineelderdemo.service;
 
 import com.example.lanlineelderdemo.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.repository.RestaurantRepository;
 import com.example.lanlineelderdemo.service.dto.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.SearchRequestServiceDto;
 import com.example.lanlineelderdemo.service.dto.UpdateRequestServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
@@ -22,6 +23,7 @@ public class RestaurantService {
      * CREATE
      * 어드민 페이지 -> 식당 등록 기능
      */
+    @Transactional
     public Long registerRestaurant(RegisterRequestServiceDto registerRequestServiceDto) {
         validateRestaurantNameDuplicate(registerRequestServiceDto);
         Restaurant restaurant = Restaurant.createRestaurant()
@@ -49,6 +51,7 @@ public class RestaurantService {
      * UPDATE
      * 어드민 페이지 -> 식당 정보 수정 기능
      */
+    @Transactional
     public void updateRestaurant(Long restaurantId, UpdateRequestServiceDto updateRequestServiceDto) {
         Restaurant findRestaurant = getRestaurantUsingId(restaurantId);
         findRestaurant.update(updateRequestServiceDto.getLocation(), updateRequestServiceDto.getCategory(),
@@ -75,11 +78,9 @@ public class RestaurantService {
      * 검색을 하면 조건에 맞는 가게들의 이름을 리스트로 보내준다.
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
      */
-    public List<String> searchRestaurants(SearchRequestServiceDto searchRequestServiceDto) {
-
-        // 동적쿼리로 검색을 한다. 결과를 5개만 받아온다. 이건 Repository에서 만들어야 하는 기능이다.
-        // 가게 이름만 받아오자.
-        return null;
+    public List<String> searchRestaurantNames(SearchCondition searchCondition) {
+        List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
+        return findRestaurants.stream().map(restaurant -> restaurant.getName()).collect(Collectors.toList());
     }
 
 }

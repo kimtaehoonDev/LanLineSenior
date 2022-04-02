@@ -1,13 +1,11 @@
-package com.example.lanlineelderdemo.repository;
+package com.example.lanlineelderdemo.domain;
 
-import com.example.lanlineelderdemo.domain.FoodCategory;
-import com.example.lanlineelderdemo.domain.Location;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class SearchRequestRepositoryDto {
+public class SearchCondition {
 
     private List<Location> locations;
 

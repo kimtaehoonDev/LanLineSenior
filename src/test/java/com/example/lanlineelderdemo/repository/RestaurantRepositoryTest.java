@@ -3,6 +3,7 @@ package com.example.lanlineelderdemo.repository;
 import com.example.lanlineelderdemo.domain.FoodCategory;
 import com.example.lanlineelderdemo.domain.Location;
 import com.example.lanlineelderdemo.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -68,14 +67,14 @@ class RestaurantRepositoryTest {
         restaurantRepository.save(restaurant);
         restaurantRepository.save(restaurant2);
 
-        SearchRequestRepositoryDto search = new SearchRequestRepositoryDto();
+        SearchCondition search = new SearchCondition();
         search.setCanEatSingle(false);
         search.setIsAtmosphere(true); //체크 안한건 false 아니라 null?
         search.setLocations(new ArrayList<>(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE)));
         search.setHasCostPerformance(false);
         search.setMaxCostLine(16000);
         search.setUnselectedCategories(new ArrayList<>());
-        List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchDto(search);
+        List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchCondition(search);
 
         Assertions.assertThat(restaurantList.size()).isEqualTo(1);
         Assertions.assertThat(restaurantList.get(0).getName()).isEqualTo(restaurant.getName());

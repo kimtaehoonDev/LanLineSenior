@@ -53,27 +53,7 @@ public class Restaurant {
         if (name == null) {
             throw new IllegalArgumentException("이름이 누락되었습니다.");
         }
-        if (location == null) {
-            throw new IllegalArgumentException("위치 정보가 누락되었습니다.");
-        }
-        if (category == null) {
-            throw new IllegalArgumentException("카테고리 정보가 누락되었습니다.");
-        }
-        if (isAtmosphere == null) {
-            throw new IllegalArgumentException("분위기 관련 정보가 누락되었습니다.");
-        }
-        if (hasCostPerformance == null) {
-            throw new IllegalArgumentException("가성비 관련 정보가 누락되었습니다.");
-        }
-        if (canEatSingle == null) {
-            throw new IllegalArgumentException("혼밥 가능 관련 정보가 누락되었습니다.");
-        }
-        if (adminComment == null) {
-            throw new IllegalArgumentException("한줄 코멘트가 누락되었습니다.");
-        }
-        if (minCost == null || maxCost == null) {
-            throw new IllegalArgumentException("가격 관련 정보가 누락되었습니다.");
-        }
+        validate(location, category, isAtmosphere, hasCostPerformance, canEatSingle, adminComment, minCost, maxCost);
     }
 
     public void update(Location location, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, Integer maxCost) {
