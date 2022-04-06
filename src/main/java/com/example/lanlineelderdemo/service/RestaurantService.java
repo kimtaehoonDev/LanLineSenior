@@ -4,7 +4,7 @@ import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.repository.RestaurantRepository;
 import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.request.UpdateRequestServiceDto;
+import com.example.lanlineelderdemo.service.dto.response.RestaurantResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,11 +80,31 @@ public class RestaurantService {
      * 읽기
      * 검색을 하면 조건에 맞는 가게들의 이름을 리스트로 보내준다.
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
+     * @return
      */
-    public List<String> searchRestaurantNames(SearchCondition searchCondition) {
+    public List<RestaurantResponseDto> searchRestaurantNames(SearchCondition searchCondition) {
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
         // TODO 레스토랑을 ResponseServiceDto로 변경 (지금은 String)
-        return findRestaurants.stream().map(restaurant -> restaurant.getName()).collect(Collectors.toList());
+
+        return findRestaurants.stream().map(restaurant -> RestaurantResponseDto.makeUsingRestaurant(restaurant)).collect(Collectors.toList());
+    }
+
+    /**
+     * 상세정보
+     * @return
+     */
+    public RestaurantResponseDto searchRestaurantByRestaurantId(Long restaurantId) {
+        Restaurant restaurant = findRestaurantByRestaurantId(restaurantId);
+        RestaurantResponseDto restaurantResponseDto = RestaurantResponseDto.makeUsingRestaurant(restaurant);
+        return restaurantResponseDto;
+    }
+
+    private Restaurant findRestaurantByRestaurantId(Long restaurantId) {
+        Optional<Restaurant> parsingRestaurant = restaurantRepository.findById(restaurantId);
+        if (parsingRestaurant.isEmpty()) {
+            throw new IllegalArgumentException("해당 restaurant는 존재하지 않습니다.");
+        }
+        return parsingRestaurant.get();
     }
 
 }

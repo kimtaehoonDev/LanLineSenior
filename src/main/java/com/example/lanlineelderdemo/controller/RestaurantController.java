@@ -2,14 +2,12 @@ package com.example.lanlineelderdemo.controller;
 
 import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.service.RestaurantService;
+import com.example.lanlineelderdemo.service.dto.response.RestaurantResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,21 +18,43 @@ public class RestaurantController {
 
     /**
      * 검색
-     * 검색을 하면 List<String>으로 이름을 받아옴. 그걸 naver api로 보내서 결과값을 받아올거. 그거랑 상태값 넣어서 return
      */
-    @GetMapping()
-    public void findRestaurantsUsingSearchCondition(SearchCondition searchCondition) {
-        //TODO SearchCondiion을 도메인으로 만들어서 컨트,서비,레포에서 의존하게 만들면 어떨까
-        List<String> restaurantNames = restaurantService.searchRestaurantNames(searchCondition);
-//         TODO 찾아보니깐, 전화번호, 사진 등의 정보는 제공되지 않는다. 내가 별도의 디비를 만들어야 할까? 라는 생각이 든다.
+    @GetMapping
+    public void searchPage() {
+        //DTO 만들어서 넣어준다.
+        // 페이지1 검색 첫번째 화면을 만들어준다.
+        // return templates/...
+    }
 
-
+    @PostMapping()
+    public void searchRestaurantsUsingSearchCondition(SearchCondition searchCondition) {
+        List<RestaurantResponseDto> restaurantResponseDtos = restaurantService.searchRestaurantNames(searchCondition);
+        //TODO return 타임리프로 지도에 매핑해주기. 저거 한개씩 다, 여기 화면은 검색2번째거 화면
     }
 
     /**
-     * 등록
-     * 201 created Ok / 이름이 같은 경우 에러 띄워주기
+     * 상세정보
      */
+    public void showRestaurantDetail(Long restaurantId) {
+        RestaurantResponseDto restaurantResponseDto = restaurantService.searchRestaurantByRestaurantId(restaurantId);
+        //TODO 이후, 후기 기능 생기면 여기에 연결해서 달아주고, 같이 타임리프 안에 넣어주면 될 거 같음.
+    }
+
+    /**
+     * 등록 페이지 GetMapping (Admin만)
+     * TODO 로그인 페이지가 없는데, 어떻게 Admin인지 알지? IP를 사용해 따로 접근할 수 있게 만들어줘야할까? 그러면 웹서버가 두개가 필요한건가?
+     */
+
+    /**
+     * 등록 (Admin만)
+     * 201 created Ok / 이름이 같은 경우 에러 띄워주기
+     * 타임리프를 사용하는 경우 http 상태코드 쓸 이유가 없잖아.
+     */
+    @PostMapping()
+    public void registerRestaurantByAdmin(RestaurantRequestDto restaurantRequestDto) {
+        Long registerRestaurantId = restaurantService.registerRestaurant(restaurantRequestDto.changeRequestServiceDto());
+        //return type String, 그리고 GetMapping 같은 주소로 다시 보내주면 됨. 쉴새없이 등록하게.
+    }
 
     /**
      * 수정
