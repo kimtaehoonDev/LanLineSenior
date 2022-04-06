@@ -1,14 +1,16 @@
-package com.example.lanlineelderdemo.service.dto;
+package com.example.lanlineelderdemo.service.dto.response;
 
 import com.example.lanlineelderdemo.domain.FoodCategory;
 import com.example.lanlineelderdemo.domain.Location;
 import lombok.Data;
 
 @Data
-public class RegisterRequestServiceDto {
+public class RestaurantResponseServiceDto {
+    private Long id;
+
     private String name;
 
-    private Location location;
+    //좌표 정보
 
     private FoodCategory category;
 
@@ -21,6 +23,4 @@ public class RegisterRequestServiceDto {
     private String adminComment;
 
     private Integer minCost;
-
-    private Integer maxCost;
 }

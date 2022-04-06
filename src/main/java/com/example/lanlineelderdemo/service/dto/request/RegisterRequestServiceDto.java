@@ -1,12 +1,19 @@
-package com.example.lanlineelderdemo.service.dto;
+package com.example.lanlineelderdemo.service.dto.request;
 
 import com.example.lanlineelderdemo.domain.FoodCategory;
+import com.example.lanlineelderdemo.domain.GeoLocation;
 import com.example.lanlineelderdemo.domain.Location;
 import lombok.Data;
 
+import javax.persistence.Embedded;
+
 @Data
-public class UpdateRequestServiceDto {
-    // 이름 변경은 update로 안되는거로. 만약 가게 이름이 바뀌면 다른 방법으로 이름을 바꿔주자.
+public class RegisterRequestServiceDto {
+    private String name;
+
+    private Double geoLocationX;
+
+    private Double geoLocationY;
 
     private Location location;
 
@@ -22,6 +29,5 @@ public class UpdateRequestServiceDto {
 
     private Integer minCost;
 
-    private Integer maxCost;
-
+    private String telNum;
 }

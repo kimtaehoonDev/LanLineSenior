@@ -20,7 +20,7 @@ public class SearchCondition {
     private Boolean canEatSingle;
 
 //    @Min, @Max => 조건 달아야하나?
-    private Integer maxCostLine; //예산 최대한도
+    private Integer maxCostLine; //예산 최대한도(1인 기준)
 
     public SearchCondition(List<Location> locations, List<FoodCategory> unselectedCategories, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer maxCostLine) {
         validate(locations, unselectedCategories, isAtmosphere, hasCostPerformance, canEatSingle, maxCostLine);

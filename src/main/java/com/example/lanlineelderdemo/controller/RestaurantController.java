@@ -27,23 +27,6 @@ public class RestaurantController {
         //TODO SearchCondiion을 도메인으로 만들어서 컨트,서비,레포에서 의존하게 만들면 어떨까
         List<String> restaurantNames = restaurantService.searchRestaurantNames(searchCondition);
 //         TODO 찾아보니깐, 전화번호, 사진 등의 정보는 제공되지 않는다. 내가 별도의 디비를 만들어야 할까? 라는 생각이 든다.
-        for (String restaurantName : restaurantNames) {
-            URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com")
-                    .path("/v1/search/local.json")
-                    .queryParam("query", restaurantName)
-                    .queryParam("display", 1)
-                    .queryParam("sort", "random")
-                    .encode()
-                    .build()
-                    .toUri();
-
-            RestTemplate restTemplate = new RestTemplate();
-            RequestEntity.get(uri)
-                    .header("X-Naver-Client-ID",MY_NAVER_CLIENT_ID)
-                    .header("X-Naver-Client-Secret", MY_NAVER_CLIENT_PASSWORD)
-                    .build();
-        }
-        //for 사용해 한개한개 꺼내서 검색을 보낸다. 네이버 api로
 
 
     }

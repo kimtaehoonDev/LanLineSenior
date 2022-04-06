@@ -3,8 +3,8 @@ package com.example.lanlineelderdemo.service;
 import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.repository.RestaurantRepository;
-import com.example.lanlineelderdemo.service.dto.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.UpdateRequestServiceDto;
+import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
+import com.example.lanlineelderdemo.service.dto.request.UpdateRequestServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +29,15 @@ public class RestaurantService {
         Restaurant restaurant = Restaurant.createRestaurant()
                 .name(registerRequestServiceDto.getName())
                 .location(registerRequestServiceDto.getLocation())
+                .geoLocationX(registerRequestServiceDto.getGeoLocationX())
+                .geoLocationY(registerRequestServiceDto.getGeoLocationY())
                 .category(registerRequestServiceDto.getCategory())
                 .isAtmosphere(registerRequestServiceDto.getIsAtmosphere())
                 .hasCostPerformance(registerRequestServiceDto.getHasCostPerformance())
                 .canEatSingle(registerRequestServiceDto.getCanEatSingle())
                 .adminComment(registerRequestServiceDto.getAdminComment())
                 .minCost(registerRequestServiceDto.getMinCost())
-                .maxCost(registerRequestServiceDto.getMaxCost())
+                .telNum(registerRequestServiceDto.getTelNum())
                 .build();
         restaurantRepository.save(restaurant);
         return restaurant.getId();
@@ -50,24 +52,25 @@ public class RestaurantService {
     /**
      * UPDATE
      * 어드민 페이지 -> 식당 정보 수정 기능
+     * 가게 정보 수정은 나중에 만들어주자. 등록 검색보다 훨씬 우선순위가 낮음.
      */
-    @Transactional
-    public void updateRestaurant(Long restaurantId, UpdateRequestServiceDto updateRequestServiceDto) {
-        Restaurant findRestaurant = getRestaurantUsingId(restaurantId);
-        findRestaurant.update(updateRequestServiceDto.getLocation(), updateRequestServiceDto.getCategory(),
-                updateRequestServiceDto.getIsAtmosphere(), updateRequestServiceDto.getHasCostPerformance(),
-                updateRequestServiceDto.getCanEatSingle(), updateRequestServiceDto.getAdminComment(),
-                updateRequestServiceDto.getMinCost(), updateRequestServiceDto.getMaxCost());
-    }
-
-    private Restaurant getRestaurantUsingId(Long restaurantId) {
-        Optional<Restaurant> wrappingRestaurant = restaurantRepository.findById(restaurantId);
-        if (wrappingRestaurant.isEmpty()) {
-            throw new IllegalArgumentException("해당 식당은 존재하지 않거나 삭제되었습니다.");
-        }
-        Restaurant findRestaurant = wrappingRestaurant.get();
-        return findRestaurant;
-    }
+//    @Transactional
+//    public void updateRestaurant(Long restaurantId, UpdateRequestServiceDto updateRequestServiceDto) {
+//        Restaurant findRestaurant = getRestaurantUsingId(restaurantId);
+//        findRestaurant.update(updateRequestServiceDto.getLocation(), updateRequestServiceDto.getCategory(),
+//                updateRequestServiceDto.getIsAtmosphere(), updateRequestServiceDto.getHasCostPerformance(),
+//                updateRequestServiceDto.getCanEatSingle(), updateRequestServiceDto.getAdminComment(),
+//                updateRequestServiceDto.getMinCost());
+//    }
+//
+//    private Restaurant getRestaurantUsingId(Long restaurantId) {
+//        Optional<Restaurant> wrappingRestaurant = restaurantRepository.findById(restaurantId);
+//        if (wrappingRestaurant.isEmpty()) {
+//            throw new IllegalArgumentException("해당 식당은 존재하지 않거나 삭제되었습니다.");
+//        }
+//        Restaurant findRestaurant = wrappingRestaurant.get();
+//        return findRestaurant;
+//    }
 
     /**
      * 삭제 Restaurant 만들 필요 있나.
@@ -80,6 +83,7 @@ public class RestaurantService {
      */
     public List<String> searchRestaurantNames(SearchCondition searchCondition) {
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
+        // TODO 레스토랑을 ResponseServiceDto로 변경 (지금은 String)
         return findRestaurants.stream().map(restaurant -> restaurant.getName()).collect(Collectors.toList());
     }
 

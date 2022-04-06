@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,15 +23,16 @@ class RestaurantRepositoryTest {
         Restaurant restaurant = Restaurant.createRestaurant()
                 .name("교촌치킨 전대점")
                 .location(Location.BACK_DOOR)
+                .geoLocationX(35.175489)
+                .geoLocationY(126.914256)
                 .category(FoodCategory.CHICKEN)
                 .adminComment("맛있어요~ 분위기 거의 푸라닭")
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .maxCost(30000)
                 .minCost(15000)
+                .telNum("000-000-0000")
                 .build();
-
         restaurantRepository.save(restaurant);
 
         Restaurant findRestaurant = restaurantRepository.findAll().get(0);
@@ -44,24 +44,27 @@ class RestaurantRepositoryTest {
         Restaurant restaurant = Restaurant.createRestaurant()
                 .name("교촌치킨 전대점")
                 .location(Location.BACK_DOOR)
+                .geoLocationX(35.175489)
+                .geoLocationY(126.914256)
                 .category(FoodCategory.CHICKEN)
                 .adminComment("맛있어요~ 분위기 거의 푸라닭")
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .maxCost(30000)
                 .minCost(15000)
+                .telNum("000-000-0000")
                 .build();
 
         Restaurant restaurant2 = Restaurant.createRestaurant()
                 .name("쭈군")
                 .location(Location.BACK_DOOR)
+                .geoLocationX(34.175489)
+                .geoLocationY(125.914256) //아무 좌표나 찍음
                 .category(FoodCategory.KOREAN)
                 .adminComment("사이드메뉴도 좋고 맛있어용!")
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .maxCost(30000)
                 .minCost(20000)
                 .build();
         restaurantRepository.save(restaurant);
