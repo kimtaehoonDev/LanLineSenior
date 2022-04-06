@@ -67,13 +67,8 @@ class RestaurantRepositoryTest {
         restaurantRepository.save(restaurant);
         restaurantRepository.save(restaurant2);
 
-        SearchCondition search = new SearchCondition();
-        search.setCanEatSingle(false);
-        search.setIsAtmosphere(true); //체크 안한건 false 아니라 null?
-        search.setLocations(new ArrayList<>(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE)));
-        search.setHasCostPerformance(false);
-        search.setMaxCostLine(16000);
-        search.setUnselectedCategories(new ArrayList<>());
+        SearchCondition search = new SearchCondition(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE),Arrays.asList(), true, null, null, 16000);
+
         List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchCondition(search);
 
         Assertions.assertThat(restaurantList.size()).isEqualTo(1);

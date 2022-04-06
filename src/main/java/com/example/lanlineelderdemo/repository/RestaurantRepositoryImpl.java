@@ -3,9 +3,12 @@ package com.example.lanlineelderdemo.repository;
 import com.example.lanlineelderdemo.domain.QRestaurant;
 import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -31,13 +34,34 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .from(restaurant)
                 .where(restaurant.location.in(searchCondition.getLocations()),
                         restaurant.category.notIn(searchCondition.getUnselectedCategories()),
-                        restaurant.isAtmosphere.eq(searchCondition.getIsAtmosphere()),
-                        restaurant.canEatSingle.eq(searchCondition.getCanEatSingle()),
-                        restaurant.hasCostPerformance.eq(searchCondition.getHasCostPerformance()),
+                        eqIsAtmosphere(searchCondition.getIsAtmosphere()),
+                        eqCanEatSingle(searchCondition.getCanEatSingle()),
+                        eqHasCostPerformance(searchCondition.getHasCostPerformance()),
                         restaurant.minCost.loe(searchCondition.getMaxCostLine())
                 )
                 .orderBy(NumberExpression.random().asc())
                 .limit(5)
                 .fetch();
+    }
+
+    private BooleanExpression eqHasCostPerformance(Boolean costPerformance) {
+        if (costPerformance == null) {
+            return null;
+        }
+        return restaurant.isAtmosphere.eq(costPerformance);
+    }
+
+    private BooleanExpression eqCanEatSingle(Boolean canEatSingle) {
+        if (canEatSingle == null) {
+            return null;
+        }
+        return restaurant.isAtmosphere.eq(canEatSingle);
+    }
+
+    private BooleanExpression eqIsAtmosphere(Boolean isAtmosphere) {
+        if (isAtmosphere == null) {
+            return null;
+        }
+        return restaurant.isAtmosphere.eq(isAtmosphere);
     }
 }
