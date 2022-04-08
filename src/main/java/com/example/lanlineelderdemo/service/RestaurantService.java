@@ -84,8 +84,6 @@ public class RestaurantService {
      */
     public List<RestaurantResponseDto> searchRestaurantNames(SearchCondition searchCondition) {
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
-        // TODO 레스토랑을 ResponseServiceDto로 변경 (지금은 String)
-
         return findRestaurants.stream().map(restaurant -> RestaurantResponseDto.makeUsingRestaurant(restaurant)).collect(Collectors.toList());
     }
 

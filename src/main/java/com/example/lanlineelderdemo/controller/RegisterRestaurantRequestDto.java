@@ -1,15 +1,12 @@
 package com.example.lanlineelderdemo.controller;
 
 import com.example.lanlineelderdemo.domain.FoodCategory;
-import com.example.lanlineelderdemo.domain.GeoLocation;
 import com.example.lanlineelderdemo.domain.Location;
 import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
 import com.sun.istack.NotNull;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
-
-public class RestaurantRequestDto {
+public class RegisterRestaurantRequestDto {
 
     @NotNull
     private String name;
