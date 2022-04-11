@@ -58,28 +58,18 @@ public class RestaurantController {
      */
     @PostMapping
     public String searchRestaurantsUsingSearchCondition(
-            @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto,
-            RedirectAttributes re) {
+            @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto, Model model) {
 
         SearchCondition searchCondition = new SearchCondition(searchRestaurantRequestDto.getLocations(),
                 searchRestaurantRequestDto.getUnselectedCategories(), searchRestaurantRequestDto.getIsAtmosphere(),
                 searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
                 searchRestaurantRequestDto.getMaxCostLine());
         List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = restaurantService.searchRestaurantNames(searchCondition);
-        re.addFlashAttribute("result", new SearchRestaurantsResponseDto(searchRestaurantResponseDtos));
-        return "redirect:/result";
-    }
-
-    @GetMapping("/result")
-    public String showRestaurants(@ModelAttribute(name = "result") SearchRestaurantsResponseDto result) {
-        List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = result.getSearchRestaurantResponseDtos();
         for (SearchRestaurantResponseDto searchRestaurantResponseDto : searchRestaurantResponseDtos) {
-//            TODO 지도 API 불러와서 마커를 찍는다.
-//             밑에 리스트 형태로 만든다. 각 리스트는 레스토랑 아이디를 가지고 있어서 클릭하면 해당 ~로 이동.
-            System.out.println(searchRestaurantResponseDto);
+            System.out.println("검색: "+searchRestaurantResponseDto);
         }
-    return "hello";
-        //전체 데이터 보여주는 ~~ 만들기. naver api 참고하기.
+        model.addAttribute("results",searchRestaurantResponseDtos);//앞에 함수 결과를 받는다.
+        return "resultPage";
     }
 
     /**
