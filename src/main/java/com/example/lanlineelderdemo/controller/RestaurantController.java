@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,22 +20,13 @@ public class RestaurantController {
     private final EnumMapper enumMapper;
 
     /**
-     * 검색
+     * 검색 페이지
      */
     @GetMapping
     public String searchPage(Model model) {
         SearchRestaurantRequestDto searchRestaurantRequestDto = new SearchRestaurantRequestDto();
         model.addAttribute("searchRestaurantRequestDto", searchRestaurantRequestDto);
-        //여기서 잘못된듯. 제대로 꺼내 쓰기.
-
-        Map<String, List<EnumValue>> enums = enumMapper.getAll();
-//        List<EnumValue> locations = enums.get("locations");
-//        List<EnumValue> foodCategories = enums.get("foodCategories");
-
-//        model.addAttribute("locations", locations);
-//        model.addAttribute("foodCategories", foodCategories);
         return "searchPage";
-        // 검색 페이지 만들어주기.
     }
 
     @ModelAttribute("locations")
@@ -63,6 +53,9 @@ public class RestaurantController {
         return foodCategories;
     }
 
+    /**
+     * 검색
+     */
     @PostMapping
     public String searchRestaurantsUsingSearchCondition(
             @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto,
@@ -73,15 +66,13 @@ public class RestaurantController {
                 searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
                 searchRestaurantRequestDto.getMaxCostLine());
         List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = restaurantService.searchRestaurantNames(searchCondition);
-        SearchRestaurantResponseDtos result = new SearchRestaurantResponseDtos(searchRestaurantResponseDtos);
-
-        re.addFlashAttribute("result", result);
+        re.addFlashAttribute("result", new SearchRestaurantsResponseDto(searchRestaurantResponseDtos));
         return "redirect:/result";
     }
 
     @GetMapping("/result")
-    public String showRestaurants(@ModelAttribute(name = "result") SearchRestaurantResponseDtos result) {
-        List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = result.searchRestaurantResponseDtos;
+    public String showRestaurants(@ModelAttribute(name = "result") SearchRestaurantsResponseDto result) {
+        List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = result.getSearchRestaurantResponseDtos();
         for (SearchRestaurantResponseDto searchRestaurantResponseDto : searchRestaurantResponseDtos) {
 //            TODO 지도 API 불러와서 마커를 찍는다.
 //             밑에 리스트 형태로 만든다. 각 리스트는 레스토랑 아이디를 가지고 있어서 클릭하면 해당 ~로 이동.

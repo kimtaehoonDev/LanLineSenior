@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>간단한 지도 표시하기</title>
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tv4q0aykz0"></script>
+</head>
+<body>
+<div id="map" style="width:550px;height:550px;"></div>
+<!--이거 크기 모바일에 맞춰 기변적으로 바뀌게 해야함.-->
+
+<script>
+  var mapOptions = {
+    center: new naver.maps.LatLng(35.177049, 126.906614),
+    zoom: 15
+  };
+
+  var map = new naver.maps.Map('map', mapOptions);
+</script>
+</body>
+</html>
