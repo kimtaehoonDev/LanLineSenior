@@ -27,14 +27,14 @@
   // insert into restaurant values(2,'ddsjladal',true, 'CHINESE', 35.177049, 126.906614, true, true, 'BACK_DOOR', 3000, '테스트가게1' ,'12312313');
   // SELECT * FROM RESTAURANT;
 
-  var name_and_positions = results.reduce(function(target, key, index) {
-    target[key.name] = [key.locationX, key.locationY];
+  results = results.reduce(function(target, key, index) {
+    target[key.name] = key;
     return target;
   }, {}) //initial empty object
 
   var MARKER_SPRITE_X_OFFSET = 29,
           MARKER_SPRITE_Y_OFFSET = 50,
-          MARKER_SPRITE_POSITION = name_and_positions;
+          MARKER_SPRITE_POSITION = results;
 
   var markers = [],
           infoWindows = [];
@@ -42,8 +42,8 @@
   for (var key in MARKER_SPRITE_POSITION) {
 
     var position = new naver.maps.LatLng(
-            MARKER_SPRITE_POSITION[key][0],
-            MARKER_SPRITE_POSITION[key][1]);
+            MARKER_SPRITE_POSITION[key].locationX,
+            MARKER_SPRITE_POSITION[key].locationY);
 
     var marker = new naver.maps.Marker({
       map: map,
@@ -52,7 +52,10 @@
     });
 
     var infoWindow = new naver.maps.InfoWindow({
-      content: '<div style="width:150px;text-align:center;padding:10px;">가게 이름 / 사진 보여주기? <b>"'+ key +'"</b>.</div>'
+      content: '<div style="width:150px;text-align:center;padding:10px;">' +
+              '가게명 : '+ key +
+              '<br>종류 : '+ MARKER_SPRITE_POSITION[key].category +'</br></div>'
+      // TODO Category가 key로 나오는데 value로 바꿔야함.
     });
 
     markers.push(marker);
