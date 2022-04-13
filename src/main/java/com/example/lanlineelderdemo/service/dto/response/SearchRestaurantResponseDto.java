@@ -1,6 +1,7 @@
 package com.example.lanlineelderdemo.service.dto.response;
 
 import com.example.lanlineelderdemo.domain.FoodCategory;
+import com.example.lanlineelderdemo.domain.Location;
 import com.example.lanlineelderdemo.domain.Restaurant;
 import lombok.Data;
 import lombok.ToString;
@@ -12,7 +13,7 @@ public class SearchRestaurantResponseDto {
 
     private String name;
 
-    //좌표 정보
+    private Location location;
 
     private FoodCategory category;
 
@@ -34,6 +35,7 @@ public class SearchRestaurantResponseDto {
         SearchRestaurantResponseDto searchRestaurantResponseDto = new SearchRestaurantResponseDto();
         searchRestaurantResponseDto.id = restaurant.getId();
         searchRestaurantResponseDto.name = restaurant.getName();
+        searchRestaurantResponseDto.location = restaurant.getLocation();
         searchRestaurantResponseDto.category = restaurant.getCategory();
         searchRestaurantResponseDto.isAtmosphere = restaurant.getIsAtmosphere();
         searchRestaurantResponseDto.hasCostPerformance = restaurant.getHasCostPerformance();

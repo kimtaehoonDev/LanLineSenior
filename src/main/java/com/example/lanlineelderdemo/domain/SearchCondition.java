@@ -1,12 +1,14 @@
 package com.example.lanlineelderdemo.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
 // 모든 조건이 null이어도 됨.
 // 다만, Boolean조건 3개는 false여서는 안됨. true일 수는 있는데.
+@ToString
 public class SearchCondition {
 
     private List<Location> locations;

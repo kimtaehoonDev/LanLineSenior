@@ -82,7 +82,7 @@ public class RestaurantService {
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
      * @return
      */
-    public List<SearchRestaurantResponseDto> searchRestaurantNames(SearchCondition searchCondition) {
+    public List<SearchRestaurantResponseDto> searchRestaurant(SearchCondition searchCondition) {
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
         return findRestaurants.stream().map(restaurant -> SearchRestaurantResponseDto.makeUsingRestaurant(restaurant)).collect(Collectors.toList());
     }

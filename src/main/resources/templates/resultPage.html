@@ -10,8 +10,13 @@
 <body>
 <div id="map" style="width:550px;height:550px;"></div>
 <!--이거 크기 모바일에 맞춰 가변적으로 바뀌게 해야함.-->
+<div id="results"></div>
+<!--이걸 클릭가능하게 만들아주자. 모양은 CSS겠지머-->
 
 <script th:inline="javascript">
+  var locations = [[${locations}]]
+  var foodCategories = [[${foodCategories}]]
+
   var mapOptions = {
     center: new naver.maps.LatLng(35.177049, 126.906614),
     zoom: 15
@@ -31,6 +36,8 @@
     target[key.name] = key;
     return target;
   }, {}) //initial empty object
+
+  console.log(results)
 
   var MARKER_SPRITE_X_OFFSET = 29,
           MARKER_SPRITE_Y_OFFSET = 50,
@@ -60,8 +67,47 @@
 
     markers.push(marker);
     infoWindows.push(infoWindow);
+
+    //밑에 리스트 형식으로 html을 만들어준다.
+    addRestaurantList(MARKER_SPRITE_POSITION[key]);
   };
 
+  function addRestaurantList(restaurant) {
+    const div = document.createElement("div");
+    div.setAttribute('id', restaurant.id);
+
+    div.setAttribute("style", "cursor: pointer;");
+    div.setAttribute('onclick', 'location.href=\"details/'+restaurant.id+'\"');
+
+    const detailDiv1 = document.createElement("div");
+    const detailText1 = document.createTextNode("가게명 : " + restaurant.name + " / 1인당 최소 비용 : " + restaurant.minCost);
+    detailDiv1.appendChild(detailText1);
+    div.appendChild(detailDiv1);
+
+    const detailDiv2 = document.createElement("div");
+    const detailText2 = document.createTextNode(locations[restaurant.location] +" / "+ foodCategories[restaurant.category]);
+    detailDiv2.appendChild(detailText2);
+    div.appendChild(detailDiv2);
+
+    const detailDiv3 = document.createElement("div");
+    if (restaurant.isAtmosphere) {
+      detailDiv3.appendChild(document.createTextNode("분위기 "));
+    }
+    if (restaurant.canEatSingle) {
+      detailDiv3.appendChild(document.createTextNode("혼밥가능 "));
+    }
+    if (restaurant.hasCostPerformance) {
+      detailDiv3.appendChild(document.createTextNode("가성비 "));
+    }
+    div.appendChild(detailDiv3);
+
+
+
+    // 타임리프에서 locations 가져와서 restaurant.location을 키값으로 value를 find 해야함.
+
+
+    document.getElementById('results').appendChild(div);
+  }
   // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
   function getClickHandler(seq) {
     return function(e) {
