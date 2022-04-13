@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <span>가게명 : </span>
+        <span th:text="${restaurant.name}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span>주소 : </span>
+        <span th:text="${restaurant.location}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span>네이버 링크 : </span>
+        <span th:text="${restaurant.location}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span>카테고리 : </span>
+        <span th:text="${foodCategories[restaurant.category]}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span>1인 최소 비용 : </span>
+        <span th:text="${restaurant.minCost}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span>랜선선배 한줄평 : </span>
+        <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
+    </div>
+    <div>
+        <span th:if="${restaurant.hasCostPerformance}">#가성비 </span>
+        <span th:if="${restaurant.canEatSingle}">#혼밥가능 </span>
+        <span th:if="${restaurant.isAtmosphere}">#분위기 </span>
+    </div>
+</body>
+</html>

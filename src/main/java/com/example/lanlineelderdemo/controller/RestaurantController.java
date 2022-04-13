@@ -72,10 +72,11 @@ public class RestaurantController {
      * 상세정보
      */
     @GetMapping("/restaurant/{restaurantId}")
-    public String showRestaurantDetail(Long restaurantId) {
+    public String showRestaurantDetail(@PathVariable Long restaurantId, Model model) {
         SearchRestaurantResponseDto searchRestaurantResponseDto = restaurantService.searchRestaurantByRestaurantId(restaurantId);
         //TODO 이후, 후기 기능 생기면 여기에 연결해서 달아주고, 같이 타임리프 안에 넣어주면 될 거 같음.
-        return "hello";
+        model.addAttribute("restaurant", searchRestaurantResponseDto);
+        return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
 

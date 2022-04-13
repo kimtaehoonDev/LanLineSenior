@@ -98,6 +98,7 @@ public class RestaurantService {
     }
 
     private Restaurant findRestaurantByRestaurantId(Long restaurantId) {
+        System.out.println("restaurantId = " + restaurantId);
         Optional<Restaurant> parsingRestaurant = restaurantRepository.findById(restaurantId);
         if (parsingRestaurant.isEmpty()) {
             throw new IllegalArgumentException("해당 restaurant는 존재하지 않습니다.");

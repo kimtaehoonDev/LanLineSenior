@@ -77,7 +77,7 @@
     div.setAttribute('id', restaurant.id);
 
     div.setAttribute("style", "cursor: pointer;");
-    div.setAttribute('onclick', 'location.href=\"details/'+restaurant.id+'\"');
+    div.setAttribute('onclick', 'location.href=\"restaurant/'+restaurant.id+'\"');
 
     const detailDiv1 = document.createElement("div");
     const detailText1 = document.createTextNode("가게명 : " + restaurant.name + " / 1인당 최소 비용 : " + restaurant.minCost);
