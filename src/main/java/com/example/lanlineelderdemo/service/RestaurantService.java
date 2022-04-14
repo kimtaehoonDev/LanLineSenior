@@ -83,6 +83,7 @@ public class RestaurantService {
      * @return
      */
     public List<SearchRestaurantResponseDto> searchRestaurant(SearchCondition searchCondition) {
+        System.out.println(searchCondition);
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
         return findRestaurants.stream().map(restaurant -> SearchRestaurantResponseDto.makeUsingRestaurant(restaurant)).collect(Collectors.toList());
     }

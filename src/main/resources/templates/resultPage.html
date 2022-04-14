@@ -16,6 +16,12 @@
 <script th:inline="javascript">
   var locations = [[${locations}]]
   var foodCategories = [[${foodCategories}]]
+  var results = [[${results}]];
+
+  // 디비에 테스트로 넣을 값.
+  // insert into restaurant values(1,'ddsjladal',true, 'KOREAN', 35.177049, 126.906614, true, true, 'BACK_DOOR', 1000, '테스트가게' ,'12312313');
+  // insert into restaurant values(2,'ddsjladal',true, 'CHINESE', 35.178049, 126.906614, true, true, 'BACK_DOOR', 3000, '테스트가게1' ,'12312313');
+  // SELECT * FROM RESTAURANT;
 
   var mapOptions = {
     center: new naver.maps.LatLng(35.177049, 126.906614),
@@ -24,20 +30,10 @@
 
   var map = new naver.maps.Map('map', mapOptions);
 
-  var results = [[${results}]];
-  // TODO 받아오는거까지 끝냄! 이제 이걸 하나씩 꺼내쓰면 됨. 페이지 소스보기 하면 데이터 넘어오는거 확인할 수 있음.
-
-  // 디비에 테스트로 넣을 값.
-  // insert into restaurant values(1,'ddsjladal',true, 'KOREAN', 35.177049, 126.906614, true, true, 'BACK_DOOR', 1000, '테스트가게' ,'12312313');
-  // insert into restaurant values(2,'ddsjladal',true, 'CHINESE', 35.177049, 126.906614, true, true, 'BACK_DOOR', 3000, '테스트가게1' ,'12312313');
-  // SELECT * FROM RESTAURANT;
-
   results = results.reduce(function(target, key, index) {
     target[key.name] = key;
     return target;
   }, {}) //initial empty object
-
-  console.log(results)
 
   var MARKER_SPRITE_X_OFFSET = 29,
           MARKER_SPRITE_Y_OFFSET = 50,
@@ -61,8 +57,7 @@
     var infoWindow = new naver.maps.InfoWindow({
       content: '<div style="width:150px;text-align:center;padding:10px;">' +
               '가게명 : '+ key +
-              '<br>종류 : '+ MARKER_SPRITE_POSITION[key].category +'</br></div>'
-      // TODO Category가 key로 나오는데 value로 바꿔야함.
+              '<br>종류 : '+ foodCategories[MARKER_SPRITE_POSITION[key].category] +'</br></div>'
     });
 
     markers.push(marker);
@@ -91,20 +86,15 @@
 
     const detailDiv3 = document.createElement("div");
     if (restaurant.isAtmosphere) {
-      detailDiv3.appendChild(document.createTextNode("분위기 "));
+      detailDiv3.appendChild(document.createTextNode("#분위기 "));
     }
     if (restaurant.canEatSingle) {
-      detailDiv3.appendChild(document.createTextNode("혼밥가능 "));
+      detailDiv3.appendChild(document.createTextNode("#혼밥가능 "));
     }
     if (restaurant.hasCostPerformance) {
-      detailDiv3.appendChild(document.createTextNode("가성비 "));
+      detailDiv3.appendChild(document.createTextNode("#가성비 "));
     }
     div.appendChild(detailDiv3);
-
-
-
-    // 타임리프에서 locations 가져와서 restaurant.location을 키값으로 value를 find 해야함.
-
 
     document.getElementById('results').appendChild(div);
   }

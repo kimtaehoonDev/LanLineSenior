@@ -25,25 +25,33 @@ public class SearchCondition {
     private Integer maxCostLine; //예산 최대한도(1인 기준)
 
     public SearchCondition(List<Location> locations, List<FoodCategory> unselectedCategories, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer maxCostLine) {
-        validate(locations, unselectedCategories, isAtmosphere, hasCostPerformance, canEatSingle, maxCostLine);
         this.locations = locations;
         this.unselectedCategories = unselectedCategories;
-        this.isAtmosphere = isAtmosphere;
-        this.hasCostPerformance = hasCostPerformance;
-        this.canEatSingle = canEatSingle;
+        this.isAtmosphere = checkIsAtmosphere(isAtmosphere);
+        this.hasCostPerformance = checkHasCostPerformance(hasCostPerformance);
+        this.canEatSingle = checkCanEatSingle(canEatSingle);
         this.maxCostLine = maxCostLine;
     }
 
-    private void validate(List<Location> locations, List<FoodCategory> unselectedCategories, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer maxCostLine) {
-        //null이거나 true는 가능. false는 불가능.
-        if (isAtmosphere != null && !isAtmosphere) {
-            throw new IllegalArgumentException("잘못된 접근입니다. False를 가질 수 없습니다.");
+    private Boolean checkIsAtmosphere(Boolean isAtmosphere) {
+        if (isAtmosphere == null || isAtmosphere == Boolean.FALSE) {
+            return null;
         }
-        if (hasCostPerformance != null && !hasCostPerformance) {
-            throw new IllegalArgumentException("잘못된 접근입니다. False를 가질 수 없습니다.");
-        }
-        if (canEatSingle != null && !canEatSingle) {
-            throw new IllegalArgumentException("잘못된 접근입니다. False를 가질 수 없습니다.");
-        }
+        return isAtmosphere;
     }
+
+    private Boolean checkHasCostPerformance(Boolean hasCostPerformance) {
+        if (hasCostPerformance == null || hasCostPerformance == Boolean.FALSE) {
+            return null;
+        }
+        return hasCostPerformance;
+    }
+
+    private Boolean checkCanEatSingle(Boolean canEatSingle) {
+        if (canEatSingle == null || canEatSingle == Boolean.FALSE) {
+            return null;
+        }
+        return canEatSingle;
+    }
+
 }

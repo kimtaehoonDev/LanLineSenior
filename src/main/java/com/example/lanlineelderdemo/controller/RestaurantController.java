@@ -63,8 +63,8 @@ public class RestaurantController {
                 searchRestaurantRequestDto.getUnselectedCategories(), searchRestaurantRequestDto.getIsAtmosphere(),
                 searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
                 searchRestaurantRequestDto.getMaxCostLine());
-        List<SearchRestaurantResponseDto> searchRestaurantResponseDtos = restaurantService.searchRestaurant(searchCondition);
-        model.addAttribute("results",searchRestaurantResponseDtos);//앞에 함수 결과를 받는다.
+        List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurant(searchCondition);
+        model.addAttribute("results",results);//앞에 함수 결과를 받는다.
         return "resultPage";
     }
 
@@ -73,15 +73,15 @@ public class RestaurantController {
      */
     @GetMapping("/restaurant/{restaurantId}")
     public String showRestaurantDetail(@PathVariable Long restaurantId, Model model) {
-        SearchRestaurantResponseDto searchRestaurantResponseDto = restaurantService.searchRestaurantByRestaurantId(restaurantId);
+        SearchRestaurantResponseDto restaurant = restaurantService.searchRestaurantByRestaurantId(restaurantId);
         //TODO 이후, 후기 기능 생기면 여기에 연결해서 달아주고, 같이 타임리프 안에 넣어주면 될 거 같음.
-        model.addAttribute("restaurant", searchRestaurantResponseDto);
+        model.addAttribute("restaurant", restaurant);
         return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
 
     /**
-     * 등록 페이지 GetMapping (Admin만)
+     * 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
      * TODO 로그인 페이지가 없는데, 어떻게 Admin인지 알지? IP를 사용해 따로 접근할 수 있게 만들어줘야할까? 그러면 웹서버가 두개가 필요한건가?
      */
 
