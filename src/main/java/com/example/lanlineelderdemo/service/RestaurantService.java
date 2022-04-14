@@ -44,7 +44,7 @@ public class RestaurantService {
     }
 
     private void validateRestaurantNameDuplicate(RegisterRequestServiceDto registerRequestServiceDto) {
-        if (restaurantRepository.findByName(registerRequestServiceDto.getName()).isEmpty()) {
+        if (!restaurantRepository.findByName(registerRequestServiceDto.getName()).isEmpty()) {
             throw new IllegalStateException("같은 이름으로 이미 가게가 등록되어 있습니다.");
         }
     }
@@ -107,4 +107,9 @@ public class RestaurantService {
         return parsingRestaurant.get();
     }
 
+    public void registerRestaurants(List<RegisterRequestServiceDto> dataList) {
+        for (RegisterRequestServiceDto data : dataList) {
+            registerRestaurant(data);
+        }
+    }
 }
