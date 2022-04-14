@@ -42,11 +42,15 @@ public class Restaurant {
     @Nullable
     private String telNum; // TODO 이후에 matches 사용해주기.
 
+    private String address;
+
+    private String url;
+
     // TODO 영업시간 관련 정보. 어떻게 만들지 감이 안잡히니까 일단 String으로 넣자.
 
     @Builder(builderClassName = "createRestaurant", builderMethodName = "createRestaurant")
-    private Restaurant(String name, Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum) {
-        validate(name, location, category, geoLocationX, geoLocationY, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum);
+    private Restaurant(String name, Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum, String address, String url) {
+        validate(name, location, category, geoLocationX, geoLocationY, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
 
         this.name = name;
         this.location = location;
@@ -60,15 +64,15 @@ public class Restaurant {
         this.telNum = telNum;
     }
 
-    private void validate(String name, Location location, FoodCategory category, Double geoLocationX, Double geoLocationY, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum) {
+    private void validate(String name, Location location, FoodCategory category, Double geoLocationX, Double geoLocationY, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum, String address, String url) {
         if (name == null) {
             throw new IllegalArgumentException("이름이 누락되었습니다.");
         }
-        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum);
+        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
     }
 
-    public void update(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum) {
-        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum);
+    public void update(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum, String address, String url) {
+        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
 
         this.location = location;
         this.category = category;
@@ -80,7 +84,7 @@ public class Restaurant {
         this.telNum = telNum;
     }
 
-    private void validate(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum) {
+    private void validate(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum, String address, String url) {
         if (location == null) {
             throw new IllegalArgumentException("위치 정보가 누락되었습니다.");
         }

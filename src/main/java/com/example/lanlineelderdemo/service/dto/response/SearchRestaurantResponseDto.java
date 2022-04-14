@@ -31,6 +31,10 @@ public class SearchRestaurantResponseDto {
 
     private Double locationY;
 
+    private String address;
+
+    private String url;
+
     public static SearchRestaurantResponseDto makeUsingRestaurant(Restaurant restaurant) {
         SearchRestaurantResponseDto searchRestaurantResponseDto = new SearchRestaurantResponseDto();
         searchRestaurantResponseDto.id = restaurant.getId();
@@ -44,6 +48,8 @@ public class SearchRestaurantResponseDto {
         searchRestaurantResponseDto.minCost = restaurant.getMinCost();
         searchRestaurantResponseDto.locationX = restaurant.getGeoLocation().getLocationX();
         searchRestaurantResponseDto.locationY = restaurant.getGeoLocation().getLocationY();
+        searchRestaurantResponseDto.address = restaurant.getAddress();
+        searchRestaurantResponseDto.url = restaurant.getUrl();
 
         return searchRestaurantResponseDto;
 
