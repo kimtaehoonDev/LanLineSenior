@@ -1,5 +1,6 @@
 package com.example.lanlineelderdemo.repository;
 
+import com.example.lanlineelderdemo.domain.Location;
 import com.example.lanlineelderdemo.domain.QRestaurant;
 import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
@@ -32,7 +33,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
         // TODO 체크 안한건(false처리) null로 들어가서 무시해줘야함. 분위기? x 했다고 분위기 없는 식당만 추천하는 게 아님.
         return queryFactory.select(restaurant)
                 .from(restaurant)
-                .where(restaurant.location.in(searchCondition.getLocations()),
+                .where(includeLocations(searchCondition.getLocations()),
                         restaurant.category.notIn(searchCondition.getUnselectedCategories()),
                         eqIsAtmosphere(searchCondition.getIsAtmosphere()),
                         eqCanEatSingle(searchCondition.getCanEatSingle()),
@@ -43,6 +44,14 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .limit(5)
                 .fetch();
     }
+
+    private BooleanExpression includeLocations(List<Location> locations) {
+        if (locations.isEmpty()) {
+            return null;
+        }
+        return restaurant.location.in(locations);
+    }
+
 
     private BooleanExpression eqHasCostPerformance(Boolean costPerformance) {
         if (costPerformance == null) {

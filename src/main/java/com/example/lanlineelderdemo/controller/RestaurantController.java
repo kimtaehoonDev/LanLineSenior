@@ -93,7 +93,7 @@ public class RestaurantController {
 
     /**
      * 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
-     * TODO 로그인 페이지가 없는데, 어떻게 Admin인지 알지? IP를 사용해 따로 접근할 수 있게 만들어줘야할까? 그러면 웹서버가 두개가 필요한건가?
+     * TODO 식당 한개씩 입력받는 기능도 만들어야 할지도. 일단 keep
      */
     @GetMapping("restaurants/new")
     public String registerPage(@ModelAttribute MultipartFile file) {
