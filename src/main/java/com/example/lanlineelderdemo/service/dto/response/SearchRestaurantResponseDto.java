@@ -35,7 +35,7 @@ public class SearchRestaurantResponseDto {
 
     private String url;
 
-    public static SearchRestaurantResponseDto makeUsingRestaurant(Restaurant restaurant) {
+    public static SearchRestaurantResponseDto of(Restaurant restaurant) {
         SearchRestaurantResponseDto searchRestaurantResponseDto = new SearchRestaurantResponseDto();
         searchRestaurantResponseDto.id = restaurant.getId();
         searchRestaurantResponseDto.name = restaurant.getName();

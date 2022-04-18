@@ -66,7 +66,7 @@ public class RestaurantController {
     /**
      * 검색
      */
-    @PostMapping("result")
+    @PostMapping("results")
     public String searchRestaurantsUsingSearchCondition(
             @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto, Model model) {
 
@@ -108,27 +108,34 @@ public class RestaurantController {
     @PostMapping("/restaurants")
     public String registerRestaurantByAdmin(@ModelAttribute MultipartFile file) throws IOException{
         List<RegisterRequestServiceDto> dataList = new ArrayList<>();
+        Workbook workbook = makeWorkbook(file);
+        makeRequestServiceDtoUsingEachColumn(dataList, workbook);
+        restaurantService.registerRestaurants(dataList);
+        return "redirect:/";
+    }
 
+    private Workbook makeWorkbook(MultipartFile file) throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
             throw new IOException("엑셀파일만 업로드 해주세요.");
         }
-
         Workbook workbook = null;
-
         if (extension.equals("xlsx")) {
             workbook = new XSSFWorkbook(file.getInputStream());
         } else if (extension.equals("xls")) {
             workbook = new HSSFWorkbook(file.getInputStream());
         }
+        return workbook;
+    }
 
+    private void makeRequestServiceDtoUsingEachColumn(List<RegisterRequestServiceDto> dataList, Workbook workbook) {
         Sheet worksheet = workbook.getSheetAt(0); //아마 설명하는 가장 위칸?
         DataFormatter formatter = new DataFormatter();
 
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
-
             Row row = worksheet.getRow(i);
             RegisterRequestServiceDto registerRequestServiceDto = new RegisterRequestServiceDto();
+            //TODO Null값 처리가 잘 되는지 확인해봐야함.(TelNum같은거)
             registerRequestServiceDto.setName(row.getCell(0).getStringCellValue());
             registerRequestServiceDto.setGeoLocationX(row.getCell(1).getNumericCellValue());
             registerRequestServiceDto.setGeoLocationY(row.getCell(2).getNumericCellValue());
@@ -145,9 +152,6 @@ public class RestaurantController {
 
             dataList.add(registerRequestServiceDto);
         }
-
-        restaurantService.registerRestaurants(dataList);
-        return "redirect:/";
     }
 
     /**

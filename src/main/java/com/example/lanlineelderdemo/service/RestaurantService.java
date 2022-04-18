@@ -23,9 +23,23 @@ public class RestaurantService {
      * CREATE
      * 어드민 페이지 -> 식당 등록 기능
      */
+    //TODO 벌크연산 가능하도록 만들기.
+    @Transactional
+    public void registerRestaurants(List<RegisterRequestServiceDto> dataList) {
+        for (RegisterRequestServiceDto data : dataList) {
+            registerRestaurant(data);
+        }
+    }
+
     @Transactional
     public Long registerRestaurant(RegisterRequestServiceDto registerRequestServiceDto) {
         validateRestaurantNameDuplicate(registerRequestServiceDto);
+        Restaurant restaurant = makeRestaurantUsingRequestServiceDto(registerRequestServiceDto);
+        restaurantRepository.save(restaurant);
+        return restaurant.getId();
+    }
+
+    private Restaurant makeRestaurantUsingRequestServiceDto(RegisterRequestServiceDto registerRequestServiceDto) {
         Restaurant restaurant = Restaurant.createRestaurant()
                 .name(registerRequestServiceDto.getName())
                 .location(registerRequestServiceDto.getLocation())
@@ -39,8 +53,7 @@ public class RestaurantService {
                 .minCost(registerRequestServiceDto.getMinCost())
                 .telNum(registerRequestServiceDto.getTelNum())
                 .build();
-        restaurantRepository.save(restaurant);
-        return restaurant.getId();
+        return restaurant;
     }
 
     private void validateRestaurantNameDuplicate(RegisterRequestServiceDto registerRequestServiceDto) {
@@ -83,9 +96,8 @@ public class RestaurantService {
      * @return
      */
     public List<SearchRestaurantResponseDto> searchRestaurant(SearchCondition searchCondition) {
-        System.out.println(searchCondition);
         List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
-        return findRestaurants.stream().map(restaurant -> SearchRestaurantResponseDto.makeUsingRestaurant(restaurant)).collect(Collectors.toList());
+        return findRestaurants.stream().map(restaurant -> SearchRestaurantResponseDto.of(restaurant)).collect(Collectors.toList());
     }
 
     /**
@@ -94,12 +106,11 @@ public class RestaurantService {
      */
     public SearchRestaurantResponseDto searchRestaurantByRestaurantId(Long restaurantId) {
         Restaurant restaurant = findRestaurantByRestaurantId(restaurantId);
-        SearchRestaurantResponseDto searchRestaurantResponseDto = SearchRestaurantResponseDto.makeUsingRestaurant(restaurant);
+        SearchRestaurantResponseDto searchRestaurantResponseDto = SearchRestaurantResponseDto.of(restaurant);
         return searchRestaurantResponseDto;
     }
 
     private Restaurant findRestaurantByRestaurantId(Long restaurantId) {
-        System.out.println("restaurantId = " + restaurantId);
         Optional<Restaurant> parsingRestaurant = restaurantRepository.findById(restaurantId);
         if (parsingRestaurant.isEmpty()) {
             throw new IllegalArgumentException("해당 restaurant는 존재하지 않습니다.");
@@ -107,9 +118,4 @@ public class RestaurantService {
         return parsingRestaurant.get();
     }
 
-    public void registerRestaurants(List<RegisterRequestServiceDto> dataList) {
-        for (RegisterRequestServiceDto data : dataList) {
-            registerRestaurant(data);
-        }
-    }
 }
