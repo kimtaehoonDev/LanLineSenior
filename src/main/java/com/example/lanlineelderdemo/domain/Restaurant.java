@@ -37,20 +37,20 @@ public class Restaurant {
     @Nullable
     private String adminComment; //null 가능.
 
-    private Integer minCost;
-
     @Nullable
-    private String telNum; // TODO 이후에 matches 사용해주기.
-
-    private String address;
-
     private String url;
 
-    // TODO 영업시간 관련 정보. 어떻게 만들지 감이 안잡히니까 일단 String으로 넣자.
+
+//    TODO 이 속성들은 별개 엔티티 만들어 처리해야 함.
+//    private String recommendMenuName;
+//    private Integer minCost;
 
     @Builder(builderClassName = "createRestaurant", builderMethodName = "createRestaurant")
-    private Restaurant(String name, Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum, String address, String url) {
-        validate(name, location, category, geoLocationX, geoLocationY, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
+    private Restaurant(String name, Location location, Double geoLocationX, Double geoLocationY,
+                       FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance,
+                       Boolean canEatSingle, String adminComment, String url) {
+        validate(name, location, category, geoLocationX, geoLocationY, isAtmosphere, hasCostPerformance,
+                canEatSingle, url);
 
         this.name = name;
         this.location = location;
@@ -60,31 +60,25 @@ public class Restaurant {
         this.hasCostPerformance = hasCostPerformance;
         this.canEatSingle = canEatSingle;
         this.adminComment = adminComment;
-        this.minCost = minCost;
-        this.telNum = telNum;
+        this.url = url;
     }
 
-    private void validate(String name, Location location, FoodCategory category, Double geoLocationX, Double geoLocationY, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum, String address, String url) {
+    private void validate(String name, Location location, FoodCategory category, Double geoLocationX,
+                          Double geoLocationY, Boolean isAtmosphere, Boolean hasCostPerformance,
+                          Boolean canEatSingle, String url) {
         if (name == null) {
             throw new IllegalArgumentException("이름이 누락되었습니다.");
         }
-        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
+        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance,
+                canEatSingle, url);
     }
 
-    public void update(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, String adminComment, Integer minCost, String telNum, String address, String url) {
-        validate(location, geoLocationX, geoLocationY, category, isAtmosphere, hasCostPerformance, canEatSingle, minCost, telNum, address, url);
+    // TODO UPDATE
 
-        this.location = location;
-        this.category = category;
-        this.isAtmosphere = isAtmosphere;
-        this.hasCostPerformance = hasCostPerformance;
-        this.canEatSingle = canEatSingle;
-        this.adminComment = adminComment;
-        this.minCost = minCost;
-        this.telNum = telNum;
-    }
 
-    private void validate(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer minCost, String telNum, String address, String url) {
+    private void validate(Location location, Double geoLocationX, Double geoLocationY, FoodCategory category,
+                          Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle,
+                          String url) {
         if (location == null) {
             throw new IllegalArgumentException("위치 정보가 누락되었습니다.");
         }
@@ -103,9 +97,5 @@ public class Restaurant {
         if (canEatSingle == null) {
             throw new IllegalArgumentException("혼밥 가능 관련 정보가 누락되었습니다.");
         }
-        if (minCost == null) {
-            throw new IllegalArgumentException("가격 관련 정보가 누락되었습니다.");
-        }
-        // TODO telNul을 matches를 사용해 검증하는 로직.
     }
 }

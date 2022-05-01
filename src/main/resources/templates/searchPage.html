@@ -44,6 +44,17 @@
   </div>
   <button class="btn-primary" type="submit">전송</button>
 
+  <div>
+    <label>언제 식사를 할 예정인가요? : </label>
+    <div th:each="openType : ${openTypes}">
+      <input type="radio" name="openType" value="시간대" text ="시간대"
+             th:field="*{openType}" th:value="${openType.getKey()}" th:text="${openType.getValue()}">
+    </div>
+  </div>
+
+  <button class="btn-primary" type="submit">전송</button>
+  </div>
+
 </form>
 
 </body>

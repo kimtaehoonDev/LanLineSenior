@@ -7,10 +7,7 @@ import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantRespons
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +50,18 @@ public class RestaurantController {
         return foodCategories;
     }
 
+    @ModelAttribute("openTypes")
+    public Map<String, String> openTypes() {
+        Map<String, List<EnumValue>> enums = enumMapper.getAll();
+        List<EnumValue> enumValues = enums.get("openTypes");
+
+        Map<String, String> foodCategories = new LinkedHashMap<>();
+        for (EnumValue enumValue : enumValues) {
+            foodCategories.put(enumValue.getKey(), enumValue.getValue());
+        }
+        return foodCategories;
+    }
+
     /**
      * 검색 페이지
      */
@@ -73,7 +82,7 @@ public class RestaurantController {
         SearchCondition searchCondition = new SearchCondition(searchRestaurantRequestDto.getLocations(),
                 searchRestaurantRequestDto.getUnselectedCategories(), searchRestaurantRequestDto.getIsAtmosphere(),
                 searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
-                searchRestaurantRequestDto.getMaxCostLine());
+                searchRestaurantRequestDto.getMaxCostLine(), searchRestaurantRequestDto.getOpenType());
         List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurant(searchCondition);
         model.addAttribute("results",results);//앞에 함수 결과를 받는다.
         return "resultPage";
@@ -107,9 +116,8 @@ public class RestaurantController {
      */
     @PostMapping("/restaurants")
     public String registerRestaurantByAdmin(@ModelAttribute MultipartFile file) throws IOException{
-        List<RegisterRequestServiceDto> dataList = new ArrayList<>();
         Workbook workbook = makeWorkbook(file);
-        makeRequestServiceDtoUsingEachColumn(dataList, workbook);
+        List<RegisterRequestServiceDto> dataList = makeRequestServiceDtoUsingEachColumn(workbook);
         restaurantService.registerRestaurants(dataList);
         return "redirect:/";
     }
@@ -128,10 +136,10 @@ public class RestaurantController {
         return workbook;
     }
 
-    private void makeRequestServiceDtoUsingEachColumn(List<RegisterRequestServiceDto> dataList, Workbook workbook) {
+    private List makeRequestServiceDtoUsingEachColumn(Workbook workbook) {
         Sheet worksheet = workbook.getSheetAt(0); //아마 설명하는 가장 위칸?
-        DataFormatter formatter = new DataFormatter();
 
+        List<RegisterRequestServiceDto> dataList = new ArrayList<>();
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
             Row row = worksheet.getRow(i);
             RegisterRequestServiceDto registerRequestServiceDto = new RegisterRequestServiceDto();
@@ -140,18 +148,18 @@ public class RestaurantController {
             registerRequestServiceDto.setGeoLocationX(row.getCell(1).getNumericCellValue());
             registerRequestServiceDto.setGeoLocationY(row.getCell(2).getNumericCellValue());
             registerRequestServiceDto.setLocation(Location.find(row.getCell(3).getStringCellValue()));
+            System.out.println(row.getCell(0).getStringCellValue());
             registerRequestServiceDto.setCategory(FoodCategory.find(row.getCell(4).getStringCellValue()));
             registerRequestServiceDto.setIsAtmosphere(row.getCell(5).getBooleanCellValue());
             registerRequestServiceDto.setHasCostPerformance(row.getCell(6).getBooleanCellValue());
             registerRequestServiceDto.setCanEatSingle(row.getCell(7).getBooleanCellValue());
-            registerRequestServiceDto.setAdminComment(row.getCell(8).getStringCellValue());
-            registerRequestServiceDto.setMinCost((int) row.getCell(9).getNumericCellValue());
-            registerRequestServiceDto.setTelNum(formatter.formatCellValue(row.getCell(10)));
-            registerRequestServiceDto.setAddress(row.getCell(11).getStringCellValue());
-            registerRequestServiceDto.setUrl(row.getCell(12).getStringCellValue());
-
+            if (row.getCell(8) != null) {
+                registerRequestServiceDto.setAdminComment(row.getCell(8).getStringCellValue());
+            }
+            registerRequestServiceDto.setUrl(row.getCell(9).getStringCellValue());
             dataList.add(registerRequestServiceDto);
         }
+        return dataList;
     }
 
     /**

@@ -37,9 +37,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                         restaurant.category.notIn(searchCondition.getUnselectedCategories()),
                         eqIsAtmosphere(searchCondition.getIsAtmosphere()),
                         eqCanEatSingle(searchCondition.getCanEatSingle()),
-                        eqHasCostPerformance(searchCondition.getHasCostPerformance()),
-                        restaurant.minCost.loe(searchCondition.getMaxCostLine())
-                )
+                        eqHasCostPerformance(searchCondition.getHasCostPerformance()))
                 .orderBy(NumberExpression.random().asc())
                 .limit(5)
                 .fetch();

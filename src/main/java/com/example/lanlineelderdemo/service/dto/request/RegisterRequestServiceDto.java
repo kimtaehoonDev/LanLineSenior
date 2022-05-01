@@ -7,8 +7,6 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Embedded;
-
 @Data
 public class RegisterRequestServiceDto {
     @NotNull
@@ -35,14 +33,7 @@ public class RegisterRequestServiceDto {
     @Nullable
     private String adminComment;
 
-    @NotNull
-    private Integer minCost;
-
-    @Nullable
-    private String telNum;
-
-    private String address;
-
+    //TODO URL 타입인지 확인.
     private String url;
 
     public RegisterRequestServiceDto changeRequestServiceDto() {
@@ -56,10 +47,7 @@ public class RegisterRequestServiceDto {
         registerRequestServiceDto.setHasCostPerformance(hasCostPerformance);
         registerRequestServiceDto.setCanEatSingle(canEatSingle);
         registerRequestServiceDto.setAdminComment(adminComment);
-        registerRequestServiceDto.setMinCost(minCost);
-        registerRequestServiceDto.setTelNum(telNum);
-//        registerRequestServiceDto.setAddress(address);
-//        registerRequestServiceDto.setUrl(url);
+        registerRequestServiceDto.setUrl(url);
         return registerRequestServiceDto;
     }
 }

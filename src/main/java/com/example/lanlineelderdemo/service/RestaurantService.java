@@ -50,8 +50,7 @@ public class RestaurantService {
                 .hasCostPerformance(registerRequestServiceDto.getHasCostPerformance())
                 .canEatSingle(registerRequestServiceDto.getCanEatSingle())
                 .adminComment(registerRequestServiceDto.getAdminComment())
-                .minCost(registerRequestServiceDto.getMinCost())
-                .telNum(registerRequestServiceDto.getTelNum())
+                .url(registerRequestServiceDto.getUrl())
                 .build();
         return restaurant;
     }

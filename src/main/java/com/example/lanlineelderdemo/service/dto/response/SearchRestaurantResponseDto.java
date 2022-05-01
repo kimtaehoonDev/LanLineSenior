@@ -45,10 +45,8 @@ public class SearchRestaurantResponseDto {
         searchRestaurantResponseDto.hasCostPerformance = restaurant.getHasCostPerformance();
         searchRestaurantResponseDto.canEatSingle = restaurant.getCanEatSingle();
         searchRestaurantResponseDto.adminComment = restaurant.getAdminComment();
-        searchRestaurantResponseDto.minCost = restaurant.getMinCost();
         searchRestaurantResponseDto.locationX = restaurant.getGeoLocation().getLocationX();
         searchRestaurantResponseDto.locationY = restaurant.getGeoLocation().getLocationY();
-        searchRestaurantResponseDto.address = restaurant.getAddress();
         searchRestaurantResponseDto.url = restaurant.getUrl();
 
         return searchRestaurantResponseDto;

@@ -1,9 +1,6 @@
 package com.example.lanlineelderdemo.repository;
 
-import com.example.lanlineelderdemo.domain.FoodCategory;
-import com.example.lanlineelderdemo.domain.Location;
-import com.example.lanlineelderdemo.domain.Restaurant;
-import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.example.lanlineelderdemo.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +27,6 @@ class RestaurantRepositoryTest {
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .minCost(15000)
-                .telNum("000-000-0000")
                 .build();
         restaurantRepository.save(restaurant);
 
@@ -51,8 +46,6 @@ class RestaurantRepositoryTest {
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .minCost(15000)
-                .telNum("000-000-0000")
                 .build();
 
         Restaurant restaurant2 = Restaurant.createRestaurant()
@@ -65,12 +58,11 @@ class RestaurantRepositoryTest {
                 .canEatSingle(false)
                 .hasCostPerformance(false)
                 .isAtmosphere(true)
-                .minCost(20000)
                 .build();
         restaurantRepository.save(restaurant);
         restaurantRepository.save(restaurant2);
 
-        SearchCondition search = new SearchCondition(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE),Arrays.asList(), true, null, null, 16000);
+        SearchCondition search = new SearchCondition(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE), Arrays.asList(), true, null, null, 16000, OpenType.LUNCH);
 
         List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchCondition(search);
 

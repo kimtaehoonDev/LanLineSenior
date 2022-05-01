@@ -24,13 +24,18 @@ public class SearchCondition {
 //    @Min, @Max => 조건 달아야하나?
     private Integer maxCostLine; //예산 최대한도(1인 기준)
 
-    public SearchCondition(List<Location> locations, List<FoodCategory> unselectedCategories, Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle, Integer maxCostLine) {
+    private OpenType openType;
+
+    public SearchCondition(List<Location> locations, List<FoodCategory> unselectedCategories,
+                           Boolean isAtmosphere, Boolean hasCostPerformance, Boolean canEatSingle,
+                           Integer maxCostLine, OpenType openType) {
         this.locations = locations;
         this.unselectedCategories = unselectedCategories;
         this.isAtmosphere = checkIsAtmosphere(isAtmosphere);
         this.hasCostPerformance = checkHasCostPerformance(hasCostPerformance);
         this.canEatSingle = checkCanEatSingle(canEatSingle);
         this.maxCostLine = maxCostLine;
+        this.openType = openType;
     }
 
     private Boolean checkIsAtmosphere(Boolean isAtmosphere) {

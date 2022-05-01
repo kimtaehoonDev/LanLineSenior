@@ -2,6 +2,7 @@ package com.example.lanlineelderdemo.controller;
 
 import com.example.lanlineelderdemo.domain.FoodCategory;
 import com.example.lanlineelderdemo.domain.Location;
+import com.example.lanlineelderdemo.domain.OpenType;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,6 @@ public class SearchRestaurantRequestDto {
     private Boolean canEatSingle;
 
     private Integer maxCostLine;
+
+    private OpenType openType;
 }
