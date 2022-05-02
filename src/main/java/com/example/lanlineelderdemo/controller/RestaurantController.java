@@ -1,9 +1,13 @@
 package com.example.lanlineelderdemo.controller;
 
 import com.example.lanlineelderdemo.domain.*;
+import com.example.lanlineelderdemo.service.MenuService;
 import com.example.lanlineelderdemo.service.RestaurantService;
+import com.example.lanlineelderdemo.service.dto.request.RegisterMenuRequestServiceDto;
 import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantResponseDto;
+import com.example.lanlineelderdemo.service.dto.response.FindRestaurantRecommendMenuResponseDto;
+import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantsResponseDto;
+import com.example.lanlineelderdemo.service.dto.response.ShowRestaurantDetailsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -24,6 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final MenuService menuService;
     private final EnumMapper enumMapper;
 
     @ModelAttribute("locations")
@@ -57,6 +62,9 @@ public class RestaurantController {
 
         Map<String, String> foodCategories = new LinkedHashMap<>();
         for (EnumValue enumValue : enumValues) {
+            if (enumValue.getKey() == OpenType.BOTH.getKey()) {
+                continue;
+            }
             foodCategories.put(enumValue.getKey(), enumValue.getValue());
         }
         return foodCategories;
@@ -83,7 +91,10 @@ public class RestaurantController {
                 searchRestaurantRequestDto.getUnselectedCategories(), searchRestaurantRequestDto.getIsAtmosphere(),
                 searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
                 searchRestaurantRequestDto.getMaxCostLine(), searchRestaurantRequestDto.getOpenType());
-        List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurant(searchCondition);
+        List<SearchRestaurantsResponseDto> results = restaurantService.searchRestaurants(searchCondition);
+        for (SearchRestaurantsResponseDto result : results) {
+            System.out.println("result = " + result);
+        }
         model.addAttribute("results",results);//앞에 함수 결과를 받는다.
         return "resultPage";
     }
@@ -93,9 +104,11 @@ public class RestaurantController {
      */
     @GetMapping("/restaurants/{restaurantId}")
     public String showRestaurantDetail(@PathVariable Long restaurantId, Model model) {
-        SearchRestaurantResponseDto restaurant = restaurantService.searchRestaurantByRestaurantId(restaurantId);
+        ShowRestaurantDetailsResponseDto restaurant = restaurantService.showRestaurantDetails(restaurantId);
+        FindRestaurantRecommendMenuResponseDto restaurantRecommendMenu = menuService.findRestaurantRecommendMenu(restaurantId);
         //TODO 이후, 후기 기능 생기면 여기에 연결해서 달아주고, 같이 타임리프 안에 넣어주면 될 거 같음.
         model.addAttribute("restaurant", restaurant);
+        model.addAttribute("restaurantRecommendMenu", restaurantRecommendMenu);
         return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
@@ -121,6 +134,45 @@ public class RestaurantController {
         restaurantService.registerRestaurants(dataList);
         return "redirect:/";
     }
+
+
+    /**
+     * 메뉴 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
+     */
+    @GetMapping("restaurants/menu/new")
+    public String registerMenuPage(@ModelAttribute MultipartFile file) {
+        return "registerMenuPage";
+    }
+
+    /**
+     * 메뉴 등록 (Admin만)
+     */
+    @PostMapping("/restaurants/menu")
+    public String registerMenuByAdmin(@ModelAttribute MultipartFile file) throws IOException{
+        Workbook workbook = makeWorkbook(file);
+        List<RegisterMenuRequestServiceDto> dataList = makeMenuRequestServiceDtoUsingEachColumn(workbook);
+        menuService.registerMenus(dataList);
+        return "redirect:/";
+    }
+
+    private List<RegisterMenuRequestServiceDto> makeMenuRequestServiceDtoUsingEachColumn(Workbook workbook) {
+        Sheet worksheet = workbook.getSheetAt(0); //아마 설명하는 가장 위칸?
+        List<RegisterMenuRequestServiceDto> dataList = new ArrayList<>();
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
+            Row row = worksheet.getRow(i);
+            RegisterMenuRequestServiceDto registerMenuRequestServiceDto = new RegisterMenuRequestServiceDto();
+            registerMenuRequestServiceDto.setRestaurantName(row.getCell(0).getStringCellValue());
+            registerMenuRequestServiceDto.setOpenType(OpenType.find(row.getCell(1).getStringCellValue()));
+            registerMenuRequestServiceDto.setMenuName(row.getCell(2).getStringCellValue());
+            registerMenuRequestServiceDto.setNumberOfMeal((int) row.getCell(3).getNumericCellValue());
+            registerMenuRequestServiceDto.setPrice((int) row.getCell(4).getNumericCellValue());
+
+            dataList.add(registerMenuRequestServiceDto);
+        }
+        return dataList;
+
+    }
+
 
     private Workbook makeWorkbook(MultipartFile file) throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());

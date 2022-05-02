@@ -2,9 +2,11 @@ package com.example.lanlineelderdemo.service;
 
 import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.example.lanlineelderdemo.repository.FindRestaurantBySearchConditionResponseDto;
 import com.example.lanlineelderdemo.repository.RestaurantRepository;
 import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantResponseDto;
+import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantsResponseDto;
+import com.example.lanlineelderdemo.service.dto.response.ShowRestaurantDetailsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,19 +96,18 @@ public class RestaurantService {
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
      * @return
      */
-    public List<SearchRestaurantResponseDto> searchRestaurant(SearchCondition searchCondition) {
-        List<Restaurant> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
-        return findRestaurants.stream().map(restaurant -> SearchRestaurantResponseDto.of(restaurant)).collect(Collectors.toList());
+    public List<SearchRestaurantsResponseDto> searchRestaurants(SearchCondition searchCondition) {
+        List<FindRestaurantBySearchConditionResponseDto> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
+        return findRestaurants.stream().map(findRestaurantBySearchConditionResponseDto -> SearchRestaurantsResponseDto.of(findRestaurantBySearchConditionResponseDto)).collect(Collectors.toList());
     }
 
     /**
      * 상세정보
      * @return
      */
-    public SearchRestaurantResponseDto searchRestaurantByRestaurantId(Long restaurantId) {
+    public ShowRestaurantDetailsResponseDto showRestaurantDetails(Long restaurantId) {
         Restaurant restaurant = findRestaurantByRestaurantId(restaurantId);
-        SearchRestaurantResponseDto searchRestaurantResponseDto = SearchRestaurantResponseDto.of(restaurant);
-        return searchRestaurantResponseDto;
+        return ShowRestaurantDetailsResponseDto.of(restaurant);
     }
 
     private Restaurant findRestaurantByRestaurantId(Long restaurantId) {

@@ -3,7 +3,7 @@ package com.example.lanlineelderdemo.domain;
 import java.util.Arrays;
 
 public enum OpenType implements EnumModel{
-    LUNCH("점심"), DINNER("저녁");
+    LUNCH("점심"), DINNER("저녁"), BOTH("둘다");
 
     private String value;
 

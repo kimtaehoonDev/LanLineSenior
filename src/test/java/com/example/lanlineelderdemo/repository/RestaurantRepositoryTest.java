@@ -64,7 +64,7 @@ class RestaurantRepositoryTest {
 
         SearchCondition search = new SearchCondition(Arrays.asList(Location.BACK_DOOR, Location.BOKGAE), Arrays.asList(), true, null, null, 16000, OpenType.LUNCH);
 
-        List<Restaurant> restaurantList = restaurantRepository.findRestaurantBySearchCondition(search);
+        List<FindRestaurantBySearchConditionResponseDto> restaurantList = restaurantRepository.findRestaurantBySearchCondition(search);
 
         Assertions.assertThat(restaurantList.size()).isEqualTo(1);
         Assertions.assertThat(restaurantList.get(0).getName()).isEqualTo(restaurant.getName());

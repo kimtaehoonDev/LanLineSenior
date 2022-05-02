@@ -1,10 +1,9 @@
 package com.example.lanlineelderdemo.repository;
 
-import com.example.lanlineelderdemo.domain.Location;
-import com.example.lanlineelderdemo.domain.QRestaurant;
-import com.example.lanlineelderdemo.domain.Restaurant;
-import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.example.lanlineelderdemo.domain.*;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -14,6 +13,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.example.lanlineelderdemo.domain.QMenu.menu;
 import static com.example.lanlineelderdemo.domain.QRestaurant.restaurant;
 
 public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
@@ -27,17 +27,21 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     }
 
     @Override
-    public List<Restaurant> findRestaurantBySearchCondition(SearchCondition searchCondition) {
+    public List<FindRestaurantBySearchConditionResponseDto> findRestaurantBySearchCondition(SearchCondition searchCondition) {
 
-        //TODO 검증 해줘야함. 코드만 지금 작성한 상태.
-        // TODO 체크 안한건(false처리) null로 들어가서 무시해줘야함. 분위기? x 했다고 분위기 없는 식당만 추천하는 게 아님.
-        return queryFactory.select(restaurant)
-                .from(restaurant)
+        return queryFactory.select(Projections.bean(FindRestaurantBySearchConditionResponseDto.class, restaurant.id, restaurant.name, restaurant.location, restaurant.geoLocation,
+                        restaurant.category, restaurant.isAtmosphere, restaurant.hasCostPerformance,
+                        restaurant.canEatSingle, restaurant.adminComment, restaurant.url, menu.openType,
+                        menu.menuName, menu.numberOfMeal, menu.price))
+                .from(restaurant, menu)
+                .join(menu.restaurant, restaurant)
                 .where(includeLocations(searchCondition.getLocations()),
                         restaurant.category.notIn(searchCondition.getUnselectedCategories()),
                         eqIsAtmosphere(searchCondition.getIsAtmosphere()),
                         eqCanEatSingle(searchCondition.getCanEatSingle()),
-                        eqHasCostPerformance(searchCondition.getHasCostPerformance()))
+                        eqHasCostPerformance(searchCondition.getHasCostPerformance()),
+                        menu.openType.in(searchCondition.getOpenType(), OpenType.BOTH),
+                        menu.price.divide(menu.numberOfMeal).loe(searchCondition.getMaxCostLine()))
                 .orderBy(NumberExpression.random().asc())
                 .limit(5)
                 .fetch();
