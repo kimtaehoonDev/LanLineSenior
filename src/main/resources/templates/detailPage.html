@@ -5,44 +5,39 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <span>가게명 : </span>
+    <span><a th:text="${restaurant.name}" th:href="@{${restaurant.url}}" target='_blank'>zz</a></span>
+</div>
+<div>
+    <span>카테고리 : </span>
+    <span th:text="${foodCategories[restaurant.category.name()]}">ㅋㅋ</span>
+</div>
+<div>
+    <span>TMI : </span>
+    <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
+</div>
+<div th:block th:if = "${restaurant.getLunchMenuName() != null}">
     <div>
-        <span>가게명 : </span>
-        <span th:text="${restaurant.name}">ㅋㅋ</span>
+        <span>점심 추천 메뉴 : </span>
+        <span th:text="${restaurant.getLunchMenuName()}">ㅋㅋ</span>
+        <span> / 가격 : </span>
+        <span th:text="${restaurant.getLunchMenuPrice()}">ㅋㅋ</span>
     </div>
+</div>
+<div th:block th:if = "${restaurant.getDinnerMenuName() != null}">
     <div>
-        <span>네이버 링크 : (링크로 걸자.)</span>
-        <span th:text="${restaurant.url}">ㅋㅋ</span>
+        <span>저녁 추천 메뉴 : </span>
+        <span th:text="${restaurant.getDinnerMenuName()}">ㅋㅋ</span>
+        <span>/ 가격 : </span>
+        <span th:text="${restaurant.getDinnerMenuPrice()}">ㅋㅋ</span>
     </div>
-    <div>
-        <span>카테고리 : </span>
-        <span th:text="${foodCategories[restaurant.category.name()]}">ㅋㅋ</span>
-    </div>
-    <div>
-        <span>TMI : </span>
-        <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
-    </div>
+</div>
 
-    <div th:block th:if = "${restaurant.getLunchMenuName() != null}">
-        <div>
-            <span>점심 추천 메뉴 : </span>
-            <span th:text="${restaurant.getLunchMenuName()}">ㅋㅋ</span>
-            <span> / 가격 : </span>
-            <span th:text="${restaurant.getLunchMenuPrice()}">ㅋㅋ</span>
-        </div>
-    </div>
-    <div th:block th:if = "${restaurant.getDinnerMenuName() != null}">
-        <div>
-            <span>저녁 추천 메뉴 : </span>
-            <span th:text="${restaurant.getDinnerMenuName()}">ㅋㅋ</span>
-            <span>/ 가격 : </span>
-            <span th:text="${restaurant.getDinnerMenuPrice()}">ㅋㅋ</span>
-        </div>
-    </div>
-
-    <div>
-        <span th:if="${restaurant.hasCostPerformance}">#가성비 </span>
-        <span th:if="${restaurant.canEatSingle}">#혼밥가능 </span>
-        <span th:if="${restaurant.isAtmosphere}">#분위기 </span>
-    </div>
+<div>
+    <span th:if="${restaurant.hasCostPerformance}">#가성비 </span>
+    <span th:if="${restaurant.canEatSingle}">#혼밥가능 </span>
+    <span th:if="${restaurant.isAtmosphere}">#분위기 </span>
+</div>
 </body>
 </html>
