@@ -23,8 +23,6 @@ public class SearchRestaurantResponseDto {
 
     private Boolean canEatSingle;
 
-    private String adminComment;
-
     private Double locationX;
 
     private Double locationY;
@@ -43,7 +41,6 @@ public class SearchRestaurantResponseDto {
         searchRestaurantResponseDto.isAtmosphere = findRestaurantBySearchConditionResponseDto.getIsAtmosphere();
         searchRestaurantResponseDto.hasCostPerformance = findRestaurantBySearchConditionResponseDto.getHasCostPerformance();
         searchRestaurantResponseDto.canEatSingle = findRestaurantBySearchConditionResponseDto.getCanEatSingle();
-        searchRestaurantResponseDto.adminComment = findRestaurantBySearchConditionResponseDto.getAdminComment();
         searchRestaurantResponseDto.locationX = findRestaurantBySearchConditionResponseDto.getGeoLocation().getLocationX();
         searchRestaurantResponseDto.locationY = findRestaurantBySearchConditionResponseDto.getGeoLocation().getLocationY();
         searchRestaurantResponseDto.url = findRestaurantBySearchConditionResponseDto.getUrl();

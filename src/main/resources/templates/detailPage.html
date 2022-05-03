@@ -22,7 +22,7 @@
         <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
     </div>
 
-    <div th:if = "${!restaurant.getLunchMenuName().isBlank()}">
+    <div th:block th:if = "${restaurant.getLunchMenuName() != null}">
         <div>
             <span>점심 추천 메뉴 : </span>
             <span th:text="${restaurant.getLunchMenuName()}">ㅋㅋ</span>
@@ -30,7 +30,7 @@
             <span th:text="${restaurant.getLunchMenuPrice()}">ㅋㅋ</span>
         </div>
     </div>
-    <div th:if = "${!restaurant.getDinnerMenuName().isBlank()}">
+    <div th:block th:if = "${restaurant.getDinnerMenuName() != null}">
         <div>
             <span>저녁 추천 메뉴 : </span>
             <span th:text="${restaurant.getDinnerMenuName()}">ㅋㅋ</span>

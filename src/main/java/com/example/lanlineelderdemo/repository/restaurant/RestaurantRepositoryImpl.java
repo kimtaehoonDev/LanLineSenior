@@ -42,7 +42,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                         menu.price.divide(menu.numberOfMeal).loe(searchCondition.getMaxCostLine()))
                 .orderBy(NumberExpression.random().asc())
                 .limit(5)
-                .fetch();
+                .fetch(); //TODO애가 문제?
     }
 
     private BooleanExpression includeLocations(List<Location> locations) {

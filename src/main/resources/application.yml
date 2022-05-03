@@ -5,6 +5,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
   jpa:
+    properties:
+      hibernate.format_sql: true
     show-sql: true
     hibernate:
       ddl-auto: create # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
