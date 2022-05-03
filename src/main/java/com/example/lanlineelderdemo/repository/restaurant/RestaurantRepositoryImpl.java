@@ -27,11 +27,13 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     @Override
     public List<FindRestaurantBySearchConditionResponseDto> findRestaurantBySearchCondition(SearchCondition searchCondition) {
 
-        return queryFactory.select(Projections.bean(FindRestaurantBySearchConditionResponseDto.class, restaurant.id, restaurant.name, restaurant.location, restaurant.geoLocation,
-                        restaurant.category, restaurant.isAtmosphere, restaurant.hasCostPerformance,
-                        restaurant.canEatSingle, restaurant.adminComment, restaurant.url, menu.openType,
-                        menu.menuName, menu.numberOfMeal, menu.price))
-                .from(restaurant, menu)
+        return queryFactory.select(Projections.bean(FindRestaurantBySearchConditionResponseDto.class,
+                        menu.openType, menu.menuName, menu.numberOfMeal, menu.price,
+                        menu.restaurant.id, menu.restaurant.name, menu.restaurant.location,
+                        menu.restaurant.geoLocation, menu.restaurant.category, menu.restaurant.isAtmosphere,
+                        menu.restaurant.hasCostPerformance, menu.restaurant.canEatSingle,
+                        menu.restaurant.adminComment, menu.restaurant.url))
+                .from(menu)
                 .join(menu.restaurant, restaurant)
                 .where(includeLocations(searchCondition.getLocations()),
                         restaurant.category.notIn(searchCondition.getUnselectedCategories()),
