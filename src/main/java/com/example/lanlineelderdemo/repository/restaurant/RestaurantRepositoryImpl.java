@@ -59,14 +59,14 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
         if (costPerformance == null) {
             return null;
         }
-        return restaurant.isAtmosphere.eq(costPerformance);
+        return restaurant.hasCostPerformance.eq(costPerformance);
     }
 
     private BooleanExpression eqCanEatSingle(Boolean canEatSingle) {
         if (canEatSingle == null) {
             return null;
         }
-        return restaurant.isAtmosphere.eq(canEatSingle);
+        return restaurant.canEatSingle.eq(canEatSingle);
     }
 
     private BooleanExpression eqIsAtmosphere(Boolean isAtmosphere) {
