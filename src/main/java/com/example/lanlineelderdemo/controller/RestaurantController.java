@@ -1,13 +1,20 @@
 package com.example.lanlineelderdemo.controller;
 
+import com.example.lanlineelderdemo.EnumMapper;
+import com.example.lanlineelderdemo.EnumValue;
+import com.example.lanlineelderdemo.controller.dto.SearchRestaurantRequestDto;
+import com.example.lanlineelderdemo.controller.dto.ShowRestaurantDetailsResponseDto;
 import com.example.lanlineelderdemo.domain.*;
-import com.example.lanlineelderdemo.service.MenuService;
-import com.example.lanlineelderdemo.service.RestaurantService;
-import com.example.lanlineelderdemo.service.dto.request.RegisterMenuRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.response.FindRestaurantRecommendMenuResponseDto;
-import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantsResponseDto;
-import com.example.lanlineelderdemo.service.dto.response.ShowRestaurantDetailsResponseDto;
+import com.example.lanlineelderdemo.domain.menu.OpenType;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.service.menu.MenuService;
+import com.example.lanlineelderdemo.service.restaurant.RestaurantService;
+import com.example.lanlineelderdemo.service.menu.RegisterMenuRequestServiceDto;
+import com.example.lanlineelderdemo.service.restaurant.request.RegisterRestaurantRequestServiceDto;
+import com.example.lanlineelderdemo.service.menu.findRecommendMenuInRestaurantDto;
+import com.example.lanlineelderdemo.service.restaurant.response.SearchRestaurantResponseDto;
+import com.example.lanlineelderdemo.service.restaurant.response.InqueryRestaurantResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -33,7 +40,7 @@ public class RestaurantController {
 
     @ModelAttribute("locations")
     public Map<String, String> locations() {
-        Map<String, List<EnumValue>> enums = enumMapper.getAll();
+        Map<String, List<EnumValue>> enums = enumMapper.get("locations");
         List<EnumValue> enumValues = enums.get("locations");
 
         Map<String, String> locations = new LinkedHashMap<>();
@@ -45,9 +52,8 @@ public class RestaurantController {
 
     @ModelAttribute("foodCategories")
     public Map<String, String> foodCategories() {
-        Map<String, List<EnumValue>> enums = enumMapper.getAll();
+        Map<String, List<EnumValue>> enums = enumMapper.get("foodCategories");
         List<EnumValue> enumValues = enums.get("foodCategories");
-
         Map<String, String> foodCategories = new LinkedHashMap<>();
         for (EnumValue enumValue : enumValues) {
             foodCategories.put(enumValue.getKey(), enumValue.getValue());
@@ -57,7 +63,7 @@ public class RestaurantController {
 
     @ModelAttribute("openTypes")
     public Map<String, String> openTypes() {
-        Map<String, List<EnumValue>> enums = enumMapper.getAll();
+        Map<String, List<EnumValue>> enums = enumMapper.get("openTypes");
         List<EnumValue> enumValues = enums.get("openTypes");
 
         Map<String, String> foodCategories = new LinkedHashMap<>();
@@ -74,7 +80,7 @@ public class RestaurantController {
      * 검색 페이지
      */
     @GetMapping
-    public String searchPage(Model model) {
+    public String searchRestaurantsForm(Model model) {
         SearchRestaurantRequestDto searchRestaurantRequestDto = new SearchRestaurantRequestDto();
         model.addAttribute("searchRestaurantRequestDto", searchRestaurantRequestDto);
         return "searchPage";
@@ -84,18 +90,11 @@ public class RestaurantController {
      * 검색
      */
     @PostMapping("results")
-    public String searchRestaurantsUsingSearchCondition(
+    public String searchRestaurants(
             @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto, Model model) {
-
-        SearchCondition searchCondition = new SearchCondition(searchRestaurantRequestDto.getLocations(),
-                searchRestaurantRequestDto.getUnselectedCategories(), searchRestaurantRequestDto.getIsAtmosphere(),
-                searchRestaurantRequestDto.getHasCostPerformance(), searchRestaurantRequestDto.getCanEatSingle(),
-                searchRestaurantRequestDto.getMaxCostLine(), searchRestaurantRequestDto.getOpenType());
-        List<SearchRestaurantsResponseDto> results = restaurantService.searchRestaurants(searchCondition);
-        for (SearchRestaurantsResponseDto result : results) {
-            System.out.println("result = " + result);
-        }
-        model.addAttribute("results",results);//앞에 함수 결과를 받는다.
+        SearchCondition searchCondition = searchRestaurantRequestDto.toEntity();
+        List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
+        model.addAttribute("results",results);
         return "resultPage";
     }
 
@@ -103,14 +102,17 @@ public class RestaurantController {
      * 상세정보
      */
     @GetMapping("/restaurants/{restaurantId}")
-    public String showRestaurantDetail(@PathVariable Long restaurantId, Model model) {
-        ShowRestaurantDetailsResponseDto restaurant = restaurantService.showRestaurantDetails(restaurantId);
-        FindRestaurantRecommendMenuResponseDto restaurantRecommendMenu = menuService.findRestaurantRecommendMenu(restaurantId);
-        //TODO 이후, 후기 기능 생기면 여기에 연결해서 달아주고, 같이 타임리프 안에 넣어주면 될 거 같음.
-        model.addAttribute("restaurant", restaurant);
-        model.addAttribute("restaurantRecommendMenu", restaurantRecommendMenu);
+    public String showRestaurantDetails(@PathVariable Long restaurantId, Model model) {
+        model.addAttribute("restaurant", makeShowRestaurantDetailsResponseDto(restaurantId));
         return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
+    }
+
+    private ShowRestaurantDetailsResponseDto makeShowRestaurantDetailsResponseDto(Long restaurantId) {
+        InqueryRestaurantResponseDto inqueryRestaurantResponse = restaurantService.inqueryRestaurant(restaurantId);
+        findRecommendMenuInRestaurantDto recommendMenu = menuService.findRecommendMenuInRestaurant(restaurantId);
+        ShowRestaurantDetailsResponseDto restaurant = ShowRestaurantDetailsResponseDto.create(inqueryRestaurantResponse, recommendMenu);
+        return restaurant;
     }
 
     /**
@@ -118,7 +120,7 @@ public class RestaurantController {
      * TODO 식당 한개씩 입력받는 기능도 만들어야 할지도. 일단 keep
      */
     @GetMapping("restaurants/new")
-    public String registerPage(@ModelAttribute MultipartFile file) {
+    public String registerRestaurantForm(@ModelAttribute MultipartFile file) {
         return "registerPage";
     }
 
@@ -130,17 +132,41 @@ public class RestaurantController {
     @PostMapping("/restaurants")
     public String registerRestaurantByAdmin(@ModelAttribute MultipartFile file) throws IOException{
         Workbook workbook = makeWorkbook(file);
-        List<RegisterRequestServiceDto> dataList = makeRequestServiceDtoUsingEachColumn(workbook);
+        List<RegisterRestaurantRequestServiceDto> dataList = makeRegisterRestaurantRequestDtoUsingEachColumn(workbook);
         restaurantService.registerRestaurants(dataList);
         return "redirect:/";
     }
 
+    private List<RegisterRestaurantRequestServiceDto> makeRegisterRestaurantRequestDtoUsingEachColumn(Workbook workbook) {
+        Sheet worksheet = workbook.getSheetAt(0); //아마 설명하는 가장 위칸?
+
+        List<RegisterRestaurantRequestServiceDto> dataList = new ArrayList<>();
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
+            Row row = worksheet.getRow(i);
+            RegisterRestaurantRequestServiceDto registerRestaurantRequestServiceDto = new RegisterRestaurantRequestServiceDto();
+
+            registerRestaurantRequestServiceDto.setName(row.getCell(0).getStringCellValue());
+            registerRestaurantRequestServiceDto.setGeoLocationX(row.getCell(1).getNumericCellValue());
+            registerRestaurantRequestServiceDto.setGeoLocationY(row.getCell(2).getNumericCellValue());
+            registerRestaurantRequestServiceDto.setLocation(Location.find(row.getCell(3).getStringCellValue()));
+            registerRestaurantRequestServiceDto.setCategory(FoodCategory.find(row.getCell(4).getStringCellValue()));
+            registerRestaurantRequestServiceDto.setIsAtmosphere(row.getCell(5).getBooleanCellValue());
+            registerRestaurantRequestServiceDto.setHasCostPerformance(row.getCell(6).getBooleanCellValue());
+            registerRestaurantRequestServiceDto.setCanEatSingle(row.getCell(7).getBooleanCellValue());
+            if (row.getCell(8) != null) {
+                registerRestaurantRequestServiceDto.setAdminComment(row.getCell(8).getStringCellValue());
+            }
+            registerRestaurantRequestServiceDto.setUrl(row.getCell(9).getStringCellValue());
+            dataList.add(registerRestaurantRequestServiceDto);
+        }
+        return dataList;
+    }
 
     /**
      * 메뉴 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
      */
     @GetMapping("restaurants/menu/new")
-    public String registerMenuPage(@ModelAttribute MultipartFile file) {
+    public String registerMenuForm(@ModelAttribute MultipartFile file) {
         return "registerMenuPage";
     }
 
@@ -173,7 +199,6 @@ public class RestaurantController {
 
     }
 
-
     private Workbook makeWorkbook(MultipartFile file) throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
@@ -188,31 +213,6 @@ public class RestaurantController {
         return workbook;
     }
 
-    private List makeRequestServiceDtoUsingEachColumn(Workbook workbook) {
-        Sheet worksheet = workbook.getSheetAt(0); //아마 설명하는 가장 위칸?
-
-        List<RegisterRequestServiceDto> dataList = new ArrayList<>();
-        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
-            Row row = worksheet.getRow(i);
-            RegisterRequestServiceDto registerRequestServiceDto = new RegisterRequestServiceDto();
-            //TODO Null값 처리가 잘 되는지 확인해봐야함.(TelNum같은거)
-            registerRequestServiceDto.setName(row.getCell(0).getStringCellValue());
-            registerRequestServiceDto.setGeoLocationX(row.getCell(1).getNumericCellValue());
-            registerRequestServiceDto.setGeoLocationY(row.getCell(2).getNumericCellValue());
-            registerRequestServiceDto.setLocation(Location.find(row.getCell(3).getStringCellValue()));
-            System.out.println(row.getCell(0).getStringCellValue());
-            registerRequestServiceDto.setCategory(FoodCategory.find(row.getCell(4).getStringCellValue()));
-            registerRequestServiceDto.setIsAtmosphere(row.getCell(5).getBooleanCellValue());
-            registerRequestServiceDto.setHasCostPerformance(row.getCell(6).getBooleanCellValue());
-            registerRequestServiceDto.setCanEatSingle(row.getCell(7).getBooleanCellValue());
-            if (row.getCell(8) != null) {
-                registerRequestServiceDto.setAdminComment(row.getCell(8).getStringCellValue());
-            }
-            registerRequestServiceDto.setUrl(row.getCell(9).getStringCellValue());
-            dataList.add(registerRequestServiceDto);
-        }
-        return dataList;
-    }
 
     /**
      * 수정

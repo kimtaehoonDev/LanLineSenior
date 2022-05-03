@@ -1,6 +1,12 @@
 package com.example.lanlineelderdemo.repository;
 
 import com.example.lanlineelderdemo.domain.*;
+import com.example.lanlineelderdemo.domain.menu.OpenType;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
+import com.example.lanlineelderdemo.repository.restaurant.FindRestaurantBySearchConditionResponseDto;
+import com.example.lanlineelderdemo.repository.restaurant.RestaurantRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +19,8 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 class RestaurantRepositoryTest {
-    @Autowired RestaurantRepository restaurantRepository;
+    @Autowired
+    RestaurantRepository restaurantRepository;
 
     @Test
     void 식당_저장() {

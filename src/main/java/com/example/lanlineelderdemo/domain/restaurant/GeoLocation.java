@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo.domain.restaurant;
 
 import lombok.AccessLevel;
 import lombok.Getter;

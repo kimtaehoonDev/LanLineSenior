@@ -1,13 +1,10 @@
-package com.example.lanlineelderdemo.service;
+package com.example.lanlineelderdemo.service.menu;
 
-import com.example.lanlineelderdemo.domain.Menu;
-import com.example.lanlineelderdemo.domain.OpenType;
-import com.example.lanlineelderdemo.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.menu.Menu;
+import com.example.lanlineelderdemo.domain.menu.OpenType;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.example.lanlineelderdemo.repository.MenuRepository;
-import com.example.lanlineelderdemo.repository.RestaurantRepository;
-import com.example.lanlineelderdemo.service.dto.request.RegisterMenuRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.response.FindRestaurantRecommendMenuResponseDto;
+import com.example.lanlineelderdemo.repository.restaurant.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +22,8 @@ public class MenuService {
     @Transactional
     public void registerMenus(List<RegisterMenuRequestServiceDto> dataList) {
         for (RegisterMenuRequestServiceDto data : dataList) {
-            registerMenu(data.getRestaurantName(), data.getOpenType(), data.getMenuName(), data.getNumberOfMeal(), data.getPrice());
+            registerMenu(data.getRestaurantName(), data.getOpenType(), data.getMenuName(),
+                    data.getNumberOfMeal(), data.getPrice());
         }
     }
 
@@ -50,8 +48,8 @@ public class MenuService {
         return parsingRestaurant.get();
     }
 
-    public FindRestaurantRecommendMenuResponseDto findRestaurantRecommendMenu(Long restaurantId) {
+    public findRecommendMenuInRestaurantDto findRecommendMenuInRestaurant(Long restaurantId) {
         List<Menu> restaurantRecommendMenus = menuRepository.findByRestaurant_Id(restaurantId);
-        return FindRestaurantRecommendMenuResponseDto.of(restaurantRecommendMenus);
+        return findRecommendMenuInRestaurantDto.from(restaurantRecommendMenus);
     }
 }

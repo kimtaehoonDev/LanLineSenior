@@ -15,27 +15,27 @@
     </div>
     <div>
         <span>카테고리 : </span>
-        <span th:text="${foodCategories[restaurant.category]}">ㅋㅋ</span>
+        <span th:text="${foodCategories[restaurant.category.name()]}">ㅋㅋ</span>
     </div>
     <div>
         <span>TMI : </span>
         <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
     </div>
 
-    <div th:if = "${!restaurantRecommendMenu.getLunchMenuName().isBlank()}">
+    <div th:if = "${!restaurant.getLunchMenuName().isBlank()}">
         <div>
             <span>점심 추천 메뉴 : </span>
-            <span th:text="${restaurantRecommendMenu.getLunchMenuName()}">ㅋㅋ</span>
+            <span th:text="${restaurant.getLunchMenuName()}">ㅋㅋ</span>
             <span> / 가격 : </span>
-            <span th:text="${restaurantRecommendMenu.getLunchMenuPrice()}">ㅋㅋ</span>
+            <span th:text="${restaurant.getLunchMenuPrice()}">ㅋㅋ</span>
         </div>
     </div>
-    <div th:if = "${!restaurantRecommendMenu.getDinnerMenuName().isBlank()}">
+    <div th:if = "${!restaurant.getDinnerMenuName().isBlank()}">
         <div>
             <span>저녁 추천 메뉴 : </span>
-            <span th:text="${restaurantRecommendMenu.getDinnerMenuName()}">ㅋㅋ</span>
+            <span th:text="${restaurant.getDinnerMenuName()}">ㅋㅋ</span>
             <span>/ 가격 : </span>
-            <span th:text="${restaurantRecommendMenu.getDinnerMenuPrice()}">ㅋㅋ</span>
+            <span th:text="${restaurant.getDinnerMenuPrice()}">ㅋㅋ</span>
         </div>
     </div>
 

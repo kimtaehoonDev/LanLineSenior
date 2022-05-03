@@ -1,4 +1,6 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo.domain.restaurant;
+
+import com.example.lanlineelderdemo.EnumModel;
 
 import java.util.Arrays;
 

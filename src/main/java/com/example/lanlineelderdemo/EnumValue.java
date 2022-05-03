@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo;
 
 public class EnumValue {
     private String key;

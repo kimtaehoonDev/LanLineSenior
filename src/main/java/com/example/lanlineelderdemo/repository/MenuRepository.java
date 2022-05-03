@@ -1,6 +1,6 @@
 package com.example.lanlineelderdemo.repository;
 
-import com.example.lanlineelderdemo.domain.Menu;
+import com.example.lanlineelderdemo.domain.menu.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

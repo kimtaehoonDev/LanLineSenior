@@ -1,8 +1,9 @@
-package com.example.lanlineelderdemo.service.dto.response;
+package com.example.lanlineelderdemo.controller.dto;
 
-import com.example.lanlineelderdemo.domain.FoodCategory;
-import com.example.lanlineelderdemo.domain.Location;
-import com.example.lanlineelderdemo.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.service.menu.findRecommendMenuInRestaurantDto;
+import com.example.lanlineelderdemo.service.restaurant.response.InqueryRestaurantResponseDto;
 import lombok.Data;
 import lombok.ToString;
 
@@ -31,7 +32,14 @@ public class ShowRestaurantDetailsResponseDto {
 
     private String url;
 
-    public static ShowRestaurantDetailsResponseDto of(Restaurant restaurant) {
+    private String lunchMenuName;
+    private Integer lunchMenuPrice;
+
+    private String dinnerMenuName;
+    private Integer dinnerMenuPrice;
+
+
+    public static ShowRestaurantDetailsResponseDto create(InqueryRestaurantResponseDto restaurant, findRecommendMenuInRestaurantDto recommendMenu) {
         ShowRestaurantDetailsResponseDto showRestaurantDetailsResponseDto = new ShowRestaurantDetailsResponseDto();
         showRestaurantDetailsResponseDto.id = restaurant.getId();
         showRestaurantDetailsResponseDto.name = restaurant.getName();
@@ -41,10 +49,13 @@ public class ShowRestaurantDetailsResponseDto {
         showRestaurantDetailsResponseDto.hasCostPerformance = restaurant.getHasCostPerformance();
         showRestaurantDetailsResponseDto.canEatSingle = restaurant.getCanEatSingle();
         showRestaurantDetailsResponseDto.adminComment = restaurant.getAdminComment();
-        showRestaurantDetailsResponseDto.locationX = restaurant.getGeoLocation().getLocationX();
-        showRestaurantDetailsResponseDto.locationY = restaurant.getGeoLocation().getLocationY();
+        showRestaurantDetailsResponseDto.locationX = restaurant.getLocationX();
+        showRestaurantDetailsResponseDto.locationY = restaurant.getLocationY();
         showRestaurantDetailsResponseDto.url = restaurant.getUrl();
-
+        showRestaurantDetailsResponseDto.lunchMenuName = recommendMenu.getLunchMenuName();
+        showRestaurantDetailsResponseDto.lunchMenuPrice = recommendMenu.getLunchMenuPrice();
+        showRestaurantDetailsResponseDto.dinnerMenuName = recommendMenu.getDinnerMenuName();
+        showRestaurantDetailsResponseDto.dinnerMenuPrice = recommendMenu.getDinnerMenuPrice();
         return showRestaurantDetailsResponseDto;
     }
 }

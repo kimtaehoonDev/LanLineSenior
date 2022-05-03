@@ -1,5 +1,6 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo.domain.menu;
 
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.sun.istack.NotNull;
 import lombok.*;
 

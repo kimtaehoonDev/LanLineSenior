@@ -1,8 +1,10 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo.domain.menu;
+
+import com.example.lanlineelderdemo.EnumModel;
 
 import java.util.Arrays;
 
-public enum OpenType implements EnumModel{
+public enum OpenType implements EnumModel {
     LUNCH("점심"), DINNER("저녁"), BOTH("둘다");
 
     private String value;

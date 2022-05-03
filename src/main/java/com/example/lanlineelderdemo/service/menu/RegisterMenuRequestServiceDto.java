@@ -1,6 +1,6 @@
-package com.example.lanlineelderdemo.service.dto.request;
+package com.example.lanlineelderdemo.service.menu;
 
-import com.example.lanlineelderdemo.domain.OpenType;
+import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.sun.istack.NotNull;
 import lombok.Data;
 

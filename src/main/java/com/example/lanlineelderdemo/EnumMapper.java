@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo;
 
 import java.util.Arrays;
 import java.util.HashMap;

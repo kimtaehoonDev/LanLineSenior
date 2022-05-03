@@ -1,20 +1,18 @@
-package com.example.lanlineelderdemo.repository;
+package com.example.lanlineelderdemo.repository.restaurant;
 
 import com.example.lanlineelderdemo.domain.*;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Predicate;
+import com.example.lanlineelderdemo.domain.menu.OpenType;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.example.lanlineelderdemo.domain.QMenu.menu;
-import static com.example.lanlineelderdemo.domain.QRestaurant.restaurant;
+import static com.example.lanlineelderdemo.domain.menu.QMenu.menu;
+import static com.example.lanlineelderdemo.domain.restaurant.QRestaurant.restaurant;
 
 public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 

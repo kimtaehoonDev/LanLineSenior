@@ -1,7 +1,7 @@
-package com.example.lanlineelderdemo.repository;
+package com.example.lanlineelderdemo.repository.restaurant;
 
-import com.example.lanlineelderdemo.domain.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.example.lanlineelderdemo.repository.restaurant.FindRestaurantBySearchConditionResponseDto;
 
 import java.util.List;
 

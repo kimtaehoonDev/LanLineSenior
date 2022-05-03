@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.domain;
+package com.example.lanlineelderdemo;
 
 public interface EnumModel {
     String getKey();

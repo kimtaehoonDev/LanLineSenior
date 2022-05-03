@@ -1,12 +1,12 @@
-package com.example.lanlineelderdemo.service;
+package com.example.lanlineelderdemo.service.restaurant;
 
-import com.example.lanlineelderdemo.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.example.lanlineelderdemo.domain.SearchCondition;
-import com.example.lanlineelderdemo.repository.FindRestaurantBySearchConditionResponseDto;
-import com.example.lanlineelderdemo.repository.RestaurantRepository;
-import com.example.lanlineelderdemo.service.dto.request.RegisterRequestServiceDto;
-import com.example.lanlineelderdemo.service.dto.response.SearchRestaurantsResponseDto;
-import com.example.lanlineelderdemo.service.dto.response.ShowRestaurantDetailsResponseDto;
+import com.example.lanlineelderdemo.repository.restaurant.FindRestaurantBySearchConditionResponseDto;
+import com.example.lanlineelderdemo.repository.restaurant.RestaurantRepository;
+import com.example.lanlineelderdemo.service.restaurant.request.RegisterRestaurantRequestServiceDto;
+import com.example.lanlineelderdemo.service.restaurant.response.SearchRestaurantResponseDto;
+import com.example.lanlineelderdemo.service.restaurant.response.InqueryRestaurantResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,38 +27,22 @@ public class RestaurantService {
      */
     //TODO 벌크연산 가능하도록 만들기.
     @Transactional
-    public void registerRestaurants(List<RegisterRequestServiceDto> dataList) {
-        for (RegisterRequestServiceDto data : dataList) {
+    public void registerRestaurants(List<RegisterRestaurantRequestServiceDto> dataList) {
+        for (RegisterRestaurantRequestServiceDto data : dataList) {
             registerRestaurant(data);
         }
     }
 
     @Transactional
-    public Long registerRestaurant(RegisterRequestServiceDto registerRequestServiceDto) {
-        validateRestaurantNameDuplicate(registerRequestServiceDto);
-        Restaurant restaurant = makeRestaurantUsingRequestServiceDto(registerRequestServiceDto);
+    public Long registerRestaurant(RegisterRestaurantRequestServiceDto registerRestaurantRequestServiceDto) {
+        validateRestaurantNameDuplicate(registerRestaurantRequestServiceDto);
+        Restaurant restaurant = registerRestaurantRequestServiceDto.toEntity();
         restaurantRepository.save(restaurant);
         return restaurant.getId();
     }
 
-    private Restaurant makeRestaurantUsingRequestServiceDto(RegisterRequestServiceDto registerRequestServiceDto) {
-        Restaurant restaurant = Restaurant.createRestaurant()
-                .name(registerRequestServiceDto.getName())
-                .location(registerRequestServiceDto.getLocation())
-                .geoLocationX(registerRequestServiceDto.getGeoLocationX())
-                .geoLocationY(registerRequestServiceDto.getGeoLocationY())
-                .category(registerRequestServiceDto.getCategory())
-                .isAtmosphere(registerRequestServiceDto.getIsAtmosphere())
-                .hasCostPerformance(registerRequestServiceDto.getHasCostPerformance())
-                .canEatSingle(registerRequestServiceDto.getCanEatSingle())
-                .adminComment(registerRequestServiceDto.getAdminComment())
-                .url(registerRequestServiceDto.getUrl())
-                .build();
-        return restaurant;
-    }
-
-    private void validateRestaurantNameDuplicate(RegisterRequestServiceDto registerRequestServiceDto) {
-        if (!restaurantRepository.findByName(registerRequestServiceDto.getName()).isEmpty()) {
+    private void validateRestaurantNameDuplicate(RegisterRestaurantRequestServiceDto registerRestaurantRequestServiceDto) {
+        if (!restaurantRepository.findByName(registerRestaurantRequestServiceDto.getName()).isEmpty()) {
             throw new IllegalStateException("같은 이름으로 이미 가게가 등록되어 있습니다.");
         }
     }
@@ -96,18 +80,18 @@ public class RestaurantService {
      * 최대 5개. 너무 많은걸 보여줘도 의미없고, 5개까지가 네이버 API에서 사용할 수 있는 양.
      * @return
      */
-    public List<SearchRestaurantsResponseDto> searchRestaurants(SearchCondition searchCondition) {
+    public List<SearchRestaurantResponseDto> searchRestaurants(SearchCondition searchCondition) {
         List<FindRestaurantBySearchConditionResponseDto> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
-        return findRestaurants.stream().map(findRestaurantBySearchConditionResponseDto -> SearchRestaurantsResponseDto.of(findRestaurantBySearchConditionResponseDto)).collect(Collectors.toList());
+        return findRestaurants.stream().map(findRestaurantBySearchConditionResponseDto -> SearchRestaurantResponseDto.of(findRestaurantBySearchConditionResponseDto)).collect(Collectors.toList());
     }
 
     /**
      * 상세정보
      * @return
      */
-    public ShowRestaurantDetailsResponseDto showRestaurantDetails(Long restaurantId) {
+    public InqueryRestaurantResponseDto inqueryRestaurant(Long restaurantId) {
         Restaurant restaurant = findRestaurantByRestaurantId(restaurantId);
-        return ShowRestaurantDetailsResponseDto.of(restaurant);
+        return InqueryRestaurantResponseDto.of(restaurant);
     }
 
     private Restaurant findRestaurantByRestaurantId(Long restaurantId) {
