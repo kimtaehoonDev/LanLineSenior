@@ -1,0 +1,32 @@
+package com.example.lanlineelderdemo.repository;
+
+import com.example.lanlineelderdemo.domain.QReview;
+import com.example.lanlineelderdemo.domain.Review;
+import com.example.lanlineelderdemo.domain.SearchCondition;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static com.example.lanlineelderdemo.domain.QReview.review;
+
+
+public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
+    private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
+
+
+    public ReviewRepositoryImpl(EntityManager em) {
+        this.em = em;
+        this.queryFactory = new JPAQueryFactory(em);
+    }
+
+
+    @Override
+    public List<Review> findReviewsByRestaurantId(Long restaurantId) {
+        return queryFactory.selectFrom(review).where(review.restaurant.id.eq(restaurantId),
+                        review.isUsing.eq(Boolean.TRUE))
+                .orderBy(review.id.asc())
+                .fetch();
+    }
+}

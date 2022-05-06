@@ -15,6 +15,7 @@ import com.example.lanlineelderdemo.service.restaurant.request.RegisterRestauran
 import com.example.lanlineelderdemo.service.menu.findRecommendMenuInRestaurantDto;
 import com.example.lanlineelderdemo.service.restaurant.response.SearchRestaurantResponseDto;
 import com.example.lanlineelderdemo.service.restaurant.response.InqueryRestaurantResponseDto;
+import com.example.lanlineelderdemo.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,6 +37,7 @@ import java.util.Map;
 public class RestaurantController {
     private final RestaurantService restaurantService;
     private final MenuService menuService;
+    private final ReviewService reviewService;
     private final EnumMapper enumMapper;
 
     @ModelAttribute("locations")
@@ -104,6 +106,9 @@ public class RestaurantController {
     @GetMapping("/restaurants/{restaurantId}")
     public String showRestaurantDetails(@PathVariable Long restaurantId, Model model) {
         model.addAttribute("restaurant", makeShowRestaurantDetailsResponseDto(restaurantId));
+        model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
+        // TODO 타임리프에서 접근 가능하게 만들기. -> 1급콜렉션 내에서 만들어줘야할듯 고민할 것. reviews를 1급콜렉션으로 받는게 맞는지 아니면 List<>로 받는게 맞는지.
+        //댓글 같이 작성 가능하게 만들어야함.
         return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
@@ -165,7 +170,7 @@ public class RestaurantController {
     /**
      * 메뉴 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
      */
-    @GetMapping("restaurants/menu/new")
+    @GetMapping("/menu/new")
     public String registerMenuForm(@ModelAttribute MultipartFile file) {
         return "registerMenuPage";
     }
@@ -173,7 +178,7 @@ public class RestaurantController {
     /**
      * 메뉴 등록 (Admin만)
      */
-    @PostMapping("/restaurants/menu")
+    @PostMapping("/menu")
     public String registerMenuByAdmin(@ModelAttribute MultipartFile file) throws IOException{
         Workbook workbook = makeWorkbook(file);
         List<RegisterMenuRequestServiceDto> dataList = makeMenuRequestServiceDtoUsingEachColumn(workbook);

@@ -9,7 +9,7 @@ spring:
       hibernate.format_sql: true
     show-sql: true
     hibernate:
-      ddl-auto: create # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
+      ddl-auto: update # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
 logging:
   level:
     org.hibernate.type: trace
