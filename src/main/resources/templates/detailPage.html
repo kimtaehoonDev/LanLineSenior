@@ -43,12 +43,13 @@
 <div>
     <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${createReviewRequestDto}">
         <div>
-            <input placeholder="닉네임" th:field="*{name}">
-            <input placeholder="비밀번호" type="password" th:field="*{password}">
-            <input placeholder="내용" th:field="*{content}">
+            <input type="text" th:field="*{name}">
+            <input type="password" th:field="*{password}">
+            <input type="text" th:field="*{content}">
         </div>
         <button type="submit">전송</button>
     </form>
+
 </div>
 <div th:each="review : ${reviews}">
     <div th:text="${review.writerName}"></div>
