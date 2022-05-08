@@ -1,7 +1,7 @@
 package com.example.lanlineelderdemo;
 
-import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
-import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.restaurant.domain.FoodCategory;
+import com.example.lanlineelderdemo.restaurant.domain.Location;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

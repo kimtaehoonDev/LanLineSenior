@@ -1,0 +1,30 @@
+package com.example.lanlineelderdemo.restaurant.domain;
+
+import com.example.lanlineelderdemo.EnumModel;
+
+import java.util.Arrays;
+
+public enum Location implements EnumModel {
+    BACK_DOOR("전대후문"), FRONT_DOOR("전대정문"), SANGDAE("상대"),
+    ENGINEER_SIDE_DOOR("공대쪽문"), BOKGAE("복개도로"), INSIDE_SCHOOL("학교내부");
+
+    private String value;
+
+    Location(String value) {
+        this.value = value;
+    }
+
+    public static Location find(String key) {
+        return Arrays.stream(Location.values()).filter(location -> location.getKey().equals(key)).findAny().orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public String getKey() {
+        return name();
+    }
+
+    @Override
+    public String getValue() {
+        return value;
+    }
+}
