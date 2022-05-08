@@ -15,6 +15,13 @@ public class CreateReviewRequestServiceDto {
 
     private String password;
 
+    public CreateReviewRequestServiceDto(Long restaurantId, String content, String name, String password) {
+        this.restaurantId = restaurantId;
+        this.content = content;
+        this.writerName = name;
+        this.password = password;
+    }
+
     public Review toEntity(Restaurant restaurant) {
         return Review.createReview()
                 .restaurant(restaurant)

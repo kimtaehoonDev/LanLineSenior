@@ -39,6 +39,22 @@
     <span th:if="${restaurant.canEatSingle}">#혼밥가능 </span>
     <span th:if="${restaurant.isAtmosphere}">#분위기 </span>
 </div>
+
+<div>
+    <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${createReviewRequestDto}">
+        <div>
+            <input placeholder="닉네임" th:field="*{name}">
+            <input placeholder="비밀번호" type="password" th:field="*{password}">
+            <input placeholder="내용" th:field="*{content}">
+        </div>
+        <button type="submit">전송</button>
+    </form>
+</div>
+<div th:each="review : ${reviews}">
+    <div th:text="${review.writerName}"></div>
+    <div th:text="${review.content}"></div>
+</div>
+
 </body>
 <!--타임리프 써서 반복.-->
 </html>

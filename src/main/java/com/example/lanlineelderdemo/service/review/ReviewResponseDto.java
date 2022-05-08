@@ -1,20 +1,22 @@
 package com.example.lanlineelderdemo.service.review;
 
 import com.example.lanlineelderdemo.domain.Review;
+import lombok.Data;
 
-public class ReviewServiceResponseDto {
+@Data
+public class ReviewResponseDto {
     private Long id;
     private String writerName;
     private String content;
 
-    public ReviewServiceResponseDto(Long id, String writerName, String content) {
+    public ReviewResponseDto(Long id, String writerName, String content) {
         this.id = id;
         this.writerName = writerName;
         this.content = content;
     }
 
-    public static ReviewServiceResponseDto from(Review review) {
-        return new ReviewServiceResponseDto(
+    public static ReviewResponseDto from(Review review) {
+        return new ReviewResponseDto(
                 review.getId(), review.getWriterName(), review.getContent());
 
     }

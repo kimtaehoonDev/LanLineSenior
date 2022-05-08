@@ -2,6 +2,7 @@ package com.example.lanlineelderdemo.controller;
 
 import com.example.lanlineelderdemo.EnumMapper;
 import com.example.lanlineelderdemo.EnumValue;
+import com.example.lanlineelderdemo.controller.dto.CreateReviewRequestDto;
 import com.example.lanlineelderdemo.controller.dto.SearchRestaurantRequestDto;
 import com.example.lanlineelderdemo.controller.dto.ShowRestaurantDetailsResponseDto;
 import com.example.lanlineelderdemo.domain.*;
@@ -107,8 +108,7 @@ public class RestaurantController {
     public String showRestaurantDetails(@PathVariable Long restaurantId, Model model) {
         model.addAttribute("restaurant", makeShowRestaurantDetailsResponseDto(restaurantId));
         model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
-        // TODO 타임리프에서 접근 가능하게 만들기. -> 1급콜렉션 내에서 만들어줘야할듯 고민할 것. reviews를 1급콜렉션으로 받는게 맞는지 아니면 List<>로 받는게 맞는지.
-        //댓글 같이 작성 가능하게 만들어야함.
+        model.addAttribute("createReviewRequestDto", new CreateReviewRequestDto());
         return "detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
