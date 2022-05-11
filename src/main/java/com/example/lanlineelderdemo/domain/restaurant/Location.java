@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.restaurant.domain;
+package com.example.lanlineelderdemo.domain.restaurant;
 
 import com.example.lanlineelderdemo.EnumModel;
 

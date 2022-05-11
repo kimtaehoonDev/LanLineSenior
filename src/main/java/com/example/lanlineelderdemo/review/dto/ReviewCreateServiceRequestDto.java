@@ -1,7 +1,7 @@
 package com.example.lanlineelderdemo.review.dto;
 
-import com.example.lanlineelderdemo.review.Review;
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.Review;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import lombok.Data;
 
 @Data

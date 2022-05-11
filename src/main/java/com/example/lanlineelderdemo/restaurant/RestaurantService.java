@@ -1,7 +1,7 @@
 package com.example.lanlineelderdemo.restaurant;
 
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
-import com.example.lanlineelderdemo.SearchCondition;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.restaurant.repository.dto.FindRestaurantBySearchConditionResponseDto;
 import com.example.lanlineelderdemo.restaurant.repository.RestaurantRepository;
 import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantCreateServiceRequestDto;

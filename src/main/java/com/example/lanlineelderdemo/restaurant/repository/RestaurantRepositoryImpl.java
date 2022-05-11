@@ -1,8 +1,8 @@
 package com.example.lanlineelderdemo.restaurant.repository;
 
-import com.example.lanlineelderdemo.SearchCondition;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
-import com.example.lanlineelderdemo.restaurant.domain.Location;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.example.lanlineelderdemo.restaurant.repository.dto.FindRestaurantBySearchConditionResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -12,8 +12,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.example.lanlineelderdemo.menu.domain.QMenu.menu;
-import static com.example.lanlineelderdemo.restaurant.domain.QRestaurant.restaurant;
+import static com.example.lanlineelderdemo.domain.menu.QMenu.menu;
+import static com.example.lanlineelderdemo.domain.restaurant.QRestaurant.restaurant;
 
 public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 

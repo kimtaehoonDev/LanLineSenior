@@ -1,12 +1,12 @@
 package com.example.lanlineelderdemo.review.repository;
 
-import com.example.lanlineelderdemo.review.Review;
+import com.example.lanlineelderdemo.domain.Review;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.example.lanlineelderdemo.review.QReview.review;
+import static com.example.lanlineelderdemo.domain.QReview.review;
 
 public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private final EntityManager em;

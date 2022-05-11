@@ -1,6 +1,7 @@
 package com.example.lanlineelderdemo.review;
 
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.Review;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.example.lanlineelderdemo.review.repository.ReviewRepository;
 import com.example.lanlineelderdemo.restaurant.repository.RestaurantRepository;
 import com.example.lanlineelderdemo.review.dto.ReviewCreateServiceRequestDto;

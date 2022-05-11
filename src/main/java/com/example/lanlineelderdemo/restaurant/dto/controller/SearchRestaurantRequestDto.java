@@ -1,9 +1,9 @@
 package com.example.lanlineelderdemo.restaurant.dto.controller;
 
-import com.example.lanlineelderdemo.restaurant.domain.FoodCategory;
-import com.example.lanlineelderdemo.restaurant.domain.Location;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
-import com.example.lanlineelderdemo.SearchCondition;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import lombok.Data;
 import lombok.ToString;
 

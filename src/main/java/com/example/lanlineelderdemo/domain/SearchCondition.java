@@ -1,8 +1,8 @@
-package com.example.lanlineelderdemo;
+package com.example.lanlineelderdemo.domain;
 
 import com.example.lanlineelderdemo.domain.menu.OpenType;
-import com.example.lanlineelderdemo.restaurant.domain.FoodCategory;
-import com.example.lanlineelderdemo.restaurant.domain.Location;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
 import lombok.Data;
 import lombok.ToString;
 

@@ -1,8 +1,8 @@
 package com.example.lanlineelderdemo.restaurant.dto.service;
 
-import com.example.lanlineelderdemo.restaurant.domain.FoodCategory;
-import com.example.lanlineelderdemo.restaurant.domain.Location;
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.apache.poi.ss.usermodel.Row;

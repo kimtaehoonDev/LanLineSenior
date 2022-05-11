@@ -3,7 +3,7 @@ package com.example.lanlineelderdemo.restaurant.controller;
 import com.example.lanlineelderdemo.EnumMapper;
 import com.example.lanlineelderdemo.EnumValue;
 import com.example.lanlineelderdemo.ExcelFileManager;
-import com.example.lanlineelderdemo.SearchCondition;
+import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.review.dto.CreateReviewRequestDto;
 import com.example.lanlineelderdemo.restaurant.dto.controller.SearchRestaurantRequestDto;
 import com.example.lanlineelderdemo.restaurant.dto.controller.ShowRestaurantDetailsResponseDto;
@@ -120,7 +120,7 @@ public class RestaurantController {
      * 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
      * TODO 식당 한개씩 입력받는 기능도 만들어야 할지도. 일단 keep
      */
-    @GetMapping("restaurants/new")
+    @GetMapping("/restaurants/new")
     public String registerRestaurantForm(@ModelAttribute MultipartFile file) {
         return "registerPage";
     }

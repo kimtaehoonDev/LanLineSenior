@@ -1,8 +1,8 @@
 package com.example.lanlineelderdemo.restaurant.repository.dto;
 
-import com.example.lanlineelderdemo.restaurant.domain.FoodCategory;
-import com.example.lanlineelderdemo.restaurant.domain.GeoLocation;
-import com.example.lanlineelderdemo.restaurant.domain.Location;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.GeoLocation;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import lombok.Data;
 import lombok.NoArgsConstructor;

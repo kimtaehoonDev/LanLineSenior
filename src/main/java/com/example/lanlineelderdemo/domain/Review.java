@@ -1,6 +1,6 @@
-package com.example.lanlineelderdemo.review;
+package com.example.lanlineelderdemo.domain;
 
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

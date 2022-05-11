@@ -4,7 +4,7 @@ import com.example.lanlineelderdemo.domain.menu.Menu;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.menu.dto.MenuRegisterDto;
 import com.example.lanlineelderdemo.menu.dto.RestaurantRecommendMenuDto;
-import com.example.lanlineelderdemo.restaurant.domain.Restaurant;
+import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.example.lanlineelderdemo.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
