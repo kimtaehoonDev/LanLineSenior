@@ -16,7 +16,6 @@ public class MemberService {
 
     public Long login(String loginId, String password) {
         Member member = findMember(loginId);
-        System.out.println("CHECK, Service: "+member);
         if (member.checkPasswordIsSame(password)) {
             return member.getId();
         }

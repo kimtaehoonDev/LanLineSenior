@@ -1,10 +1,10 @@
-package com.example.lanlineelderdemo.restaurant.controller;
+package com.example.lanlineelderdemo.web;
 
-import com.example.lanlineelderdemo.EnumMapper;
-import com.example.lanlineelderdemo.EnumValue;
-import com.example.lanlineelderdemo.ExcelFileManager;
+import com.example.lanlineelderdemo.review.dto.ReviewCreateRequestDto;
+import com.example.lanlineelderdemo.utils.enums.EnumMapper;
+import com.example.lanlineelderdemo.utils.enums.EnumValue;
+import com.example.lanlineelderdemo.utils.ExcelFileManager;
 import com.example.lanlineelderdemo.domain.SearchCondition;
-import com.example.lanlineelderdemo.review.dto.CreateReviewRequestDto;
 import com.example.lanlineelderdemo.restaurant.dto.controller.SearchRestaurantRequestDto;
 import com.example.lanlineelderdemo.restaurant.dto.controller.ShowRestaurantDetailsResponseDto;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
@@ -32,10 +32,10 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 public class RestaurantController {
+    private final EnumMapper enumMapper;
     private final RestaurantService restaurantService;
     private final MenuService menuService;
     private final ReviewService reviewService;
-    private final EnumMapper enumMapper;
 
     @ModelAttribute("locations")
     public Map<String, String> locations() {
@@ -78,34 +78,32 @@ public class RestaurantController {
     /**
      * 검색 페이지
      */
-    @GetMapping
-    public String searchRestaurantsForm(Model model) {
-        SearchRestaurantRequestDto searchRestaurantRequestDto = new SearchRestaurantRequestDto();
-        model.addAttribute("searchRestaurantRequestDto", searchRestaurantRequestDto);
-        return "searchPage";
+    @GetMapping("/search")
+    public String searchRestaurantsForm(@ModelAttribute SearchRestaurantRequestDto form) {
+        return "restaurants/searchForm";
     }
 
     /**
      * 검색
      */
-    @PostMapping("results")
+    @PostMapping("search")
     public String searchRestaurants(
             @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto, Model model) {
         SearchCondition searchCondition = searchRestaurantRequestDto.toEntity();
         List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
         model.addAttribute("results",results);
-        return "resultPage";
+        return "restaurants/resultPage";
     }
 
     /**
      * 상세정보
      */
     @GetMapping("/restaurants/{restaurantId}")
-    public String showRestaurantDetails(@PathVariable Long restaurantId, Model model) {
+    public String showRestaurantDetails(@PathVariable Long restaurantId, Model model,
+                                        @ModelAttribute ReviewCreateRequestDto reviewCreateRequestDto) {
         model.addAttribute("restaurant", makeShowRestaurantDetailsResponseDto(restaurantId));
         model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
-        model.addAttribute("createReviewRequestDto", new CreateReviewRequestDto());
-        return "detailPage";
+        return "restaurants/detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
 
@@ -122,7 +120,7 @@ public class RestaurantController {
      */
     @GetMapping("/restaurants/new")
     public String registerRestaurantForm(@ModelAttribute MultipartFile file) {
-        return "registerPage";
+        return "restaurants/registerForm";
     }
 
     /**
@@ -148,7 +146,7 @@ public class RestaurantController {
      */
     @GetMapping("/menu/new")
     public String registerMenuForm(@ModelAttribute MultipartFile file) {
-        return "registerMenuPage";
+        return "registerMenuForm";
     }
 
     /**

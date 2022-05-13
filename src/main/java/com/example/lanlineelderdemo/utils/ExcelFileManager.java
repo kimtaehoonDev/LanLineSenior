@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo;
+package com.example.lanlineelderdemo.utils;
 
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.menu.dto.MenuRegisterDto;

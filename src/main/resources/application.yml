@@ -10,6 +10,14 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 logging:
   level:
     org.hibernate.type: trace
+
+
+
+

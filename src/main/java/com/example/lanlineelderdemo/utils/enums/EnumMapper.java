@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo;
+package com.example.lanlineelderdemo.utils.enums;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -63,6 +63,7 @@ public class ReviewService {
 
     /**
      * Delete
+     * update review set is_using=FALSE where review_id=해당아이디;
      */
     @Transactional
     public Long deleteReview(Long reviewId, String password) {

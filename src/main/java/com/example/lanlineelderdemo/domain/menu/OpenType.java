@@ -1,6 +1,6 @@
 package com.example.lanlineelderdemo.domain.menu;
 
-import com.example.lanlineelderdemo.EnumModel;
+import com.example.lanlineelderdemo.utils.enums.EnumModel;
 
 import java.util.Arrays;
 

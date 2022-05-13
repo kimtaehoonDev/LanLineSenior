@@ -1,6 +1,6 @@
-package com.example.lanlineelderdemo.interceptor;
+package com.example.lanlineelderdemo.utils.interceptor;
 
-import com.example.lanlineelderdemo.SessionConst;
+import com.example.lanlineelderdemo.utils.SessionConst;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form action="editForm.html" th:action="@{/reviews}" th:method="patch" th:object="${reviewUpdateRequestDto}">
+        <div>
+            <input type="text" th:field="*{name}" th:text="*{name}">
+            <input type="password" th:field="*{password}" th:text="*{password}">
+            <input type="text" th:field="*{content}" th:text="*{password}">
+        </div>
+        <button type="submit">수정</button>
+    </form>
+
+
+</body>
+</html>

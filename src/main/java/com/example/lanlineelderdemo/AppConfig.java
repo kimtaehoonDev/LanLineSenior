@@ -3,9 +3,11 @@ package com.example.lanlineelderdemo;
 import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
 import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
-import com.example.lanlineelderdemo.interceptor.AdminCheckInterceptor;
+import com.example.lanlineelderdemo.utils.interceptor.AdminCheckInterceptor;
+import com.example.lanlineelderdemo.utils.enums.EnumMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,7 +27,11 @@ public class AppConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/restaurants/new", "/menu/new", "/restaurants","/menu");
+                .addPathPatterns("/admin","/restaurants/new", "/menu/new", "/restaurants","/menu");
+    }
 
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
+        return new HiddenHttpMethodFilter();
     }
 }
