@@ -8,6 +8,7 @@ import com.example.lanlineelderdemo.review.dto.ReviewCreateServiceRequestDto;
 import com.example.lanlineelderdemo.review.dto.ReviewResponseDto;
 import com.example.lanlineelderdemo.review.dto.ReviewUpdateServiceRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Create
@@ -28,6 +30,8 @@ public class ReviewService {
     @Transactional
     public Long leaveReview(ReviewCreateServiceRequestDto reviewCreateServiceRequestDto) {
         Restaurant restaurant = getRestaurant(reviewCreateServiceRequestDto.getRestaurantId());
+
+        reviewCreateServiceRequestDto.setPassword(passwordEncoder.encode(reviewCreateServiceRequestDto.getPassword()));
         Review review = reviewCreateServiceRequestDto.toEntity(restaurant); //레스토랑을 주입해준다. 연관관계떄문.
         reviewRepository.save(review);
         return review.getId();
@@ -56,8 +60,8 @@ public class ReviewService {
     @Transactional
     public Long updateReview(Long reviewId, ReviewUpdateServiceRequestDto reviewUpdateServiceRequestDto) {
         Review review = getReview(reviewId);
-        review.update(reviewUpdateServiceRequestDto.getWriterName(),
-                reviewUpdateServiceRequestDto.getContent(), reviewUpdateServiceRequestDto.getPassword());
+        validatePasswordIsSame(review, reviewUpdateServiceRequestDto.getPassword());
+        review.update(reviewUpdateServiceRequestDto.getWriterName(), reviewUpdateServiceRequestDto.getContent());
         return review.getRestaurant().getId();
     }
 
@@ -68,8 +72,15 @@ public class ReviewService {
     @Transactional
     public Long deleteReview(Long reviewId, String password) {
         Review review = getReview(reviewId);
-        review.delete(password);
+        validatePasswordIsSame(review, password);
+        review.delete();
         return review.getRestaurant().getId();
+    }
+
+    private void validatePasswordIsSame(Review review, String password) {
+        if (!passwordEncoder.matches(password, review.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     private Review getReview(Long reviewId) {

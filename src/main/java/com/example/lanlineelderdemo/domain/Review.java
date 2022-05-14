@@ -40,15 +40,7 @@ public class Review {
         this.isUsing = Boolean.TRUE;
     }
 
-    private void validatePasswordIsSame(String password) {
-        if (this.password.equals(password)) {
-            return;
-        }
-        throw new IllegalArgumentException("비밀번호가 다릅니다.");
-    }
-
-    public void update(String writerName, String content, String password) {
-        validatePasswordIsSame(password);
+    public void update(String writerName, String content) {
         if (writerName != null) {
             this.writerName = writerName;
         }
@@ -57,8 +49,7 @@ public class Review {
         }
     }
 
-    public void delete(String password) {
-        validatePasswordIsSame(password);
+    public void delete() {
         this.isUsing = Boolean.FALSE;
     }
 }

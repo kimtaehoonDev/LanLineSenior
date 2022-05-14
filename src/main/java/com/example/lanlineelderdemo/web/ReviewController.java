@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
-
     @PostMapping
     public String postReview(@RequestParam Long restaurantId,
                              @Validated @ModelAttribute ReviewCreateRequestDto reviewCreateRequestDto) {
@@ -24,7 +23,6 @@ public class ReviewController {
         return "redirect:/restaurants/"+restaurantId;
     }
 
-    //     TODO 수정폼 만들기 -> 작은창으로 뜨세.
     @GetMapping("/edit")
     public String editForm(@ModelAttribute ReviewUpdateRequestDto reviewUpdateRequestDto) {
         return "/review/editForm";
@@ -37,7 +35,6 @@ public class ReviewController {
         return "redirect:/restaurants/"+restaurantId;
     }
 
-    // 삭제 비밀번호 받는 폼 만들기.
     @GetMapping("/delete")
     public String deleteForm(@RequestParam Long restaurantId, @RequestParam Long reviewId,
                              @ModelAttribute ReviewDeleteRequestDto reviewDeleteRequestDto) {
