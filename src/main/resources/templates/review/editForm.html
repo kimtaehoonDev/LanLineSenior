@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <form action="editForm.html" th:action="@{/reviews}" th:method="patch" th:object="${reviewUpdateRequestDto}">
+    <form action="editForm.html" th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}" th:method="patch" th:object="${reviewUpdateRequestDto}">
         <div>
             <input type="text" th:field="*{name}" th:text="*{name}">
             <input type="password" th:field="*{password}" th:text="*{password}">

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
+
     @PostMapping
     public String postReview(@RequestParam Long restaurantId,
                              @Validated @ModelAttribute ReviewCreateRequestDto reviewCreateRequestDto) {
@@ -24,7 +25,8 @@ public class ReviewController {
     }
 
     @GetMapping("/edit")
-    public String editForm(@ModelAttribute ReviewUpdateRequestDto reviewUpdateRequestDto) {
+    public String editForm(@RequestParam Long restaurantId, @RequestParam Long reviewId,
+                           @ModelAttribute ReviewUpdateRequestDto reviewUpdateRequestDto) {
         return "/review/editForm";
     }
 
