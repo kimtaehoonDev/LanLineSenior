@@ -9,5 +9,25 @@
    th:href="@{/restaurants/new}">식당 등록 ,미완성 : 식당, 메뉴 같이 등록하는 form도 만들기. 엑셀 말고 한개씩</a>
 <br><a href="registerMenuForm.html"
        th:href="@{/menu/new}">메뉴 등록(식당등록 후 사용)</a>
+
+<form th:action th:object="${memberForm}" method="post">
+    <div>
+        <label for="loginId">회원가입할 ID</label>
+        <input type="text" id="loginId" th:field="*{loginId}">
+    </div>
+    <div>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" th:field="*{password}">
+    </div>
+    <hr>
+    <div>
+        <div>
+            <button type="submit">운영자 가입</button> </div>
+        <div>
+            <button th:onclick="|location.href='@{/admin}'|" type="button">취소</button>
+        </div>
+    </div>
+</form>
+
 </body>
 </html>

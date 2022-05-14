@@ -21,7 +21,11 @@ public class Member {
 
     private String password;
 
-    public boolean checkPasswordIsSame(String password) {
-        return this.password.equals(password);
+    private Boolean isGrant;
+
+    public Member(String loginId, String password) {
+        this.loginId = loginId;
+        this.password = password;
+        isGrant = Boolean.FALSE;
     }
 }

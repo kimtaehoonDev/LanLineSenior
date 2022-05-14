@@ -1,5 +1,6 @@
 package com.example.lanlineelderdemo.web;
 
+import com.example.lanlineelderdemo.domain.MemberForm;
 import com.example.lanlineelderdemo.member.LoginForm;
 import com.example.lanlineelderdemo.member.MemberService;
 import com.example.lanlineelderdemo.utils.SessionConst;
@@ -20,9 +21,10 @@ public class AdminController {
     private final MemberService memberService;
 
     @GetMapping("/admin")
-    public String adminForm() {
+    public String adminForm(@ModelAttribute MemberForm memberForm) {
         return "adminForm";
     }
+
     @GetMapping("/admin/login") // TODO 이거 숨겨버릴까 고민 한번 해보자.
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
         return "loginForm";
@@ -43,5 +45,11 @@ public class AdminController {
             bindingResult.reject("loginFail", e.getMessage());
             return "loginForm";
         }
+    }
+
+    @PostMapping("/admin")
+    public String addAdmin(String loginId, String password) {
+        memberService.addAdmin(loginId, password);
+        return "redirect:/admin";
     }
 }
