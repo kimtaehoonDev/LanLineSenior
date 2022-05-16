@@ -8,9 +8,9 @@
 <div>
     <form action="editForm.html" th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}" th:method="patch" th:object="${reviewUpdateForm}">
         <div>
-            <input type="text" th:field="*{name}" th:value="${review.writerName}" th:text="${review.writerName}">
+            <input type="text" th:id="writerName" th:name="writerName" th:value="${review.writerName}" th:value="${review.writerName}" th:text="${review.writerName}">
             <input type="password" th:field="*{password}">
-            <input type="text" th:field="*{content}" th:value="${review.content}">
+            <input type="text" th:id="content" th:name="content" th:value="${review.content}" th:value="${review.content}">
         </div>
         <button type="submit">수정</button>
     </form>
