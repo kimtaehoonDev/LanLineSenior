@@ -3,17 +3,14 @@ package com.example.lanlineelderdemo.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class Member {
+public class Admin {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -23,7 +20,7 @@ public class Member {
 
     private Boolean isGrant;
 
-    public Member(String loginId, String password) {
+    public Admin(String loginId, String password) {
         this.loginId = loginId;
         this.password = password;
         isGrant = Boolean.FALSE;

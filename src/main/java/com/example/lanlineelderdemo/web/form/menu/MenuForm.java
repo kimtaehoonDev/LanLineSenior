@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.menu.dto;
+package com.example.lanlineelderdemo.web.form.menu;
 
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.sun.istack.NotNull;
@@ -6,7 +6,7 @@ import lombok.Data;
 import org.apache.poi.ss.usermodel.Row;
 
 @Data
-public class MenuRegisterDto {
+public class MenuForm {
     @NotNull
     private String restaurantName;
 
@@ -22,7 +22,7 @@ public class MenuRegisterDto {
     @NotNull
     private Integer price;
 
-    public MenuRegisterDto(Row row) {
+    public MenuForm(Row row) {
         this.restaurantName = row.getCell(0).getStringCellValue();
         this.openType = OpenType.find(row.getCell(1).getStringCellValue());
         this.menuName = row.getCell(2).getStringCellValue();

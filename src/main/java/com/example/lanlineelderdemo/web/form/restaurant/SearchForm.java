@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.restaurant.dto.controller;
+package com.example.lanlineelderdemo.web.form.restaurant;
 
 import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
 import com.example.lanlineelderdemo.domain.restaurant.Location;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @ToString
-public class SearchRestaurantRequestDto {
+public class SearchForm {
 
     private List<Location> locations;
 

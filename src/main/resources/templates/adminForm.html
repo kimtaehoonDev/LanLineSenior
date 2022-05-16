@@ -10,7 +10,7 @@
 <br><a href="registerMenuForm.html"
        th:href="@{/menu/new}">메뉴 등록(식당등록 후 사용)</a>
 
-<form th:action th:object="${memberForm}" method="post">
+<form th:action th:object="${createForm}" method="post">
     <div>
         <label for="loginId">회원가입할 ID</label>
         <input type="text" id="loginId" th:field="*{loginId}">

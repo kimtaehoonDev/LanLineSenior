@@ -16,7 +16,7 @@ public class Menu {
     @Column(name = "menu_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // 매핑 해줘야 하나. 상대 입장에서는 필요없을 수도 있잖아?
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
@@ -34,7 +34,7 @@ public class Menu {
 
     @Builder(builderClassName = "createMenu", builderMethodName = "createMenu")
     private Menu(Restaurant restaurant, OpenType openType, String menuName, Integer numberOfMeal, Integer price) {
-        validate(openType, menuName, numberOfMeal, price);
+        validate(restaurant, openType, menuName, numberOfMeal, price);
         this.restaurant = restaurant;
         this.openType = openType;
         this.menuName = menuName;
@@ -42,7 +42,10 @@ public class Menu {
         this.price = price;
     }
 
-    private void validate(OpenType openType, String menuName, Integer numberOfMeal, Integer price) {
+    private void validate(Restaurant restaurant, OpenType openType, String menuName, Integer numberOfMeal, Integer price) {
+        if (restaurant == null) {
+            throw new IllegalArgumentException("식당 정보가 누락되었습니다.");
+        }
         if (openType == null) {
             throw new IllegalArgumentException("메뉴의 영업타입이 누락되었습니다.");
         }

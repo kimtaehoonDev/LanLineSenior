@@ -1,11 +1,11 @@
-package com.example.lanlineelderdemo.review.dto;
+package com.example.lanlineelderdemo.web.form.review;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class ReviewCreateRequestDto {
+public class ReviewCreateForm {
     @NotBlank
     private String name;
     @NotBlank

@@ -2,8 +2,8 @@ package com.example.lanlineelderdemo.menu;
 
 import com.example.lanlineelderdemo.domain.menu.Menu;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
-import com.example.lanlineelderdemo.menu.dto.MenuRegisterDto;
-import com.example.lanlineelderdemo.menu.dto.RestaurantRecommendMenuDto;
+import com.example.lanlineelderdemo.web.form.menu.MenuForm;
+import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantRecommendMenuDto;
 import com.example.lanlineelderdemo.domain.restaurant.Restaurant;
 import com.example.lanlineelderdemo.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class MenuService {
     private final RestaurantRepository restaurantRepository;
 
     @Transactional
-    public void registerMenus(List<MenuRegisterDto> dataList) {
-        for (MenuRegisterDto data : dataList) {
+    public void registerMenus(List<MenuForm> dataList) {
+        for (MenuForm data : dataList) {
             registerMenu(data.getRestaurantName(), data.getOpenType(), data.getMenuName(),
                     data.getNumberOfMeal(), data.getPrice());
         }

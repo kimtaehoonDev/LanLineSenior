@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateRequestDto}">
+    <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}">
         <div>
             <input type="text" th:field="*{name}">
             <input type="password" th:field="*{password}">

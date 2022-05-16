@@ -1,7 +1,7 @@
 package com.example.lanlineelderdemo.web;
 
-import com.example.lanlineelderdemo.domain.MemberForm;
-import com.example.lanlineelderdemo.member.LoginForm;
+import com.example.lanlineelderdemo.web.form.admin.CreateForm;
+import com.example.lanlineelderdemo.web.form.admin.LoginForm;
 import com.example.lanlineelderdemo.member.MemberService;
 import com.example.lanlineelderdemo.utils.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AdminController {
     private final MemberService memberService;
 
     @GetMapping("/admin")
-    public String adminForm(@ModelAttribute MemberForm memberForm) {
+    public String adminForm(@ModelAttribute("createForm") CreateForm form) {
         return "adminForm";
     }
 
@@ -33,9 +33,9 @@ public class AdminController {
     @PostMapping("/admin/login")// TODO 이거 숨겨버릴까 고민 한번 해보자.
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return "loginForm";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "loginForm";
+//        } -> 아마 글로벌 말고 지역오류 발생시 여기 코드로 이동하는거같음. 없어도 프로그램 작동하면 삭제해버리기.
         try {
             Long loginMemberId = memberService.login(form.getLoginId(), form.getPassword());
             HttpSession session = request.getSession();

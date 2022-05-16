@@ -1,4 +1,4 @@
-package com.example.lanlineelderdemo.menu.dto;
+package com.example.lanlineelderdemo.restaurant.dto.service;
 
 import com.example.lanlineelderdemo.domain.menu.Menu;
 import com.example.lanlineelderdemo.domain.menu.OpenType;

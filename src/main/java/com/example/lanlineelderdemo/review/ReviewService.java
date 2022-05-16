@@ -88,7 +88,16 @@ public class ReviewService {
         if (parsingReview.isEmpty()) {
             throw new IllegalArgumentException("해당 review는 존재하지 않습니다.");
         }
-        return parsingReview.get();
+        Review review = parsingReview.get();
+        if (!review.getIsUsing()) {
+            throw new IllegalArgumentException("해당 review는 존재하지 않습니다.");
+        }
+        return review;
+    }
+
+    public ReviewResponseDto findReview(Long reviewId) {
+        Review review = getReview(reviewId);
+        return ReviewResponseDto.from(review);
     }
 
 //    public List<CommentResponseDto>

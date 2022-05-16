@@ -1,9 +1,11 @@
-package com.example.lanlineelderdemo.member;
+package com.example.lanlineelderdemo.web.form.admin;
 
 import lombok.Data;
 
 @Data
-public class LoginForm {
+public class CreateForm {
     private String loginId;
+
     private String password;
+
 }

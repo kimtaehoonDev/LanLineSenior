@@ -40,11 +40,6 @@ public class Restaurant {
     @Nullable
     private String url;
 
-
-//    TODO 이 속성들은 별개 엔티티 만들어 처리해야 함.
-//    private String recommendMenuName;
-//    private Integer minCost;
-
     @Builder(builderClassName = "createRestaurant", builderMethodName = "createRestaurant")
     private Restaurant(String name, Location location, Double geoLocationX, Double geoLocationY,
                        FoodCategory category, Boolean isAtmosphere, Boolean hasCostPerformance,

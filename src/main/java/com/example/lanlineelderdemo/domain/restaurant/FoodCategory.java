@@ -17,7 +17,8 @@ public enum FoodCategory implements EnumModel {
     }
 
     public static FoodCategory find(String key) {
-        return Arrays.stream(FoodCategory.values()).filter(foodCategory -> foodCategory.getKey().equals(key)).findAny().orElseThrow(IllegalArgumentException::new);
+        return Arrays.stream(FoodCategory.values()).filter(foodCategory ->
+                foodCategory.getKey().equals(key)).findAny().orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

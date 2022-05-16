@@ -8,7 +8,7 @@
 <div>
     <form action="deleteForm.html"
           th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}"
-          th:method="delete" th:object="${reviewDeleteRequestDto}">
+          th:method="delete" th:object="${reviewDeleteForm}">
         <div>
             <input type="password" th:field="*{password}" th:text="*{password}">
         </div>

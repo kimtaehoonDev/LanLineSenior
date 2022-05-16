@@ -1,13 +1,14 @@
-package com.example.lanlineelderdemo.review.dto;
+package com.example.lanlineelderdemo.web.form.review;
 
+import com.example.lanlineelderdemo.review.dto.ReviewUpdateServiceRequestDto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class ReviewUpdateRequestDto {
+public class ReviewUpdateForm {
     @NotBlank
-    private String name;
+    private String writerName;
     @NotBlank
     private String password;
     @NotBlank
@@ -15,7 +16,7 @@ public class ReviewUpdateRequestDto {
 
     public ReviewUpdateServiceRequestDto changeServiceDto() {
         ReviewUpdateServiceRequestDto dto = new ReviewUpdateServiceRequestDto();
-        dto.setWriterName(name);
+        dto.setWriterName(writerName);
         dto.setPassword(password);
         dto.setContent(content);
         return dto;

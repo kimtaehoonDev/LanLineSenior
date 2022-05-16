@@ -14,7 +14,8 @@ public enum OpenType implements EnumModel {
     }
 
     public static OpenType find(String key) {
-        return Arrays.stream(OpenType.values()).filter(openType -> openType.getKey().equals(key)).findAny().orElseThrow(IllegalArgumentException::new);
+        return Arrays.stream(OpenType.values()).filter(openType ->
+                        openType.getKey().equals(key)).findAny().orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

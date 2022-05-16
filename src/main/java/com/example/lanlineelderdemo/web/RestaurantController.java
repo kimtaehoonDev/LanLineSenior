@@ -1,21 +1,21 @@
 package com.example.lanlineelderdemo.web;
 
-import com.example.lanlineelderdemo.review.dto.ReviewCreateRequestDto;
+import com.example.lanlineelderdemo.web.form.review.ReviewCreateForm;
 import com.example.lanlineelderdemo.utils.enums.EnumMapper;
 import com.example.lanlineelderdemo.utils.enums.EnumValue;
 import com.example.lanlineelderdemo.utils.ExcelFileManager;
 import com.example.lanlineelderdemo.domain.SearchCondition;
-import com.example.lanlineelderdemo.restaurant.dto.controller.SearchRestaurantRequestDto;
 import com.example.lanlineelderdemo.restaurant.dto.controller.ShowRestaurantDetailsResponseDto;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.menu.MenuService;
 import com.example.lanlineelderdemo.restaurant.RestaurantService;
-import com.example.lanlineelderdemo.menu.dto.MenuRegisterDto;
+import com.example.lanlineelderdemo.web.form.menu.MenuForm;
 import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantCreateServiceRequestDto;
-import com.example.lanlineelderdemo.menu.dto.RestaurantRecommendMenuDto;
+import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantRecommendMenuDto;
 import com.example.lanlineelderdemo.restaurant.dto.service.SearchRestaurantResponseDto;
 import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantResponseDto;
 import com.example.lanlineelderdemo.review.ReviewService;
+import com.example.lanlineelderdemo.web.form.restaurant.SearchForm;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
@@ -79,7 +79,7 @@ public class RestaurantController {
      * 검색 페이지
      */
     @GetMapping("/search")
-    public String searchRestaurantsForm(@ModelAttribute SearchRestaurantRequestDto form) {
+    public String searchRestaurantsForm(@ModelAttribute("searchForm") SearchForm form) {
         return "restaurants/searchForm";
     }
 
@@ -88,8 +88,8 @@ public class RestaurantController {
      */
     @PostMapping("search")
     public String searchRestaurants(
-            @ModelAttribute SearchRestaurantRequestDto searchRestaurantRequestDto, Model model) {
-        SearchCondition searchCondition = searchRestaurantRequestDto.toEntity();
+            @ModelAttribute("searchForm") SearchForm searchForm, Model model) {
+        SearchCondition searchCondition = searchForm.toEntity();
         List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
         model.addAttribute("results",results);
         return "restaurants/resultPage";
@@ -100,14 +100,14 @@ public class RestaurantController {
      */
     @GetMapping("/restaurants/{restaurantId}")
     public String showRestaurantDetails(@PathVariable Long restaurantId, Model model,
-                                        @ModelAttribute ReviewCreateRequestDto reviewCreateRequestDto) {
-        model.addAttribute("restaurant", makeShowRestaurantDetailsResponseDto(restaurantId));
+                                        @ModelAttribute ReviewCreateForm reviewCreateForm) {
+        model.addAttribute("restaurant", makeRestaurantDetailInfo(restaurantId));
         model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
         return "restaurants/detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.
     }
 
-    private ShowRestaurantDetailsResponseDto makeShowRestaurantDetailsResponseDto(Long restaurantId) {
+    private ShowRestaurantDetailsResponseDto makeRestaurantDetailInfo(Long restaurantId) {
         RestaurantResponseDto inqueryRestaurantResponse = restaurantService.inqueryRestaurant(restaurantId);
         RestaurantRecommendMenuDto recommendMenu = menuService.findRestaurantRecommendMenu(restaurantId);
         ShowRestaurantDetailsResponseDto restaurant = ShowRestaurantDetailsResponseDto.create(inqueryRestaurantResponse, recommendMenu);
@@ -154,11 +154,11 @@ public class RestaurantController {
      */
     @PostMapping("/menu")
     public String registerMenus(@ModelAttribute MultipartFile file) throws IOException{
-        List<MenuRegisterDto> dataList = new ArrayList<>();
+        List<MenuForm> dataList = new ArrayList<>();
         Sheet worksheet = ExcelFileManager.validateExcelFileIsAvailable(file);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
             Row row = worksheet.getRow(i);
-            dataList.add(new MenuRegisterDto(row));
+            dataList.add(new MenuForm(row));
             //TODO 이걸 놔둔 이유는 벌크로 연산이 가능하도록.
             // 만약 그게 불가능하면 여기 위치에서 menuService.registerMenu가 맞음
         }
