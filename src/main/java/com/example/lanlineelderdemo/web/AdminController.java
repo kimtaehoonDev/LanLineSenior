@@ -33,9 +33,6 @@ public class AdminController {
     @PostMapping("/admin/login")// TODO 이거 숨겨버릴까 고민 한번 해보자.
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         HttpServletRequest request) {
-//        if (bindingResult.hasErrors()) {
-//            return "loginForm";
-//        } -> 아마 글로벌 말고 지역오류 발생시 여기 코드로 이동하는거같음. 없어도 프로그램 작동하면 삭제해버리기.
         try {
             Long loginMemberId = memberService.login(form.getLoginId(), form.getPassword());
             HttpSession session = request.getSession();

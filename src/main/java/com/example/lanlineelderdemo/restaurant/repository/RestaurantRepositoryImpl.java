@@ -42,10 +42,17 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                         eqCanEatSingle(searchCondition.getCanEatSingle()),
                         eqHasCostPerformance(searchCondition.getHasCostPerformance()),
                         menu.openType.in(searchCondition.getOpenType(), OpenType.BOTH),
-                        menu.price.divide(menu.numberOfMeal).loe(searchCondition.getMaxCostLine()))
+                        loeMaxCostLine(searchCondition.getMaxCostLine()))
                 .orderBy(NumberExpression.random().asc())
                 .limit(5)
                 .fetch(); //TODO애가 문제?
+    }
+
+    private BooleanExpression loeMaxCostLine(Integer maxCostLine) {
+        if (maxCostLine == null) {
+            return null;
+        }
+        return menu.price.divide(menu.numberOfMeal).loe(maxCostLine);
     }
 
     private BooleanExpression includeLocations(List<Location> locations) {
