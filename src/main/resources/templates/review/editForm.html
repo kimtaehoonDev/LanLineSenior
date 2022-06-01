@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        function reload() {
+            // 여기 Ajax 해야하는데, 일단 다른거 먼저 하기.
+            opener.parent.location.reload();
+            window.close();
+        }
+    </script>
+
 </head>
 <body>
 <div>
-    <form action="editForm.html" th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}" th:method="patch" th:object="${reviewUpdateForm}">
-        <div>
-            <input type="text" th:id="writerName" th:name="writerName" th:value="${review.writerName}" th:value="${review.writerName}" th:text="${review.writerName}">
-            <input type="password" th:field="*{password}">
-            <input type="text" th:id="content" th:name="content" th:value="${review.content}" th:value="${review.content}">
-        </div>
-        <button type="submit">수정</button>
+    <form id="editForm" action="editForm.html" th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}" th:method="patch" th:object="${reviewUpdateForm}">
+        <input type="text" th:id="writerName" th:name="writerName" th:value="${review.writerName}">
+        <input type="password" th:field="*{password}">
+        <input type="text" th:id="content" th:name="content" th:value="${review.content}">
+        <button type="submit" id="editBtn" onclick="reload()">수정</button>
     </form>
-
-
+</div>
 </body>
 </html>

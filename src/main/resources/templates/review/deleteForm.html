@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        function reload() {
+            // 여기 Ajax 해야하는데, 일단 다른거 먼저 하기.
+            opener.parent.location.reload();
+            window.close();
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -10,9 +17,9 @@
           th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}"
           th:method="delete" th:object="${reviewDeleteForm}">
         <div>
-            <input type="password" th:field="*{password}" th:text="*{password}">
+            <input type="password" th:field="*{password}">
         </div>
-        <button type="submit">삭제</button>
+        <button type="submit" onclick="reload()">삭제</button>
     </form>
 </div>
 

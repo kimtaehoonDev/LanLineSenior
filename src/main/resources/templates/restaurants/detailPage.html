@@ -2,60 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/detail_style.css">
+    <title>상세정보</title>
+    <script th:inline="javascript">
+        function editPopup(restaurantId, reviewId) {
+            window.open("/reviews/edit?restaurantId="+restaurantId+"&reviewId="+reviewId, "코멘트 수정", "width=320, height=500, left=30, top=50");
+        }
+        function deletePopup(restaurantId, reviewId) {
+            window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "코멘트 삭제", "width=320, height=500, left=30, top=50");
+        }
+    </script>
 </head>
 <body>
-<div>
-    <span>가게명 : </span>
-    <span><a th:text="${restaurant.name}" th:href="@{${restaurant.url}}" target='_blank'>zz</a></span>
-</div>
-<div>
-    <span>카테고리 : </span>
-    <span th:text="${foodCategories[restaurant.category.name()]}">ㅋㅋ</span>
-</div>
-<div>
-    <span>TMI : </span>
-    <span th:text="${restaurant.adminComment}">ㅋㅋ</span>
-</div>
-<div th:block th:if = "${restaurant.getLunchMenuName() != null}">
-    <div>
-        <span>점심 추천 메뉴 : </span>
-        <span th:text="${restaurant.getLunchMenuName()}">ㅋㅋ</span>
-        <span> / 가격 : </span>
-        <span th:text="${restaurant.getLunchMenuPrice()}">ㅋㅋ</span>
+<header onclick="location.href='searchForm.html'" th:onclick="/search">전남대 맛집 탐색 어플 </header>
+<main>
+    <section class="explain">
+        <article class="informaion">
+            <h4>가게명 : </h4>
+            <a href="#" target="_blank" th:href="${restaurant.url}" th:text="${restaurant.name}">맛집</a><br>
+            <h4>카테고리 : <span th:text="${foodCategories[restaurant.category.name()]}">한식</span></h4><br>
+            <h5> - 점심 추천 메뉴 : <span th:text="${restaurant.getLunchMenuName()}">긴티띠게</span></h5>
+            <h5> - 가격 : <span th:text="${restaurant.getLunchMenuPrice()}">8,000</span></h5>
+            <h5> - 저녁 추천 메뉴 : <span th:text="${restaurant.getDinnerMenuName()}">긴티띠게</span></h5>
+            <h5> - 가격 : <span th:text="${restaurant.getDinnerMenuPrice()}">8,000</span></h5>
+
+            <h4>TMI : <span th:text="${restaurant.getAdminComment()}">짬</span></h4>
+        </article>
+        <article class="hashtag">
+            <span th:if="${restaurant.hasCostPerformance}">#가성비</span>
+            <span th:if="${restaurant.isAtmosphere}">#분위기좋은</span>
+            <span th:if="${restaurant.canEatSingle}">#혼밥가능</span>
+        </article>
+    </section>
+    <hr>
+    <section class="bbs">
+        <h3>음식점에 대한 의견을 나눠주세요!</h3>
+        <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}">
+            <input type="text" placeholder="아이디" th:field="*{name}"/>
+            <input type="password" placeholder="비밀번호" th:field="*{password}"/><br>
+            <textarea rows="10" cols="40" class="content" id="content" placeholder="내용" th:field="*{content}"></textarea>
+            <button type="submit" id="submit">전송</button>
+        </form>
+    </section>
+</main>
+<footer>
+    <div th:each="review : ${reviews}"> <!--이 div 하나가 댓글 하나-->
+        <hr>
+        <table>
+            <tr>
+<!--                TODO 작성시간 DB에 넣고 기능 만들기.-->
+                <th th:text="${review.writerName}">아이디</th><th>작성시간</th>
+            </tr>
+            <tr>
+                <td colspan="2" th:text="${review.content}">여기 정.말 맛있습니다</td>
+            </tr>
+        </table>
+        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}" th:onclick="editPopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">수정</button>
+        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}" th:onclick="deletePopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">삭제</button>
     </div>
-</div>
-<div th:block th:if = "${restaurant.getDinnerMenuName() != null}">
-    <div>
-        <span>저녁 추천 메뉴 : </span>
-        <span th:text="${restaurant.getDinnerMenuName()}">ㅋㅋ</span>
-        <span>/ 가격 : </span>
-        <span th:text="${restaurant.getDinnerMenuPrice()}">ㅋㅋ</span>
-    </div>
-</div>
-
-<div>
-    <span th:if="${restaurant.hasCostPerformance}">#가성비 </span>
-    <span th:if="${restaurant.canEatSingle}">#혼밥가능 </span>
-    <span th:if="${restaurant.isAtmosphere}">#분위기 </span>
-</div>
-
-<div>
-    <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}">
-        <div>
-            <input type="text" th:field="*{name}">
-            <input type="password" th:field="*{password}">
-            <input type="text" th:field="*{content}">
-        </div>
-        <button type="submit">전송</button>
-    </form>
-
-</div>
-<div th:each="review : ${reviews}">
-    <div th:text="${review.writerName}"></div>
-    <div th:text="${review.content}"></div>
-</div>
-
+</footer>
 </body>
 <!--타임리프 써서 반복.-->
 </html>
