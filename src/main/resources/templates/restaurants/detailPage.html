@@ -6,11 +6,18 @@
     <link rel="stylesheet" href="../../static/css/detail_style.css" th:href="@{/css/detail_style.css}">
     <title>상세정보</title>
     <script th:inline="javascript">
+
+        //TODO 지워야함. 테스트코드
+        let today = new Date();
+        document.write(today);
+
         function editPopup(restaurantId, reviewId) {
             window.open("/reviews/edit?restaurantId="+restaurantId+"&reviewId="+reviewId, "코멘트 수정", "width=320, height=500, left=30, top=50");
         }
         function deletePopup(restaurantId, reviewId) {
-            window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "코멘트 삭제", "width=320, height=500, left=30, top=50");
+            // window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "코멘트 삭제", "width=320, height=500, left=30, top=50");
+            // window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "_blank", "width=320, height=500, left=30, top=50");
+            window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "_black", "width=320, height=500, left=30, top=50");
         }
     </script>
 </head>

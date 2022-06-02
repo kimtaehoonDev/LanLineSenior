@@ -4,24 +4,102 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript">
-        function reload() {
-            // 여기 Ajax 해야하는데, 일단 다른거 먼저 하기.
-            opener.parent.location.reload();
+        function requestDelete() {
+            /*<![CDATA[*/
+            let restaurantId = [[${param.restaurantId}]];
+            let reviewId = [[${param.reviewId}]];
+            /*]]*/
+
+            console.log(restaurantId+ " : "+reviewId)
+            var input = document.getElementById("inputValue");
+            var value = input.value;
+
+            var data = `password=${value}&restaurantId=${restaurantId}&reviewId=${reviewId}`;
+
+            console.log("data : " + data);
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("DELETE", "/reviews");
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(data);
+
+            console.log(window.opener);
+            window.opener.parent.location.reload();
             window.close();
+
         }
     </script>
 </head>
 <body>
 <div>
-    <form action="deleteForm.html"
-          th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}"
-          th:method="delete" th:object="${reviewDeleteForm}">
-        <div>
-            <input type="password" th:field="*{password}">
-        </div>
-        <button type="submit" onclick="reload()">삭제</button>
-    </form>
+    <input id="inputValue" type="password">
+    <button onclick="requestDelete()">삭제</button>
+
 </div>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <script type="text/javascript">-->
+<!--        function asdf() {-->
+<!--            let form = document.getElementById("#deleteForm");-->
+<!--            // form.submit();-->
+<!--            // opener.location.reload();-->
+<!--            // window.close();-->
+
+<!--            $.ajax({-->
+<!--                type: "DELETE",-->
+<!--                data: form, // api 호출을 위한 요청 변수가 필요하다면 사용해주세요.-->
+<!--                dataType: "text"-->
+<!--            })-->
+<!--                .done(function (result) {-->
+<!--                    console.log("hello");-->
+<!--                })-->
+<!--                .fail(function(jqXHR) {-->
+<!--                    console.log(jqXHR);-->
+<!--                })-->
+<!--                .always(function() {-->
+<!--                    console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");-->
+<!--                    opener.location.reload(); // 부모창 새로고침-->
+<!--                    window.close(); //팝업창 닫음-->
+<!--                })-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+<!--    <form action="deleteForm.html" id="deleteForm" name="deleteForm"-->
+<!--          th:action="@{/reviews(restaurantId=${param.restaurantId},reviewId=${param.reviewId})}"-->
+<!--          th:method="delete" th:object="${reviewDeleteForm}">-->
+<!--        <div>-->
+<!--            <input type="password" th:field="*{password}">-->
+<!--        </div>-->
+<!--        <button onclick="asdf();">삭제</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+

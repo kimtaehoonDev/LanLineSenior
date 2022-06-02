@@ -50,8 +50,9 @@ public class ReviewController {
 
     @DeleteMapping
     public String deleteReview(@RequestParam Long restaurantId, @RequestParam Long reviewId,
-                               @Validated @ModelAttribute ReviewDeleteForm reviewDeleteForm) {
-        reviewService.deleteReview(reviewId, reviewDeleteForm.getPassword());
-        return "redirect:/restaurants/"+restaurantId;
+                               @RequestParam String password) {
+        reviewService.deleteReview(reviewId, password);
+//        return null;
+        return "redirect:/restaurants/" + restaurantId;
     }
 }
