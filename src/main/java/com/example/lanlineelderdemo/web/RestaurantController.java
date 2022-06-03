@@ -1,5 +1,6 @@
 package com.example.lanlineelderdemo.web;
 
+import com.example.lanlineelderdemo.review.dto.ReviewResponseDto;
 import com.example.lanlineelderdemo.web.form.review.ReviewCreateForm;
 import com.example.lanlineelderdemo.utils.enums.EnumMapper;
 import com.example.lanlineelderdemo.utils.enums.EnumValue;
@@ -103,6 +104,10 @@ public class RestaurantController {
                                         @ModelAttribute ReviewCreateForm reviewCreateForm) {
         model.addAttribute("restaurant", makeRestaurantDetailInfo(restaurantId));
         model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
+        List<ReviewResponseDto> dtos = reviewService.inqueryRestaurantReviews(restaurantId);
+        for (ReviewResponseDto dto : dtos) {
+            System.out.println("dto = " + dto);
+        }
         model.addAttribute("reviewCreateForm", reviewCreateForm);
         return "restaurants/detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.

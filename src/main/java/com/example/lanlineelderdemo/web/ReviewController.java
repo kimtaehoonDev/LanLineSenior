@@ -7,6 +7,7 @@ import com.example.lanlineelderdemo.review.dto.ReviewCreateServiceRequestDto;
 import com.example.lanlineelderdemo.web.form.review.ReviewDeleteForm;
 import com.example.lanlineelderdemo.web.form.review.ReviewUpdateForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -48,11 +49,12 @@ public class ReviewController {
         return "/review/deleteForm";
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     @DeleteMapping
-    public String deleteReview(@RequestParam Long restaurantId, @RequestParam Long reviewId,
+    public Long deleteReview(@RequestParam Long restaurantId, @RequestParam Long reviewId,
                                @RequestParam String password) {
         reviewService.deleteReview(reviewId, password);
-//        return null;
-        return "redirect:/restaurants/" + restaurantId;
+        return reviewId;
     }
 }
