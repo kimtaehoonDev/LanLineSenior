@@ -10,4 +10,10 @@ public class ReviewUpdateServiceRequestDto {
     private String writerName;
 
     private String password;
+
+//    public ReviewUpdateServiceRequestDto(String writerName, String password, String content) {
+//        this.content = content;
+//        this.writerName = writerName;
+//        this.password = password;
+//    }
 }

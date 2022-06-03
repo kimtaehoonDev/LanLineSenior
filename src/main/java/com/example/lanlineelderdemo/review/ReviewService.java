@@ -78,6 +78,8 @@ public class ReviewService {
     }
 
     private void validatePasswordIsSame(Review review, String password) {
+        System.out.println("review = " + review.getPassword());
+        System.out.println("password = " + password);
         if (!passwordEncoder.matches(password, review.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
