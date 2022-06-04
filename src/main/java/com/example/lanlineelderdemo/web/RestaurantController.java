@@ -104,10 +104,7 @@ public class RestaurantController {
                                         @ModelAttribute ReviewCreateForm reviewCreateForm) {
         model.addAttribute("restaurant", makeRestaurantDetailInfo(restaurantId));
         model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
-        List<ReviewResponseDto> dtos = reviewService.inqueryRestaurantReviews(restaurantId);
-        for (ReviewResponseDto dto : dtos) {
-            System.out.println("dto = " + dto);
-        }
+
         model.addAttribute("reviewCreateForm", reviewCreateForm);
         return "restaurants/detailPage";
         // 식당의 상세정보 보여주는 페이지를 만들기.

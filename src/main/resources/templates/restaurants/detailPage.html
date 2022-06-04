@@ -57,7 +57,7 @@
         <table>
             <tr>
 <!--                TODO 작성시간 DB에 넣고 기능 만들기.-->
-                <th th:text="${review.writerName}">아이디</th><th>작성시간</th>
+                <th th:text="${review.writerName}">아이디</th><th th:text="${review.lastModifiedDate}">작성시간</th>
             </tr>
             <tr>
                 <td colspan="2" th:text="${review.content}">여기 정.말 맛있습니다</td>
