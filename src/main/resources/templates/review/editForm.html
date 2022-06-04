@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/edit_style.css" th:href="@{/css/edit_style.css}">
+    <title>코멘트 수정</title>
     <script type="text/javascript">
         /*<![CDATA[*/
         let restaurantId = [[${param.restaurantId}]];
@@ -39,14 +41,12 @@
     </script>
 </head>
 <body>
+<h3>댓글 수정</h3>
 <div>
     <input type="text" th:id="writerName" th:name="writerName" th:value="${review.writerName}">
     <input id="password" type="password">
     <input type="text" th:id="content" th:name="content" th:value="${review.content}">
     <button onclick="requestUpdate()">수정</button>
-
-
 </div>
-
 </body>
 </html>

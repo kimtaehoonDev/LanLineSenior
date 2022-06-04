@@ -2,17 +2,18 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="../../css/result_style.css" th:href="@{/css/result_style.css}">
+  <link rel="stylesheet" href="../../static/css/result_style.css" th:href="@{/css/result_style.css}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <title>간단한 지도 표시하기</title>
   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tv4q0aykz0"></script>
 </head>
 <body>
-<div id="map" style="width:400px;height:400px;"></div>
-<!--이거 크기 모바일에 맞춰 가변적으로 바뀌게 해야함.-->
-<div id="results"></div>
-<!--이걸 클릭가능하게 만들아주자. 모양은 CSS겠지머-->
+<header onclick="location.href='searchForm.html'" th:onclick="/search">전남대 맛집 탐색 어플 </header>
+<main>
+  <article id="map" style="width:400px;height:400px;"></article>
+  <div id="results"></div>
+</main>
 
 <script th:inline="javascript">
   var locations = [[${locations}]]
@@ -69,10 +70,10 @@
   };
 
   function addRestaurantList(restaurant) {
-    const article = document.createElement("article");
-    article.setAttribute('id', restaurant.id);
-    article.setAttribute("style", "cursor: pointer;");
-    article.setAttribute('onclick', 'window.open(\"restaurants/'+restaurant.id+'\")');
+    // const article = document.createElement("article");
+    // article.setAttribute('id', restaurant.id);
+    // article.setAttribute("style", "cursor: pointer;");
+    // article.setAttribute('onclick', 'window.open(\"restaurants/'+restaurant.id+'\")');
 
     const detail1_1 = document.createElement("td");
     const detail1_2 = document.createElement("td");
@@ -91,12 +92,17 @@
     detail2.appendChild(detail2_2);
 
     const table = document.createElement("table");
+    table.setAttribute('id', restaurant.id);
+    table.setAttribute("style", "cursor: pointer;");
+    table.setAttribute('onclick', 'window.open(\"restaurants/'+restaurant.id+'\")');
+
     table.appendChild(detail1);
     table.appendChild(detail2);
+    table.appendChild(document.createElement("hr"));
 
-    article.appendChild(table);
+    // article.appendChild(table);
 
-    document.getElementById('results').appendChild(article);
+    document.getElementById('results').appendChild(table);
   }
   // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
   function getClickHandler(seq) {

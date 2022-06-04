@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/delete_style.css" th:href="@{/css/delete_style.css}">
+    <title>코멘트 삭제</title>
     <script type="text/javascript">
         /*<![CDATA[*/
         let restaurantId = [[${param.restaurantId}]];
@@ -37,6 +39,7 @@
 </head>
 <body>
 <div>
+    <h3>댓글 삭제</h3>
     <input id="inputValue" type="password">
     <button onclick="requestDelete()">삭제</button>
 
