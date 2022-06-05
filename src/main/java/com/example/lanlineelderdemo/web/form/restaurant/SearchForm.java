@@ -29,7 +29,7 @@ public class SearchForm {
     @Range(min = 2500, max = 100000)
     private Integer maxCostLine;
 
-    @NotNull
+    @NotNull(message="{essentialValue.notnull}")
     private OpenType openType;
 
     public SearchCondition toEntity() {

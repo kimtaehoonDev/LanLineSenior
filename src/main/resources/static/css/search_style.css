@@ -24,6 +24,15 @@ table{
     box-shadow: 0 0 0 1px cadetblue;
 }
 
+span{
+    color: red;
+    text-decoration: underline;
+}
+
+.error{
+    color: red;
+}
+
 tr th {
     border-style: solid;
     text-align: center;
