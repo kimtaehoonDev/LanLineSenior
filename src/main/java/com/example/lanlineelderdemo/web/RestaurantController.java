@@ -21,8 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +84,7 @@ public class RestaurantController {
      * 검색 페이지
      */
     @GetMapping("/search")
-    public String searchRestaurantsForm(@ModelAttribute("searchForm") SearchForm form) {
+    public String searchRestaurantsForm(@ModelAttribute SearchForm form) {
         return "restaurants/searchForm";
     }
 
@@ -88,11 +92,16 @@ public class RestaurantController {
      * 검색
      */
     @PostMapping("search")
-    public String searchRestaurants(
-            @ModelAttribute("searchForm") SearchForm searchForm, Model model) {
+    public String searchRestaurants(@Validated @ModelAttribute SearchForm searchForm,
+                                    BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "restaurants/searchForm";
+        }
+
+
         SearchCondition searchCondition = searchForm.toEntity();
         List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
-        model.addAttribute("results",results);
+        model.addAttribute("results", results);
         return "restaurants/resultPage";
     }
 

@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -20,16 +21,17 @@ public class Menu {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private OpenType openType;
 
-    @NotNull
+    @NotBlank
     private String menuName;
 
-    @NotNull
+    @NotBlank
     private Integer numberOfMeal;
 
-    @NotNull
+    @NotBlank
     private int price;
 
     @Builder(builderClassName = "createMenu", builderMethodName = "createMenu")

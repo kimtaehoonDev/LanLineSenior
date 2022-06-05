@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -18,16 +20,21 @@ public class Review extends BaseTimeEntity {
     @Column(name = "review_id")
     private Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
+    @NotBlank
     private String content;
 
+    @NotBlank
     private String writerName;
 
+    @NotBlank
     private String password;
 
+    @NotNull
     private Boolean isUsing;
 
     @Builder(builderClassName = "createReview", builderMethodName = "createReview")

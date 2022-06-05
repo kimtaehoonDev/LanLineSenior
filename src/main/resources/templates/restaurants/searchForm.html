@@ -54,10 +54,12 @@
       <h3>언제 식사를 할 예정인가요?(필수)</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="time1"><label><input type="radio" name="time" id="lunch">점심</label></th>
-          <th onclick="colorChange(this.id, event)" id="time2"><label><input type="radio" name="time" id="dinner">저녁</label></th>
+          <th onclick="colorChange(this.id, event)" id="time1"><label><input type="radio" name="time" id="lunch" th:field="*{openType}" th:value="LUNCH">점심</label></th>
+          <th onclick="colorChange(this.id, event)" id="time2"><label><input type="radio" name="time" id="dinner" th:field="*{openType}" th:value="DINNER">저녁</label></th>
+<!--          -->
         </tr>
       </table>
+      <div th:errors="*{openType}" style="color: red">필수값 오류</div>
     </div>
 
     <div class="location">
@@ -118,6 +120,7 @@
     <div class="maxCost">
       <h4>최대 금액(1인당) : </h4>
       <input type="text" name="maxCostLine" th:field = "*{maxCostLine}" value="" id="maxCostLine"/>
+      <div th:errors="*{maxCostLine}" style="color: red">금액 관련 오류</div>
     </div>
 
     <button class="btn-primary" type="submit">전송</button>

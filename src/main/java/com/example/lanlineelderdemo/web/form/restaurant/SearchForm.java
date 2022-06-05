@@ -6,7 +6,10 @@ import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.domain.SearchCondition;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -23,8 +26,10 @@ public class SearchForm {
 
     private Boolean canEatSingle;
 
+    @Range(min = 2500, max = 100000)
     private Integer maxCostLine;
 
+    @NotNull
     private OpenType openType;
 
     public SearchCondition toEntity() {

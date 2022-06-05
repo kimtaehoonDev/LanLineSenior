@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -17,21 +19,28 @@ public class Restaurant {
     @Column(name = "restaurant_id")
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Location location;//위치 카테고리
 
+    @NotNull
     @Embedded
     private GeoLocation geoLocation; //x값, y값. 지도에 매핑하기 위함.
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private FoodCategory category;
 
+    @NotNull
     private Boolean isAtmosphere;
 
+    @NotNull
     private Boolean hasCostPerformance;
 
+    @NotNull
     private Boolean canEatSingle;
 
     @Nullable
