@@ -111,12 +111,16 @@ public class RestaurantController {
     @GetMapping("/restaurants/{restaurantId}")
     public String showRestaurantDetails(@PathVariable Long restaurantId, Model model,
                                         @ModelAttribute ReviewCreateForm reviewCreateForm) {
-        model.addAttribute("restaurant", makeRestaurantDetailInfo(restaurantId));
-        model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
+        try {
+            model.addAttribute("restaurant", makeRestaurantDetailInfo(restaurantId));
+            model.addAttribute("reviews", reviewService.inqueryRestaurantReviews(restaurantId));
 
-        model.addAttribute("reviewCreateForm", reviewCreateForm);
-        return "restaurants/detailPage";
-        // 식당의 상세정보 보여주는 페이지를 만들기.
+            model.addAttribute("reviewCreateForm", reviewCreateForm);
+            return "restaurants/detailPage";
+        } catch (Exception e) {
+            return "errorPage";
+            //TODO 이거뿐만 아니라 모든 페이지가 마찬가지로 적용되는건데, 전체 단에서 적용될 수 있게 만들기.
+        }
     }
 
     private ShowRestaurantDetailsResponseDto makeRestaurantDetailInfo(Long restaurantId) {
