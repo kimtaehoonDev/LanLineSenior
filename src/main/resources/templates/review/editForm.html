@@ -44,7 +44,7 @@
 <h3>댓글 수정</h3>
 <main>
     <div>
-        <input type="text" id="writerName" name="writerName" th:value="${review.writerName}" placeholder="아이디">
+        <input type="text" id="writerName" name="writerName" th:value="${review.writerName}" placeholder="아이디" maxlength='10'>
         <input type="password" id="editpassword" name="editpassword" placeholder="비밀번호"><br>
         <textarea rows="10" cols="40" th:id="content" th:value="${review.content}" placeholder="내용"></textarea>
         <button type="submit" id="editbutton" onclick="requestUpdate();">수정</button>

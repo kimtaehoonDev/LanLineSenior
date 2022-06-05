@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -29,6 +30,7 @@ public class Review extends BaseTimeEntity {
     private String content;
 
     @NotBlank
+    @Size(max = 10)
     private String writerName;
 
     @NotBlank
