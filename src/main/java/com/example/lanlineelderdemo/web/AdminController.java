@@ -10,27 +10,34 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
     private final MemberService memberService;
 
-    @GetMapping("/admin")
-    public String adminForm(@ModelAttribute("createForm") CreateForm form) {
-        return "adminForm";
+    @GetMapping("/info")
+    public String adminForm() {
+        return "adminPage";
     }
 
-    @GetMapping("/admin/login") // TODO 이거 숨겨버릴까 고민 한번 해보자.
+    @GetMapping("/register")
+    public String registerForm(@ModelAttribute("createForm") CreateForm form) {
+        return "adminRegisterForm";
+    }
+
+    @GetMapping("/login") // TODO 이거 숨겨버릴까 고민 한번 해보자.
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
         return "loginForm";
     }
 
-    @PostMapping("/admin/login")// TODO 이거 숨겨버릴까 고민 한번 해보자.
+    @PostMapping("/login")// TODO 이거 숨겨버릴까 고민 한번 해보자.
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         HttpServletRequest request) {
         try {
@@ -44,9 +51,9 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/admin")
+    @PostMapping
     public String addAdmin(String loginId, String password) {
         memberService.addAdmin(loginId, password);
-        return "redirect:/admin";
+        return "redirect:/admin/login";
     }
 }

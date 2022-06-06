@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/admin","/restaurants/new", "/menu/new", "/restaurants","/menu");
+                .addPathPatterns("/admin/info","/restaurants/new", "/menu/new", "/restaurants","/menu");
     }
 
     @Bean
