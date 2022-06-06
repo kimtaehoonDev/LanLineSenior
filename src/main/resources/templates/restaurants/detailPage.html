@@ -6,7 +6,16 @@
     <link rel="stylesheet" href="../../static/css/detail_style.css" th:href="@{/css/detail_style.css}">
     <title>상세정보</title>
     <script th:inline="javascript">
-        function editPopup(restaurantId, reviewId) {
+        function validateEmpty() {
+            console.log("들어는 옴,.");
+            if (document.getElementById("content").value.length == 0) {
+                document.getElementById("content").focus();
+                alert("리뷰의 내용을 입력해주세요.");
+                return false;
+            }
+        }
+
+    function editPopup(restaurantId, reviewId) {
             window.open("/reviews/edit?restaurantId="+restaurantId+"&reviewId="+reviewId, "_black", "width=320, height=500, left=30, top=50");
         }
         function deletePopup(restaurantId, reviewId) {
@@ -40,10 +49,9 @@
     <hr>
     <section class="bbs">
         <h3>음식점에 대한 의견을 나눠주세요!</h3>
-        <form action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}">
-            <input type="text" placeholder="아이디" th:field="*{name}" maxlength='10'/>
-            <input type="password" placeholder="비밀번호" th:field="*{password}"/><br>
-<!--            TODO 글자수엔 제한을 안 넣는게 좋다고 함.-->
+        <form id = "reviewForm" action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}" onsubmit="return validateEmpty();">
+            <input type="text" placeholder="아이디" th:field="*{name}" maxlength='10' required/>
+            <input type="password" placeholder="비밀번호" th:field="*{password}" required/><br>
             <textarea rows="10" cols="40" class="content" id="content" placeholder="내용" th:field="*{content}"></textarea>
 <!--            TODO content varchar 255 걸려있음. 아마 DB가 테스트용 H2라서 그런거로 보이는데, DB 갈아끼고 긴 문자열을 넣어서 잘 저장되나 확인해보기.-->
             <button type="submit" id="submit">전송</button>
