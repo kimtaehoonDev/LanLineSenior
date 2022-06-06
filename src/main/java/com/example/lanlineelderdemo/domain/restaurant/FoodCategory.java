@@ -7,8 +7,7 @@ import java.util.Arrays;
 public enum FoodCategory implements EnumModel {
     KOREAN("한식"), CHINESE("중식"), JAPANESE("일식"),
     ITALY("양식"), ASIAN("아시안"), CHICKEN("치킨")
-    , FAST_FOOD("패스트푸드"), GOGI("고기(구워먹는)"), BUNSIK("분식"), ETC("기타");
-    // TODO 한식 말고 고기 카테고리 나눠.
+    , FAST_FOOD("패스트푸드"), GOGI("고기"), BUNSIK("분식"), ETC("기타");
 
     private String value;
 

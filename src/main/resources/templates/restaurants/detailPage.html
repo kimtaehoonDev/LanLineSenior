@@ -53,7 +53,6 @@
             <input type="text" placeholder="아이디" th:field="*{name}" maxlength='10' required/>
             <input type="password" placeholder="비밀번호" th:field="*{password}" required/><br>
             <textarea rows="10" cols="40" class="content" id="content" placeholder="내용" th:field="*{content}"></textarea>
-<!--            TODO content varchar 255 걸려있음. 아마 DB가 테스트용 H2라서 그런거로 보이는데, DB 갈아끼고 긴 문자열을 넣어서 잘 저장되나 확인해보기.-->
             <button type="submit" id="submit">전송</button>
         </form>
     </section>
@@ -63,7 +62,6 @@
         <hr>
         <table>
             <tr>
-<!--                TODO 작성시간 DB에 넣고 기능 만들기.-->
                 <th th:text="${review.writerName}">아이디</th><th th:text="${review.lastModifiedDate}">작성시간</th>
             </tr>
             <tr>

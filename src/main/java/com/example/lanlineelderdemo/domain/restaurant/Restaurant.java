@@ -12,8 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id","name","location","category"})
 public class Restaurant {
-    // TODO 공통 그거로 createDate, updateDate 등록해주기.
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")

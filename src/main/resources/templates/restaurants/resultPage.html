@@ -20,11 +20,6 @@
   var foodCategories = [[${foodCategories}]]
   var results = [[${results}]];
 
-  // 디비에 테스트로 넣을 값.
-  // insert into restaurant values(1,'ddsjladal',true, 'KOREAN', 35.177049, 126.906614, true, true, 'BACK_DOOR', 1000, '테스트가게' ,'12312313');
-  // insert into restaurant values(2,'ddsjladal',true, 'CHINESE', 35.178049, 126.906614, true, true, 'BACK_DOOR', 3000, '테스트가게1' ,'12312313');
-  // SELECT * FROM RESTAURANT;
-
   var mapOptions = {
     center: new naver.maps.LatLng(35.177049, 126.906614),
     zoom: 15
@@ -65,15 +60,10 @@
     markers.push(marker);
     infoWindows.push(infoWindow);
 
-    //밑에 리스트 형식으로 html을 만들어준다.
     addRestaurantList(MARKER_SPRITE_POSITION[key]);
   };
 
   function addRestaurantList(restaurant) {
-    // const article = document.createElement("article");
-    // article.setAttribute('id', restaurant.id);
-    // article.setAttribute("style", "cursor: pointer;");
-    // article.setAttribute('onclick', 'window.open(\"restaurants/'+restaurant.id+'\")');
 
     const detail1_1 = document.createElement("td");
     const detail1_2 = document.createElement("td");
@@ -99,8 +89,6 @@
     table.appendChild(detail1);
     table.appendChild(detail2);
     table.appendChild(document.createElement("hr"));
-
-    // article.appendChild(table);
 
     document.getElementById('results').appendChild(table);
   }

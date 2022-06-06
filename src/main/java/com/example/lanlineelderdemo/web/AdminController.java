@@ -32,12 +32,12 @@ public class AdminController {
         return "adminRegisterForm";
     }
 
-    @GetMapping("/login") // TODO 이거 숨겨버릴까 고민 한번 해보자.
+    @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
         return "loginForm";
     }
 
-    @PostMapping("/login")// TODO 이거 숨겨버릴까 고민 한번 해보자.
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         HttpServletRequest request) {
         try {

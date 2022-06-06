@@ -119,7 +119,6 @@ public class RestaurantController {
             return "restaurants/detailPage";
         } catch (Exception e) {
             return "errorPage";
-            //TODO 이거뿐만 아니라 모든 페이지가 마찬가지로 적용되는건데, 전체 단에서 적용될 수 있게 만들기.
         }
     }
 

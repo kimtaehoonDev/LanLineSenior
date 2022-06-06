@@ -41,7 +41,6 @@ public class Review extends BaseTimeEntity {
 
     @Builder(builderClassName = "createReview", builderMethodName = "createReview")
     private Review(Restaurant restaurant, String content, String writerName, String password) {
-        // TODO 검증은 일단 DTO에서 먼저.
         validate(restaurant, content, writerName, password);
         this.restaurant = restaurant;
         this.content = content;
@@ -61,7 +60,6 @@ public class Review extends BaseTimeEntity {
             throw new IllegalArgumentException("작성자 이름이 누락되었습니다.");
         }
         if (password.isBlank()) {
-            //TODO DTO에서 password 양식을 만들기. 여기서는 Blank 여부만 확인.
             throw new IllegalArgumentException("비밀번호가 누락되었습니다.");
         }
     }

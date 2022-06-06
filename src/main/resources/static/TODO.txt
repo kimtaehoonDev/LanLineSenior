@@ -1,0 +1,3 @@
+detailPage.html
+content varchar 255 걸려있음. 아마 DB가 테스트용 H2라서 그런거로 보이는데, DB 바꾸고 긴 문자열을 넣어 확인 해보기( )
+
