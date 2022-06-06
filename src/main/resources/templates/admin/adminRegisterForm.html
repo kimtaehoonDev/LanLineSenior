@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:object="${createForm}" th:method="post" th:action="@{/admin}">
+<form th:object="${createForm}" th:method="post" th:action="@{/templates/admin}">
     <div>
         <label for="loginId">회원가입할 ID</label>
         <input type="text" id="loginId" th:field="*{loginId}">

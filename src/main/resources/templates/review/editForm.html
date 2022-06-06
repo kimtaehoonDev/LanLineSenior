@@ -18,15 +18,20 @@
                 opener.location.replace(`/restaurants/${restaurantId}`);
                 window.close();
             }
+            if (this.status === 400 && this.readyState === this.DONE) {
+                addError();
+            }
+        }
+
+        function addError() {
+            document.getElementById('editPasswordError').className += ' error';
+            document.getElementById('editPasswordError').innerHTML = '비밀번호가 잘못되었습니다.';
         }
 
         function requestUpdate() {
 
-            console.log(restaurantId+ " : "+reviewId)
-
             var writerName = document.getElementById("writerName").value;
             var password = document.getElementById("editpassword").value;
-            console.log(password);
             var content = document.getElementById("content").value;
 
             var data = `writerName=${writerName}&password=${password}&content=${content}&restaurantId=${restaurantId}&reviewId=${reviewId}`;
@@ -34,8 +39,6 @@
             xmlHttp.open("PATCH", "/reviews");
             xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlHttp.send(data);
-
-            console.log(window.opener);
 
         }
     </script>
@@ -47,7 +50,8 @@
         <input type="text" id="writerName" name="writerName" th:value="${review.writerName}" placeholder="아이디" maxlength='10'>
         <input type="password" id="editpassword" name="editpassword" placeholder="비밀번호"><br>
         <textarea rows="10" cols="40" th:id="content" th:value="${review.content}" placeholder="내용"></textarea>
-        <button type="submit" id="editbutton" onclick="requestUpdate();">수정</button>
+        <button type="submit" id="editbutton" onclick="requestUpdate()">수정</button>
+        <div id="editPasswordError" class="editPasswordError"></div>
     </div>
 </main>
 </body>

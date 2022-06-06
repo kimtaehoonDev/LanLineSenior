@@ -52,3 +52,7 @@ button{
     height: 35px;
     box-shadow: -3px -3px 2px rgba(228, 226, 226,0.8), 3px 3px 5px rgba(0,0,0,0.2);
 }
+
+.error{
+    color: red;
+}
