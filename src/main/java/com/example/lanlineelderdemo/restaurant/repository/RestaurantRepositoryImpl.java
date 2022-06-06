@@ -6,6 +6,7 @@ import com.example.lanlineelderdemo.domain.restaurant.Location;
 import com.example.lanlineelderdemo.restaurant.repository.dto.FindRestaurantBySearchConditionResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -43,9 +44,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                         eqHasCostPerformance(searchCondition.getHasCostPerformance()),
                         menu.openType.in(searchCondition.getOpenType(), OpenType.BOTH),
                         loeMaxCostLine(searchCondition.getMaxCostLine()))
-                .orderBy(NumberExpression.random().asc())
+                .orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
                 .limit(5)
-                .fetch(); //TODO애가 문제?
+                .fetch();
     }
 
     private BooleanExpression loeMaxCostLine(Integer maxCostLine) {

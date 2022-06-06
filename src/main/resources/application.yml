@@ -1,9 +1,13 @@
 spring:
   # DB 연결
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/h2-database/lan-line-elder-demo
-    driver-class-name: org.h2.Driver
-    username: sa
+#    h2 DB
+#  datasource:
+#      url: jdbc:h2:tcp://localhost/~/h2-database/lan-line-elder-demo
+#    driver-class-name: org.h2.Driver
+#    username: sa
+
+# 여기 파일 gitignore 만들기
+
   jpa:
     properties:
       hibernate.format_sql: true
