@@ -84,6 +84,15 @@ public class RestaurantService {
      * @return
      */
     public List<SearchRestaurantResponseDto> searchRestaurants(SearchCondition searchCondition) {
+        List<Location> locations = searchCondition.getLocations();
+        for (Location location : locations) {
+            System.out.println("location = " + location.getKey());
+        }
+        List<FoodCategory> unselectedCategories = searchCondition.getUnselectedCategories();
+        for (FoodCategory unselectedCategory : unselectedCategories) {
+            System.out.println("unselectedCategory.getKey() = " + unselectedCategory.getKey());
+        }
+
         List<FindRestaurantBySearchConditionResponseDto> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
         return findRestaurants.stream().map(findRestaurantBySearchConditionResponseDto -> SearchRestaurantResponseDto.of(findRestaurantBySearchConditionResponseDto)).collect(Collectors.toList());
     }

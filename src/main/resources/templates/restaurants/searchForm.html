@@ -66,16 +66,16 @@
       <h3>위치를 모두 선택하세요</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location1"><label><input type="checkbox" id="front" th:field="*{locations}" th:value="FRONT_DOOR">정문&#x2B07;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location2"><label><input type="checkbox" id="back" th:field="*{locations}" th:value="BACK_DOOR">후문&#x27A1;</label></th>
+          <th onclick="colorChange(this.id, event)" id="location1"><label><input type="checkbox" th:field="*{locations}" th:value="FRONT_DOOR">정문&#x2B07;</label></th>
+          <th onclick="colorChange(this.id, event)" id="location2"><label><input type="checkbox" th:field="*{locations}" th:value="BACK_DOOR">후문&#x27A1;</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location3"><label><input type="checkbox" id="sangdae" th:field="*{locations}" th:value="SANGDAE">상대&#x2196;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location4"><label><input type="checkbox" id="side" th:field="*{locations}" th:value="ENGINEER_SIDE_DOOR">쪽문&#x2197;</label></th>
+          <th onclick="colorChange(this.id, event)" id="location3"><label><input type="checkbox" th:field="*{locations}" th:value="SANGDAE">상대&#x2196;</label></th>
+          <th onclick="colorChange(this.id, event)" id="location4"><label><input type="checkbox" th:field="*{locations}" th:value="ENGINEER_SIDE_DOOR">쪽문&#x2197;</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location5"><label><input type="checkbox" id="bockgae" th:field="*{locations}" th:value="BOKGAE">복개도로&#x2198;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location6"><label><input type="checkbox" id="location_etc" th:field="*{locations}" th:value="INSIDE_SCHOOL">기타</label></th>
+          <th onclick="colorChange(this.id, event)" id="location5"><label><input type="checkbox" th:field="*{locations}" th:value="BOKGAE">복개도로&#x2198;</label></th>
+          <th onclick="colorChange(this.id, event)" id="location6"><label><input type="checkbox" th:field="*{locations}" th:value="INSIDE_SCHOOL">학교내부</label></th>
         </tr>
       </table>
     </div>
@@ -84,24 +84,24 @@
       <h3>먹기 <span>싫은</span> 종류의 음식을 모두 선택하세요</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food1"><label><input type="checkbox" id="korea" th:field="*{unselectedCategories}" th:value="KOREAN">한식</label></th>
-          <th onclick="colorChange(this.id, event)" id="food2"><label><input type="checkbox" id="china" th:field="*{unselectedCategories}" th:value="CHINESE">중식</label></th>
+          <th onclick="colorChange(this.id, event)" id="food1"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="KOREAN">한식</label></th>
+          <th onclick="colorChange(this.id, event)" id="food2"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="CHINESE">중식</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food3"><label><input type="checkbox" id="japan" th:field="*{unselectedCategories}" th:value="JAPANESE">일식</label></th>
-          <th onclick="colorChange(this.id, event)" id="food4"><label><input type="checkbox" id="western" th:field="*{unselectedCategories}" th:value="ITALY">양식</label></th>
+          <th onclick="colorChange(this.id, event)" id="food3"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="JAPANESE">일식</label></th>
+          <th onclick="colorChange(this.id, event)" id="food4"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="ITALY">양식</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food5"><label><input type="checkbox" id="asian" th:field="*{unselectedCategories}" th:value="ASIAN">아시아</label></th>
-          <th onclick="colorChange(this.id, event)" id="food6"><label><input type="checkbox" id="chicken" th:field="*{unselectedCategories}" th:value="CHICKEN">치킨</label></th>
+          <th onclick="colorChange(this.id, event)" id="food5"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="ASIAN">아시아</label></th>
+          <th onclick="colorChange(this.id, event)" id="food6"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="CHICKEN">치킨</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food7"><label><input type="checkbox" id="fastfood" th:field="*{unselectedCategories}" th:value="FAST_FOOD">패푸</label></th>
-          <th onclick="colorChange(this.id, event)" id="food8"><label><input type="checkbox" id="steak" th:field="*{unselectedCategories}" th:value="GOGI">고기</label></th>
+          <th onclick="colorChange(this.id, event)" id="food7"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="FAST_FOOD">패푸</label></th>
+          <th onclick="colorChange(this.id, event)" id="food8"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="GOGI">고기</label></th>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food9"><label><input type="checkbox" id="snack" th:field="*{unselectedCategories}" th:value="BUNSIK">분식</label></th>
-          <th onclick="colorChange(this.id, event)" id="food10"><label><input type="checkbox" id="food_etc" th:field="*{unselectedCategories}" th:value="ETC">기타</label></th>
+          <th onclick="colorChange(this.id, event)" id="food9"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="BUNSIK">분식</label></th>
+          <th onclick="colorChange(this.id, event)" id="food10"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="ETC">기타</label></th>
         </tr>
       </table>
     </div>

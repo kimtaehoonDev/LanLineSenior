@@ -33,11 +33,6 @@ public class SearchForm {
     private OpenType openType;
 
     public SearchCondition toEntity() {
-        System.out.println("locations : "+ locations);
-        for (Location location : locations) {
-            System.out.println("location = " + location.getKey());
-            System.out.println("location = " + location.getValue());
-        }
         return new SearchCondition(locations, unselectedCategories, isAtmosphere,
                 hasCostPerformance, canEatSingle, maxCostLine, openType);
 
