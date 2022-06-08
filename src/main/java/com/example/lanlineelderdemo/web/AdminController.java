@@ -24,17 +24,17 @@ public class AdminController {
 
     @GetMapping("/info")
     public String adminForm() {
-        return "adminPage";
+        return "admin/adminPage";
     }
 
     @GetMapping("/register")
     public String registerForm(@ModelAttribute("createForm") CreateForm form) {
-        return "adminRegisterForm";
+        return "admin/adminRegisterForm";
     }
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
-        return "loginForm";
+        return "admin/loginForm";
     }
 
     @PostMapping("/login")
@@ -47,7 +47,7 @@ public class AdminController {
             return "redirect:/";
         } catch (IllegalArgumentException e) {
             bindingResult.reject("loginFail", e.getMessage());
-            return "loginForm";
+            return "admin/loginForm";
         }
     }
 

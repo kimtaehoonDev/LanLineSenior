@@ -6,14 +6,14 @@ spring:
 #    driver-class-name: org.h2.Driver
 #    username: sa
 
-# 여기 파일 gitignore 만들기
+
 
   jpa:
     properties:
       hibernate.format_sql: true
-    show-sql: true
+    show-sql: false
     hibernate:
-      ddl-auto: update # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
+      ddl-auto: validate # 바뀔수 있음. DB 고정으로 등록해두려면 이거 변경
   mvc:
     hiddenmethod:
       filter:

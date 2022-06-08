@@ -29,6 +29,7 @@ public class RestaurantService {
     @Transactional
     public void registerRestaurants(List<RestaurantCreateServiceRequestDto> dataList) {
         for (RestaurantCreateServiceRequestDto data : dataList) {
+            System.out.println(data.getName());
             registerRestaurant(data);
         }
     }

@@ -28,11 +28,11 @@ public class Menu {
     @NotBlank
     private String menuName;
 
-    @NotBlank
+    @NotNull
     private Integer numberOfMeal;
 
-    @NotBlank
-    private int price;
+    @NotNull
+    private Integer price;
 
     @Builder(builderClassName = "createMenu", builderMethodName = "createMenu")
     private Menu(Restaurant restaurant, OpenType openType, String menuName, Integer numberOfMeal, Integer price) {
