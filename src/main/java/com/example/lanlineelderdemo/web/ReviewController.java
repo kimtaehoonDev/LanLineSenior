@@ -42,7 +42,7 @@ public class ReviewController {
                            @ModelAttribute ReviewUpdateForm reviewUpdateForm, Model model) {
         model.addAttribute("review", reviewService.findReview(reviewId));
         model.addAttribute("reviewUpdateForm", reviewUpdateForm);
-        return "/review/editForm";
+        return "review/editForm";
     }
     
     @ResponseBody
@@ -60,7 +60,7 @@ public class ReviewController {
     public String deleteForm(@RequestParam Long restaurantId, @RequestParam Long reviewId,
                              @ModelAttribute ReviewDeleteForm reviewDeleteForm, Model model) {
         model.addAttribute("reviewDeleteForm", reviewDeleteForm);
-        return "/review/deleteForm";
+        return "review/deleteForm";
     }
 
     @ResponseBody
