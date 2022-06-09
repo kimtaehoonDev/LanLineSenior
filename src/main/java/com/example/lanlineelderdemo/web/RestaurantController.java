@@ -7,7 +7,6 @@ import com.example.lanlineelderdemo.web.form.review.ReviewCreateForm;
 import com.example.lanlineelderdemo.utils.enums.EnumMapper;
 import com.example.lanlineelderdemo.utils.enums.EnumValue;
 import com.example.lanlineelderdemo.utils.ExcelFileManager;
-import com.example.lanlineelderdemo.domain.SearchCondition;
 import com.example.lanlineelderdemo.restaurant.dto.controller.ShowRestaurantDetailsResponseDto;
 import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.menu.MenuService;
@@ -32,10 +31,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
 public class RestaurantController {
+    private static final int MAX_RESTAURANT_CNT = 5;
+    private static final int EACH_RESTAURANT_PARAM_CNT = 7;
     private final EnumMapper enumMapper;
     private final RestaurantService restaurantService;
     private final MenuService menuService;
@@ -96,53 +98,76 @@ public class RestaurantController {
             return "restaurants/searchForm";
         }
 
-        SearchCondition searchCondition = searchForm.toEntity();
-        List<SearchRestaurantResponseDto> restaurants = restaurantService.searchRestaurants(searchCondition);
+        List<SearchRestaurantResponseDto> restaurantsDto = restaurantService.searchRestaurants(searchForm.toEntity());
+        List<String> restaurantsParam = makeParameters(restaurantsDto);
+        return "redirect:/result?restaurants=" + URLEncoder.encode(StringUtils.join(restaurantsParam, ','));
+    }
 
-        return "redirect:/result?restaurants=" + URLEncoder.encode(StringUtils.join(restaurants, ','));
+    private List<String> makeParameters(List<SearchRestaurantResponseDto> restaurants) {
+        return restaurants.stream().map(restaurant -> restaurant.convertParam()).collect(Collectors.toList());
     }
 
     @GetMapping("result")
     public String searchRestaurantResult(@RequestParam List<String> restaurants, Model model) {
-
-        List<SearchRestaurantResponseDto> results = new ArrayList<>();
-        for (String restaurant : restaurants) {
-            restaurant = StringUtils.removeStart(restaurant, "SearchRestaurantResponseDto{");
-            restaurant = StringUtils.removeEnd(restaurant, "}");
-            SearchRestaurantResponseDto restaurantResponseDto = new SearchRestaurantResponseDto();
-
-            String[] infos = restaurant.split("%");
-            for (String info : infos) {
-                String[] idAndValue = info.split("=");
-                String id = idAndValue[0];
-                String value = idAndValue[1];
-
-                if (id.equals("id")) {
-                    restaurantResponseDto.setId(Long.valueOf(value));
-                }
-                if (id.equals("name")) {
-                    restaurantResponseDto.setName(value);
-                }
-                if (id.equals("location")) {
-                    restaurantResponseDto.setLocation(Location.find(value));
-                }
-                if (id.equals("category")) {
-                    restaurantResponseDto.setCategory(FoodCategory.find(value));
-                }
-                if (id.equals("locationX")) {
-                    restaurantResponseDto.setLocationX(Double.valueOf(value));
-                }
-                if (id.equals("locationY")) {
-                    restaurantResponseDto.setLocationY(Double.valueOf(value));
-                }
-                if (id.equals("minCostPerPerson")) {
-                    restaurantResponseDto.setMinCostPerPerson(Integer.valueOf(value));
-                }
+        try {
+            List<SearchRestaurantResponseDto> results = new ArrayList<>();
+            if (results.size() > MAX_RESTAURANT_CNT) {
+                throw new IllegalArgumentException("잘못된 파라미터 요청입니다.");
             }
-            results.add(restaurantResponseDto);
+            for (String restaurant : restaurants) {
+                results.add(makeResponsePuttingValue(restaurant));
+            }
+            model.addAttribute("results", results);
+            return "restaurants/resultPage";
+        } catch (IllegalArgumentException e) {
+            return "redirect:/";
         }
-        model.addAttribute("results", results);
-        return "restaurants/resultPage";
+    }
+
+    private SearchRestaurantResponseDto makeResponsePuttingValue(String restaurant) {
+        SearchRestaurantResponseDto restaurantResponseDto = new SearchRestaurantResponseDto();
+
+        String[] infos = restaurant.split("%");
+        if (infos.length != EACH_RESTAURANT_PARAM_CNT) {
+            throw new IllegalArgumentException("잘못된 파라미터 요청입니다.");
+        }
+        for (String info : infos) {
+            String[] idAndValue = info.split("=");
+            if (idAndValue.length != 2) {
+                throw new IllegalArgumentException("잘못된 파라미터 요청입니다.");
+            }
+            putValueUsingId(restaurantResponseDto,idAndValue);
+        }
+        return restaurantResponseDto;
+    }
+
+    private SearchRestaurantResponseDto putValueUsingId(SearchRestaurantResponseDto restaurantResponseDto, String[] idAndValue) {
+        String id = idAndValue[0];
+        String value = idAndValue[1];
+
+        if (id.equals("id")) {
+            restaurantResponseDto.setId(Long.valueOf(value));
+        }
+        else if (id.equals("name")) {
+            restaurantResponseDto.setName(value);
+        }
+        else if (id.equals("location")) {
+            restaurantResponseDto.setLocation(Location.find(value));
+        }
+        else if (id.equals("category")) {
+            restaurantResponseDto.setCategory(FoodCategory.find(value));
+        }
+        else if (id.equals("locationX")) {
+            restaurantResponseDto.setLocationX(Double.valueOf(value));
+        }
+        else if (id.equals("locationY")) {
+            restaurantResponseDto.setLocationY(Double.valueOf(value));
+        } else if (id.equals("minCostPerPerson")) {
+            restaurantResponseDto.setMinCostPerPerson(Integer.valueOf(value));
+        } else {
+            throw new IllegalArgumentException("잘못된 파라미터 요청입니다.");
+        }
+        return restaurantResponseDto;
     }
 
     /**

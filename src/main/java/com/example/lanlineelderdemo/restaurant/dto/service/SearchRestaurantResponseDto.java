@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
+@ToString
 public class SearchRestaurantResponseDto {
     private Long id;
 
@@ -38,16 +39,13 @@ public class SearchRestaurantResponseDto {
 
     }
 
-    @Override
-    public String toString() {
-        return "SearchRestaurantResponseDto{" +
-                "id=" + id +
+    public String convertParam() {
+        return "id=" + id +
                 "%name=" + name +
                 "%location=" + location +
                 "%category=" + category +
                 "%locationX=" + locationX +
                 "%locationY=" + locationY +
-                "%minCostPerPerson=" + minCostPerPerson +
-                '}';
+                "%minCostPerPerson=" + minCostPerPerson;
     }
 }
