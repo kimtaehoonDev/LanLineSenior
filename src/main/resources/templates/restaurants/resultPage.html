@@ -11,7 +11,7 @@
 <body>
 <header onClick="location.href='searchForm.html'" th:onclick="|location.href='@{/search}'|" style="cursor: pointer">랜선선배</header>
 <main>
-  <article id="map" style="width:400px;height:400px;"></article>
+  <article id="map"></article>
   <div id="results"></div>
 </main>
 
@@ -22,7 +22,7 @@
 
   var mapOptions = {
     center: new naver.maps.LatLng(35.177049, 126.906614),
-    zoom: 15
+    zoom: 14
   };
 
   var map = new naver.maps.Map('map', mapOptions);
