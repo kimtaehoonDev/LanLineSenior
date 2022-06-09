@@ -32,7 +32,7 @@ public class ReviewService {
         Restaurant restaurant = getRestaurant(reviewCreateServiceRequestDto.getRestaurantId());
 
         reviewCreateServiceRequestDto.setPassword(passwordEncoder.encode(reviewCreateServiceRequestDto.getPassword()));
-        Review review = reviewCreateServiceRequestDto.toEntity(restaurant); //레스토랑을 주입해준다. 연관관계떄문.
+        Review review = reviewCreateServiceRequestDto.toEntity(restaurant);
         reviewRepository.save(review);
         return review.getId();
     }
@@ -47,7 +47,6 @@ public class ReviewService {
 
     /**
      * Read
-     * @return
      */
     public List<ReviewResponseDto> inqueryRestaurantReviews(Long restaurantId) {
         List<Review> reviews = reviewRepository.findReviewsByRestaurantId(restaurantId);
@@ -67,7 +66,6 @@ public class ReviewService {
 
     /**
      * Delete
-     * update review set is_using=FALSE where review_id=해당아이디;
      */
     @Transactional
     public Long deleteReview(Long reviewId, String password) {
@@ -78,8 +76,6 @@ public class ReviewService {
     }
 
     private void validatePasswordIsSame(Review review, String password) {
-        System.out.println("review = " + review.getPassword());
-        System.out.println("password = " + password);
         if (!passwordEncoder.matches(password, review.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
@@ -102,5 +98,4 @@ public class ReviewService {
         return ReviewResponseDto.from(review);
     }
 
-//    public List<CommentResponseDto>
 }

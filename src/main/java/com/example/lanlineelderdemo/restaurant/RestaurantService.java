@@ -27,11 +27,9 @@ public class RestaurantService {
      * CREATE
      * 어드민 페이지 -> 식당 등록 기능
      */
-    //TODO 벌크연산 가능하도록 만들기.
     @Transactional
     public void registerRestaurants(List<RestaurantCreateServiceRequestDto> dataList) {
         for (RestaurantCreateServiceRequestDto data : dataList) {
-            System.out.println(data.getName());
             registerRestaurant(data);
         }
     }
@@ -84,15 +82,6 @@ public class RestaurantService {
      * @return
      */
     public List<SearchRestaurantResponseDto> searchRestaurants(SearchCondition searchCondition) {
-        List<Location> locations = searchCondition.getLocations();
-        for (Location location : locations) {
-            System.out.println("location = " + location.getKey());
-        }
-        List<FoodCategory> unselectedCategories = searchCondition.getUnselectedCategories();
-        for (FoodCategory unselectedCategory : unselectedCategories) {
-            System.out.println("unselectedCategory.getKey() = " + unselectedCategory.getKey());
-        }
-
         List<FindRestaurantBySearchConditionResponseDto> findRestaurants = restaurantRepository.findRestaurantBySearchCondition(searchCondition);
         return findRestaurants.stream().map(findRestaurantBySearchConditionResponseDto -> SearchRestaurantResponseDto.of(findRestaurantBySearchConditionResponseDto)).collect(Collectors.toList());
     }

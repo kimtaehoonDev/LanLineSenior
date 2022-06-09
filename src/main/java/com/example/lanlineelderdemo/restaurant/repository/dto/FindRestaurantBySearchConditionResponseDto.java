@@ -18,7 +18,7 @@ public class FindRestaurantBySearchConditionResponseDto {
     private Boolean isAtmosphere;
     private Boolean hasCostPerformance;
     private Boolean canEatSingle;
-    private String adminComment; //null 가능.
+    private String adminComment;
     private String url;
     private OpenType openType;
     private String menuName;

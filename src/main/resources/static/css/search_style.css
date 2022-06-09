@@ -47,6 +47,7 @@ label {
     display: block;
 }
 
+/*여기 부분 지우면 뒤로가기 눌러도 버튼에 색깔 남아있나 테스트 해보기. -> 색깔이 남아있지 않음.*/
 input[type="checkbox"] {
     display: none;
 }

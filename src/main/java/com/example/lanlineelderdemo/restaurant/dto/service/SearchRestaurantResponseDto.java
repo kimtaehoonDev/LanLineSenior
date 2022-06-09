@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class SearchRestaurantResponseDto { // TODO RestaurantResponseDto랑 컬럼 한개차이인데 어떻게 합쳐버릴까...
+public class SearchRestaurantResponseDto {
     private Long id;
 
     private String name;

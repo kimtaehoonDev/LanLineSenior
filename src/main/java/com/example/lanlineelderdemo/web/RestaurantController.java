@@ -98,7 +98,6 @@ public class RestaurantController {
             return "restaurants/searchForm";
         }
 
-
         SearchCondition searchCondition = searchForm.toEntity();
         List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
         model.addAttribute("results", results);
@@ -131,7 +130,6 @@ public class RestaurantController {
 
     /**
      * 등록 페이지 GetMapping (Admin만) 엑셀 사용해서 그냥 등록해버리면 편할텐데. 이거 방법 찾아보기.
-     * TODO 식당 한개씩 입력받는 기능도 만들어야 할지도. 일단 keep
      */
     @GetMapping("/restaurants/new")
     public String registerRestaurantForm(@ModelAttribute MultipartFile file) {

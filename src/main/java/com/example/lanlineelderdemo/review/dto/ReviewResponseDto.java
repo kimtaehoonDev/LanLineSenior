@@ -17,6 +17,7 @@ public class ReviewResponseDto {
         this.id = id;
         this.writerName = writerName;
         this.content = content;
+        //TODO LocalDateTime의 형식을 변경해주는 로직. 여기 말고 다른 위치로 옮기고 싶음. 고민 한 번 해보기.
         this.lastModifiedDate = lastModifiedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd a HH:mm:ss"));
 
     }

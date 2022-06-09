@@ -11,6 +11,8 @@ import java.io.IOException;
 
 public class ExcelFileManager {
 
+    private static final int USING_SHEET_NUMBER = 0;
+
     public static Sheet validateExcelFileIsAvailable(MultipartFile file) throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
@@ -22,7 +24,7 @@ public class ExcelFileManager {
         } else if (extension.equals("xls")) {
             workbook = new HSSFWorkbook(file.getInputStream());
         }
-        return workbook.getSheetAt(0); // 0번째 시트를 사용한다.
+        return workbook.getSheetAt(USING_SHEET_NUMBER);
     }
 
 }

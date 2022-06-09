@@ -22,11 +22,11 @@ public class Restaurant {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Location location;//위치 카테고리
+    private Location location;
 
     @NotNull
     @Embedded
-    private GeoLocation geoLocation; //x값, y값. 지도에 매핑하기 위함.
+    private GeoLocation geoLocation;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class Restaurant {
     private Boolean canEatSingle;
 
     @Nullable
-    private String adminComment; //null 가능.
+    private String adminComment;
 
     @Nullable
     private String url;

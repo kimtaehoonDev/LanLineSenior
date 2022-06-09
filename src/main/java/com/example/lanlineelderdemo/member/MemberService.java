@@ -14,7 +14,6 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    //Join 기능은 만들지 않기.? sql에 바로 집어넣을거.
 
     public Long login(String loginId, String password) {
         Admin admin = findMember(loginId);

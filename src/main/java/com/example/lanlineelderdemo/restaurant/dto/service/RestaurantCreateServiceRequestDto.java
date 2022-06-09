@@ -20,7 +20,7 @@ public class RestaurantCreateServiceRequestDto {
     private Double geoLocationY;
 
     @NotNull
-    private Location location; //Enum을 바로 받을 수 있나?
+    private Location location;
 
     @NotNull
     private FoodCategory category;
@@ -34,7 +34,6 @@ public class RestaurantCreateServiceRequestDto {
     @Nullable
     private String adminComment;
 
-    //TODO URL 타입인지 확인.
     private String url;
 
     public RestaurantCreateServiceRequestDto(Row row) {
