@@ -1,6 +1,8 @@
 package com.example.lanlineelderdemo.web;
 
-import com.example.lanlineelderdemo.review.dto.ReviewResponseDto;
+import com.example.lanlineelderdemo.domain.restaurant.FoodCategory;
+import com.example.lanlineelderdemo.domain.restaurant.Location;
+import com.example.lanlineelderdemo.restaurant.dto.service.*;
 import com.example.lanlineelderdemo.web.form.review.ReviewCreateForm;
 import com.example.lanlineelderdemo.utils.enums.EnumMapper;
 import com.example.lanlineelderdemo.utils.enums.EnumValue;
@@ -11,24 +13,21 @@ import com.example.lanlineelderdemo.domain.menu.OpenType;
 import com.example.lanlineelderdemo.menu.MenuService;
 import com.example.lanlineelderdemo.restaurant.RestaurantService;
 import com.example.lanlineelderdemo.web.form.menu.MenuForm;
-import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantCreateServiceRequestDto;
-import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantRecommendMenuDto;
-import com.example.lanlineelderdemo.restaurant.dto.service.SearchRestaurantResponseDto;
-import com.example.lanlineelderdemo.restaurant.dto.service.RestaurantResponseDto;
 import com.example.lanlineelderdemo.review.ReviewService;
 import com.example.lanlineelderdemo.web.form.restaurant.SearchForm;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -92,14 +91,56 @@ public class RestaurantController {
      * 검색
      */
     @PostMapping("search")
-    public String searchRestaurants(@Validated @ModelAttribute SearchForm searchForm,
-                                    BindingResult bindingResult, Model model) {
+    public String searchRestaurants(@Validated @ModelAttribute SearchForm searchForm, BindingResult bindingResult) throws UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             return "restaurants/searchForm";
         }
 
         SearchCondition searchCondition = searchForm.toEntity();
-        List<SearchRestaurantResponseDto> results = restaurantService.searchRestaurants(searchCondition);
+        List<SearchRestaurantResponseDto> restaurants = restaurantService.searchRestaurants(searchCondition);
+
+        return "redirect:/result?restaurants=" + URLEncoder.encode(StringUtils.join(restaurants, ','));
+    }
+
+    @GetMapping("result")
+    public String searchRestaurantResult(@RequestParam List<String> restaurants, Model model) {
+
+        List<SearchRestaurantResponseDto> results = new ArrayList<>();
+        for (String restaurant : restaurants) {
+            restaurant = StringUtils.removeStart(restaurant, "SearchRestaurantResponseDto{");
+            restaurant = StringUtils.removeEnd(restaurant, "}");
+            SearchRestaurantResponseDto restaurantResponseDto = new SearchRestaurantResponseDto();
+
+            String[] infos = restaurant.split("%");
+            for (String info : infos) {
+                String[] idAndValue = info.split("=");
+                String id = idAndValue[0];
+                String value = idAndValue[1];
+
+                if (id.equals("id")) {
+                    restaurantResponseDto.setId(Long.valueOf(value));
+                }
+                if (id.equals("name")) {
+                    restaurantResponseDto.setName(value);
+                }
+                if (id.equals("location")) {
+                    restaurantResponseDto.setLocation(Location.find(value));
+                }
+                if (id.equals("category")) {
+                    restaurantResponseDto.setCategory(FoodCategory.find(value));
+                }
+                if (id.equals("locationX")) {
+                    restaurantResponseDto.setLocationX(Double.valueOf(value));
+                }
+                if (id.equals("locationY")) {
+                    restaurantResponseDto.setLocationY(Double.valueOf(value));
+                }
+                if (id.equals("minCostPerPerson")) {
+                    restaurantResponseDto.setMinCostPerPerson(Integer.valueOf(value));
+                }
+            }
+            results.add(restaurantResponseDto);
+        }
         model.addAttribute("results", results);
         return "restaurants/resultPage";
     }

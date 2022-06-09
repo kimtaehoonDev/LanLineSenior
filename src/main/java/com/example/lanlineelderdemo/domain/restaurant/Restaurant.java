@@ -1,11 +1,14 @@
 package com.example.lanlineelderdemo.domain.restaurant;
 
+import com.example.lanlineelderdemo.utils.Encoder;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Entity
 @Getter
@@ -53,7 +56,6 @@ public class Restaurant {
                        Boolean canEatSingle, String adminComment, String url) {
         validate(name, location, category, geoLocationX, geoLocationY, isAtmosphere, hasCostPerformance,
                 canEatSingle, url);
-
         this.name = name;
         this.location = location;
         this.geoLocation = new GeoLocation(geoLocationX, geoLocationY);

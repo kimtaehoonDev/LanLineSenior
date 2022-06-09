@@ -43,6 +43,7 @@ public class MenuService {
 
     private Restaurant findRestaurant(String restaurantName) {
         Optional<Restaurant> parsingRestaurant = restaurantRepository.findByName(restaurantName);
+        System.out.println(parsingRestaurant.get().getName());
         if (parsingRestaurant.isEmpty()) {
             throw new IllegalArgumentException("해당되는 이름을 가진 식당은 존재하지 않습니다.");
         }
