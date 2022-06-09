@@ -47,9 +47,9 @@
 </head>
 
 <body>
-<header onclick="location.href='searchForm.html'" th:onclick="|location.href='@{/search}'|" style="cursor: pointer">랜선선배</header>
+<header onclick="location.href='searchForm.html'" th:onclick="|location.href='@{/}'|" style="cursor: pointer">랜선선배</header>
 <main>
-  <form action="" th:action method="post" th:object="${searchForm}">
+  <form action="" th:action="@{/search}" method="post" th:object="${searchForm}">
     <div class="time">
       <h3>1. 언제 식사를 할 예정인가요?(필수)</h3>
       <table align="center">

@@ -83,7 +83,7 @@ public class RestaurantController {
     /**
      * 검색 페이지
      */
-    @GetMapping("/search")
+    @GetMapping("/")
     public String searchRestaurantsForm(@ModelAttribute SearchForm form) {
         return "restaurants/searchForm";
     }
