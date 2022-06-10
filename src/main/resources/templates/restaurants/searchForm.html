@@ -5,45 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/css/search_style.css" th:href="@{/css/search_style.css}">
   <title>식당 조건 검색</title>
-  <script>
-    function colorChange(x, event){
-      let check = false;
-      let rowcolor= null;
-      rowcolor = document.getElementById(x);
-
-      if(event.target.checked){
-        rowcolor.style.background="darkseagreen";
-      }else{
-        rowcolor.style.background="ghostwhite";
-      }
-      if(x==='time1'){
-        check=document.getElementById("lunch");
-        let rowcolor1 = document.getElementById("time1");
-        let rowcolor2 = document.getElementById("time2");
-        if(check.checked){
-          rowcolor1.style.background="darkseagreen";
-          rowcolor2.style.background="ghostwhite";
-
-        }else{
-          rowcolor1.style.background="ghostwhite";
-          rowcolor2.style.background="darkseagreen";
-        }
-      }
-      if(x==='time2'){
-        check=document.getElementById("dinner");
-        let rowcolor1 = document.getElementById("time1");
-        let rowcolor2 = document.getElementById("time2");
-        if(check.checked){
-          rowcolor1.style.background="ghostwhite";
-          rowcolor2.style.background="darkseagreen";
-
-        }else{
-          rowcolor1.style.background="darkseagreen";
-          rowcolor2.style.background="ghostwhite";
-        }
-      }
-    }
-  </script>
 </head>
 
 <body>
@@ -54,9 +15,14 @@
       <h3>1. 언제 식사를 할 예정인가요?(필수)</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="time1"><label><input type="radio" name="time" id="lunch" th:field="*{openType}" th:value="LUNCH">점심</label></th>
-          <th onclick="colorChange(this.id, event)" id="time2"><label><input type="radio" name="time" id="dinner" th:field="*{openType}" th:value="DINNER">저녁</label></th>
-<!--          -->
+          <td id="time1">
+            <input type="radio" id="lunch" th:field="*{openType}" th:value="LUNCH">
+            <label for="lunch" class="checkbox">점심</label>
+          </td>
+          <td id="time2">
+            <input type="radio" id="dinner" th:field="*{openType}" th:value="DINNER">
+            <label for="dinner" class="checkbox">저녁</label>
+          </td>
         </tr>
       </table>
       <div align="center" th:classappend="error" th:errors="*{openType}">필수값 오류</div>
@@ -66,41 +32,101 @@
       <h3>2. 위치를 모두 선택하세요</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location1"><label><input type="checkbox" th:field="*{locations}" th:value="FRONT_DOOR">정문&#x2B07;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location2"><label><input type="checkbox" th:field="*{locations}" th:value="BACK_DOOR">후문&#x27A1;</label></th>
+          <td id="location1">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="front" class="locations" name=locations th:value="FRONT_DOOR"/>
+            <label for="front" class="checkbox">정문&#x2B07;</label>
+          </td>
+          <td id="location2">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="back" class="locations" name=locations th:value="BACK_DOOR">
+            <label for="back" class="checkbox">후문&#x27A1;</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location3"><label><input type="checkbox" th:field="*{locations}" th:value="SANGDAE">상대&#x2196;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location4"><label><input type="checkbox" th:field="*{locations}" th:value="ENGINEER_SIDE_DOOR">쪽문&#x2197;</label></th>
+          <td id="location3">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="sangdae" class="locations" name=locations th:value="SANGDAE">
+            <label for="sangdae">상대&#x2196;</label>
+          </td>
+          <td id="location4">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="side" class="locations" name=locations th:value="ENGINEER_SIDE_DOOR">
+            <label for="side">쪽문&#x2197;</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="location5"><label><input type="checkbox" th:field="*{locations}" th:value="BOKGAE">복개도로&#x2198;</label></th>
-          <th onclick="colorChange(this.id, event)" id="location6"><label><input type="checkbox" th:field="*{locations}" th:value="INSIDE_SCHOOL">학교내부</label></th>
+          <td id="location5">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="bockgae" class="locations" name=locations th:value="BOKGAE">
+            <label for="bockgae">복개도로&#x2198;</label>
+          </td>
+          <td id="location6">
+            <input type="hidden" name="_locations" value="on"/>
+            <input type="checkbox" id="inside" class="locations" name=locations th:value="INSIDE_SCHOOL">
+            <label for="inside">학교내부</label>
+          </td>
         </tr>
       </table>
     </div>
 
     <div class="food">
-      <h3>3. 먹기 <span>싫은</span> 종류의 음식을 모두 선택하세요</h3>
+      <h3>3. 먹기 <span class="emphasis">싫은</span> 종류의 음식을 모두 선택하세요</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food1"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="KOREAN">한식</label></th>
-          <th onclick="colorChange(this.id, event)" id="food2"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="CHINESE">중식</label></th>
+          <td id="food1">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="korea" th:value="KOREAN">
+            <label for="korea">한식</label>
+          </td>
+          <td id="food2">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="china" th:value="CHINESE">
+            <label for="china">중식</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food3"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="JAPANESE">일식</label></th>
-          <th onclick="colorChange(this.id, event)" id="food4"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="ITALY">양식</label></th>
+          <td id="food3">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="japan" th:value="JAPANESE">
+            <label for="japan">일식</label>
+          </td>
+          <td id="food4">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="italy" th:value="ITALY">
+            <label for="italy">양식</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food5"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="ASIAN">아시아</label></th>
-          <th onclick="colorChange(this.id, event)" id="food6"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="CHICKEN">치킨</label></th>
+          <td id="food5">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="asian" th:value="ASIAN">
+            <label for="asian">아시안</label>
+          </td>
+          <td id="food6">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="chicken" th:value="CHICKEN">
+            <label for="chicken">치킨</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food7"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="FAST_FOOD">패푸</label></th>
-          <th onclick="colorChange(this.id, event)" id="food8"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="GOGI">고기</label></th>
+          <td id="food7">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="fastfood" th:value="FAST_FOOD">
+            <label for="fastfood">패푸</label>
+          </td>
+          <td id="food8">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="gogi" th:value="GOGI">
+            <label for="gogi">고기</label>
+          </td>
         </tr>
         <tr>
-          <th onclick="colorChange(this.id, event)" id="food9"><label><input type="checkbox" th:field="*{unselectedCategories}" th:value="BUNSIK">분식</label></th>
+          <td id="food9">
+            <input type="hidden" name="_unselectedCategories" value="on"/>
+            <input type="checkbox" name="unselectedCategories" id="bunsik" th:value="BUNSIK">
+            <label for="bunsik">분식</label>
+          </td>
         </tr>
       </table>
     </div>
@@ -109,9 +135,21 @@
       <h3>4. 원하는 조건을 모두 선택하세요</h3>
       <table align="center">
         <tr>
-          <th onclick="colorChange(this.id, event)" id="condition1"><label><input type="checkbox" name="condition" th:field = "*{isAtmosphere}">분위기</label></th>
-          <th onclick="colorChange(this.id, event)" id="condition2"><label><input type="checkbox" name="condition" th:field = "*{hasCostPerformance}">가성비</label></th>
-          <th onclick="colorChange(this.id, event)" id="condition3"><label><input type="checkbox" name="condition" th:field = "*{canEatSingle}">혼밥</label></th>
+          <td id="condition1">
+            <input type="hidden" name="_isAtmosphere" value="on"/>
+            <input type="checkbox" name="isAtmosphere" id="isAtmosphere">
+            <label for="isAtmosphere" class="checkbox">분위기</label>
+          </td>
+          <td id="condition2">
+            <input type="hidden" name="_hasCostPerformance" value="on"/>
+            <input type="checkbox" name="hasCostPerformance" id="hasCostPerformance">
+            <label for="hasCostPerformance" class="checkbox">가성비</label>
+          </td>
+          <td id="condition3">
+            <input type="hidden" name="_canEatSingle" value="on"/>
+            <input type="checkbox" name="canEatSingle" id="canEatSingle">
+            <label for="canEatSingle" class="checkbox">혼밥</label>
+          </td>
         </tr>
       </table>
     </div>
