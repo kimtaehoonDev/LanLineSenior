@@ -37,6 +37,7 @@ public class RestaurantCreateServiceRequestDto {
     private String url;
 
     public RestaurantCreateServiceRequestDto(Row row) {
+        System.out.println(row.getCell(0).getStringCellValue());
         this.name = row.getCell(0).getStringCellValue();
         this.geoLocationX = row.getCell(1).getNumericCellValue();
         this.geoLocationY = row.getCell(2).getNumericCellValue();

@@ -100,5 +100,4 @@ public class RestaurantService {
         }
         return parsingRestaurant.get();
     }
-
 }

@@ -213,6 +213,7 @@ public class RestaurantController {
 
         List<RestaurantCreateServiceRequestDto> dataList = new ArrayList<>();
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            System.out.println("iNumber: "+i);
             Row row = worksheet.getRow(i);
             dataList.add(new RestaurantCreateServiceRequestDto(row));
         }
@@ -249,4 +250,11 @@ public class RestaurantController {
      * 수정
      * 수정 http 상태메세지 / 수정이 안되는 상황?
      */
+
+
+
+    @GetMapping("/noResult")
+    public String notFound() {
+        return "errorPage";
+    }
 }
