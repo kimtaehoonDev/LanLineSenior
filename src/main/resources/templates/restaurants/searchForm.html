@@ -138,7 +138,7 @@
           <td id="condition1">
             <input type="hidden" name="_isAtmosphere" value="on"/>
             <input type="checkbox" name="isAtmosphere" id="isAtmosphere">
-            <label for="isAtmosphere" class="checkbox">분위기</label>
+            <label for="isAtmosphere" class="checkbox">깔끔함</label>
           </td>
           <td id="condition2">
             <input type="hidden" name="_hasCostPerformance" value="on"/>
@@ -155,7 +155,7 @@
     </div>
 
     <div class="maxCost">
-      <h4>5. 1인당 지불 가능한 최대 금액을 입력하세요</h4><br>
+      <h3>5. 1인당 지불 가능한 최대 금액을 입력하세요</h3><br>
       <input type="text" name="maxCostLine" th:field = "*{maxCostLine}" value="" id="maxCostLine"/>
       <div align="center" th:classappend="error" th:errors="*{maxCostLine}" >금액 관련 오류</div>
     </div>
