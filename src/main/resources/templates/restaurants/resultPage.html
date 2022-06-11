@@ -84,7 +84,7 @@
     const table = document.createElement("table");
     table.setAttribute('id', restaurant.id);
     table.setAttribute("style", "cursor: pointer;");
-    table.setAttribute('onclick', 'window.open(\"restaurants/'+restaurant.id+'\")');
+    div.setAttribute('onclick', 'location.href=\"restaurants/'+restaurant.id+'\"');
 
     table.appendChild(detail1);
     table.appendChild(detail2);
