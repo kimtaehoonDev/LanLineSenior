@@ -1,89 +1,202 @@
 @font-face {
+    font-family: '나눔손글씨 느릿느릿체';
+    src: url("../font/나눔손글씨 느릿느릿체.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: '까투리';
     src: url("../font/Katuri.ttf");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: '나눔스퀘어';
-    src: url("../font/NanumSquareRoundB.ttf");
+    font-family: '미생';
+    src: url("../font/SDMiSaeng.ttf");
     font-weight: normal;
     font-style: normal;
 }
+header{
+    font-family: '나눔손글씨 느릿느릿체';
+    text-align: center;
+    color: #F46364;
+    font-size: 60px;
+    padding: 10px;
+    margin: 15px 0 15px 0;
+}
 
 body{
-    font-family: '나눔스퀘어';
-    margin: 0;
-    background-color: ghostwhite;
+    font-family: '미생';
+    margin: 0 15px 15px 15px;
+    background-color: #FDE9E0;
 }
-header{
-    font-family: '까투리';
-    text-align: center;
-    font-size: 35px;
+main {
+    background-color: #FDE9E0;
+    border-radius: 20px;
+    padding: 20px;
+}
+hr{
+    margin: 0 8px 0 8px;
+}
+section{
+    display: inline-block;
     border-style: solid;
-    border-width: 6px;
-    border-color: cadetblue;
-    margin-bottom: 1rem;
-    padding: 10px;
+    border-color: #F46364;
+    border-radius: 15px;
+    width: 100%;
+    background-color: #FFF4F0;
+    padding: 10px 0 10px 0;
 }
-main{
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-
-h3{
-    margin-top: 0;
-    margin-bottom: 5px;
+article{
     text-align: center;
+}
+.informaion div{
+    display: inline-block;
+    background-color: #FFE4D9;
+    width: 35%;
+    height: auto;
+    margin: 10px;
+    border-radius: 10px;
+}
+h2{
+    display: inline-block;
+    font-weight: lighter !important;
+    margin: 0;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 35px;
+}
+span{
+    font-size: 25px;
+}
+h3{
+    display: block;
+    font-weight: lighter !important;
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
 }
 h4{
-    font-size: 17px;
-    font-weight: bold;
-    margin-top: 0;
+    font-weight: lighter !important;
+    color: #F46364;
+    font-size: 23px;
+    margin-top: 10px;
     margin-bottom: 5px;
     display: inline-block;
 }
-h5{
-    margin-left: 10px;
-    margin-top: 5px;
+#tmi span{
+    font-weight: lighter !important;
+    font-size: 26px;
+    margin-top: 0;
     margin-bottom: 5px;
+    display: inline;
+    color: black;
+}
+p{
+    padding: 0;
+    margin: 0;
+}
+.hashtag{
+    text-align: center;
+}
+.hashtag div{
+
 }
 .hashtag span{
     display: inline-block;
-    font-size: 12px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 5px;
-    background-color: lightgray;
-    padding: 5px;
+    color: dodgerblue;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 5px 5px 5px;
+    margin-bottom: 10px;
+}
+.hashtag h4{
+    margin: 15px;
 }
 
-main button{
-    display: inline-block;
-    vertical-align: middle;
+.hyperlink{
+    background-color: #FFBBBC;
+    font-family: '까투리';
+    font-weight: lighter;
+    border-width: 0;
+    border-radius: 5px;
+    margin: 5px;
+    color: white;
+    font-size: 15px;
+    width: 30%;
+    height: 40px;
+    float: right;
+    box-shadow: -3px -3px 2px rgba(228, 226, 226,0.8), 3px 3px 5px rgba(0,0,0,0.2);
+}
+
+.bbs button{
+    font-family: '까투리';
+    font-weight: lighter;
     border-width: 0;
     border-radius: 5px;
     color: white;
-    background-color: #9abf7f;
-    font-weight: bolder;
-    font-size: 16px;
-    width: 9%;
-    height: 145px;
+    background-color: #F46364;
+    margin-top: 15px;
+    font-size: 20px;
+    width: 30%;
+    height: 40px;
     box-shadow: -3px -3px 2px rgba(228, 226, 226,0.8), 3px 3px 5px rgba(0,0,0,0.2);
 }
+
+.bbs{
+    text-align: center;
+}
+input[type="text"]{
+    background-color: #FFFAF7;
+    border-color: #FFD4C4;
+    border-width: 2px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 2px 0 2px 0;
+    width: 36%;
+    height: 23px;
+    border-style: solid;
+}
+input[type="password"]{
+    background-color: #FFFAF7;
+    border-color: #FFD4C4;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 2px 0 2px 0;
+    width: 55%;
+    height: 23px;
+}
+
+textarea{
+    background-color: #FFFAF7;
+    border-color: #FFD4C4;
+    border-width: 2px;
+    border-radius: 10px;
+    display: inline-block;
+    width: 89%;
+    margin-top: 5px;
+    padding: 10px;
+    resize: none;
+    vertical-align: middle;
+}
+
 footer button{
     display: inline-block;
     float: right;
     margin: 5px 0 5px 10px;
-    border-width: 0;
-    border-radius: 5px;
-    color: white;
-    background-color: seagreen;
+    border-style: solid;
+    border-color: #FFD2C3;
+    border-width: 2px;
+    border-radius: 25px;
+    color: gray;
+    background-color: #FFF4F0;
     font-weight: bolder;
     font-size: 13px;
-    width: 50px;
+    width: 60px;
     height: 30px;
-    box-shadow: -3px -3px 2px rgba(228, 226, 226,0.8), 3px 3px 5px rgba(0,0,0,0.2);
+
 }
 footer{
     margin-left: 1rem;
@@ -93,42 +206,30 @@ footer div{
     display: inline-block;
     width: 100%;
 }
-input[type="text"]{
-    display: inline-block;
-    margin: 2px 0 2px 0;
-    width: 35%;
-    height: 23px;
-}
-input[type="password"]{
-    display: inline-block;
-    margin: 2px 0 2px 0;
-    width: 54%;
-    height: 23px;
-}
-
-textarea{
-    display: inline-block;
-    width: 83%;
-    margin-top: 5px;
-    resize: none;
-    vertical-align: middle;
-}
 
 table{
     width: 100%;
-    border-style: solid;
-    border-color: gray;
-    border-collapse: collapse;
 }
 tr th{
-    border-style: solid;
-    border-color: gray;
-    background-color: blanchedalmond;
+    background-color: #FDE9E0;
+    border-left: solid 1px gray;
+    border-collapse: collapse;
+    padding-left: 7px;
+    padding-right: 5px;
+
+}
+table th:first-child{
+
+    border-left-style: none;
+}
+th{
+    font-size: 20px;
+    float: left;
+    background-color: white;
 }
 td{
-    border-style: solid;
-    border-color: gray;
-    background-color: white;
+    padding-left: 7px;
+    font-size: 18px;
 }
 .bbs{
     margin-top: 10px;

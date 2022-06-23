@@ -9,11 +9,14 @@
   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tv4q0aykz0"></script>
 </head>
 <body>
-<header onClick="location.href='searchForm.html'" th:onclick="|location.href='@{/}'|" style="cursor: pointer">랜선선배</header>
+<header onClick="location.href='searchForm.html'" th:onclick="|location.href='@{/}'|" style="cursor: pointer">랜선 선배</header>
+
+
+<article id="map"></article> <!--지도 들어가는 자리, article태그로 바꿔주기, header와 main태그 사이로 바꾸기-->
 <main>
-  <article id="map"></article>
-  <div id="results"></div>
+  <div id="results"><!--필수!! 이 div태그 단위로 반복되는거라 가장 바깥 태그는 div가 되어야함--></div>
 </main>
+
 
 <script th:inline="javascript">
   var locations = [[${locations}]]
@@ -38,7 +41,7 @@
 
   var markers = [],
           infoWindows = [];
-
+  console.log(MARKER_SPRITE_POSITION)
   for (var key in MARKER_SPRITE_POSITION) {
 
     var position = new naver.maps.LatLng(
@@ -48,7 +51,13 @@
     var marker = new naver.maps.Marker({
       map: map,
       position: position,
-      zIndex: 100
+      zIndex: 100,
+      icon: {
+        url: '../img/pngegg.png',
+        size: new naver.maps.Size(20, 25),
+        scaledSize: new naver.maps.Size(20, 25),
+      }
+
     });
 
     var infoWindow = new naver.maps.InfoWindow({
@@ -64,32 +73,34 @@
   };
 
   function addRestaurantList(restaurant) {
-
-    const detail1_1 = document.createElement("td");
-    const detail1_2 = document.createElement("td");
-    detail1_1.appendChild(document.createTextNode("가게명 : " + restaurant.name));
-    detail1_2.appendChild(document.createTextNode(locations[restaurant.location]));
-    const detail1 = document.createElement("tr");
-    detail1.appendChild(detail1_1);
-    detail1.appendChild(detail1_2);
-
-    const detail2_1 = document.createElement("td");
-    const detail2_2 = document.createElement("td");
-    detail2_1.appendChild(document.createTextNode("1인당 예상 비용 : " + restaurant.minCostPerPerson));
-    detail2_2.appendChild(document.createTextNode(foodCategories[restaurant.category]));
-    const detail2 = document.createElement("tr");
-    detail2.appendChild(detail2_1);
-    detail2.appendChild(detail2_2);
+    const img = document.createElement("img");
+    img.setAttribute('src', '../img/pngegg.png');
+    img.setAttribute('alt', 'marker');
 
     const table = document.createElement("table");
     table.setAttribute('id', restaurant.id);
     table.setAttribute("style", "cursor: pointer;");
-    div.setAttribute('onclick', 'location.href=\"restaurants/'+restaurant.id+'\"');
+    table.setAttribute('onclick', 'location.href=\"restaurants/'+restaurant.id+'\"');
 
-    table.appendChild(detail1);
-    table.appendChild(detail2);
-    table.appendChild(document.createElement("hr"));
+    const caption = document.createElement("caption");
+    caption.appendChild(document.createTextNode(restaurant.name));
 
+    const tr = document.createElement("tr");
+    const tdLocation = document.createElement("td");
+    tdLocation.appendChild(document.createTextNode(locations[restaurant.location]));
+    const tdCategory = document.createElement("td");
+    tdCategory.appendChild(document.createTextNode(foodCategories[restaurant.category]));
+
+    const tdCost = document.createElement("td");
+    tdCost.appendChild(document.createTextNode("1인당 " + restaurant.minCostPerPerson + "원 예상"));
+
+    table.appendChild(caption);
+    table.appendChild(tr);
+    tr.appendChild(tdLocation);
+    tr.appendChild(tdCategory);
+    tr.appendChild(tdCost);
+
+    document.getElementById('results').appendChild(img);
     document.getElementById('results').appendChild(table);
   }
   // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
@@ -113,8 +124,5 @@
 </script>
 </body>
 </html>
-
-
-
 
 

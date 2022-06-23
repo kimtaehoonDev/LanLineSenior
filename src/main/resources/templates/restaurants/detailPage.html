@@ -14,61 +14,81 @@
             }
         }
 
-    function editPopup(restaurantId, reviewId) {
-            window.open("/reviews/edit?restaurantId="+restaurantId+"&reviewId="+reviewId, "_black", "width=320, height=500, left=30, top=50");
+        function editPopup(restaurantId, reviewId) {
+            window.open("/reviews/edit?restaurantId=" + restaurantId + "&reviewId=" + reviewId, "_black", "width=320, height=500, left=30, top=50");
         }
+
         function deletePopup(restaurantId, reviewId) {
-            window.open("/reviews/delete?restaurantId="+restaurantId+"&reviewId="+reviewId, "_black", "width=320, height=500, left=30, top=50");
+            window.open("/reviews/delete?restaurantId=" + restaurantId + "&reviewId=" + reviewId, "_black", "width=320, height=500, left=30, top=50");
         }
     </script>
 </head>
 <body>
 
 
-<header onclick="location.href='searchForm.html'" th:onclick="|location.href='@{/}'|" style="cursor: pointer">랜선선배</header>
+<header onclick="location.href='searchForm.html'" th:onclick="|location.href='@{/}'|" style="cursor: pointer">랜선 선배
+</header>
 <main>
+    <h2 th:text="${restaurant.name}">음식점 이름<span>/</span></h2> <!--음식-->
+    <span th:text="${foodCategories[restaurant.category.name()]}">한식</span>
+
+    <button class="hyperlink" onclick="location.href='#';"
+            th:onclick="'location.href=\''+ @{${restaurant.url}} + '\''">네이버 이동</button>
     <section class="explain">
         <article class="informaion">
-            <h4>가게명 : </h4>
-            <a href="#" target="_blank" th:href="${restaurant.url}" th:text="${restaurant.name}">맛집</a><br>
-            <h4>카테고리 : <span th:text="${foodCategories[restaurant.category.name()]}">한식</span></h4><br>
-            <h5> - 점심 추천 메뉴 : <span th:text="${restaurant.getLunchMenuName()}">긴티띠게</span></h5>
-            <h5> - 가격 : <span th:text="${restaurant.getLunchMenuPrice()}">8,000</span></h5>
-            <h5> - 저녁 추천 메뉴 : <span th:text="${restaurant.getDinnerMenuName()}">긴티띠게</span></h5>
-            <h5> - 가격 : <span th:text="${restaurant.getDinnerMenuPrice()}">8,000</span></h5>
-
-            <h4>TMI : <span th:text="${restaurant.getAdminComment()}">짬</span></h4>
+            <div>
+                <h4>점심 추천</h4>
+                <h3 th:text="${restaurant.getLunchMenuName()}"></h3>
+                <h3 th:text="${restaurant.getLunchMenuPrice()}"></h3>
+            </div>
+            <div>
+                <h4>점심 추천</h4>
+                <h3 th:text="${restaurant.getDinnerMenuName()}"></h3>
+                <h3 th:text="${restaurant.getDinnerMenuPrice()}"></h3>
+            </div>
+            <hr>
         </article>
         <article class="hashtag">
-            <span th:if="${restaurant.hasCostPerformance}">#가성비</span>
-            <span th:if="${restaurant.isAtmosphere}">#깔끔함</span>
-            <span th:if="${restaurant.canEatSingle}">#혼밥가능</span>
+            <div>
+                <h4 id="tmi">TMI. <span th:text="${restaurant.getAdminComment()}"></span></h4>
+                <p>
+                    <span th:if="${restaurant.hasCostPerformance}">#가성비</span>
+                    <span th:if="${restaurant.isAtmosphere}">#깔끔함</span>
+                    <span th:if="${restaurant.canEatSingle}">#혼밥가능</span>
+                </p>
+            </div>
         </article>
     </section>
     <hr>
     <section class="bbs">
-        <h3>음식점에 대한 의견을 나눠주세요!</h3>
-        <form id = "reviewForm" action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post" th:object="${reviewCreateForm}" onsubmit="return validateEmpty();">
+        <h3>당신의 TMI는?</h3>
+        <form id="reviewForm" action="" th:action="@{/reviews(restaurantId=${restaurant.id})}" method="post"
+              th:object="${reviewCreateForm}" onsubmit="return validateEmpty();">
             <input type="text" placeholder="아이디" th:field="*{name}" maxlength='10' required/>
             <input type="password" placeholder="비밀번호" th:field="*{password}" required/><br>
-            <textarea rows="10" cols="40" class="content" id="content" placeholder="내용" th:field="*{content}"></textarea>
-            <button type="submit" id="submit">전송</button>
+            <textarea rows="10" cols="40" class="content" id="content" placeholder="내용"
+                      th:field="*{content}"></textarea>
+            <button type="submit" id="submit">전송!</button>
         </form>
     </section>
 </main>
 <footer>
     <div th:each="review : ${reviews}"> <!--이 div 하나가 댓글 하나-->
-        <hr>
         <table>
             <tr>
-                <th th:text="${review.writerName}">아이디</th><th th:text="${review.lastModifiedDate}">작성시간</th>
+                <th th:text="${review.writerName}">아이디</th>
+                <th th:text="${review.lastModifiedDate}">작성시간</th>
             </tr>
             <tr>
-                <td colspan="2" th:text="${review.content}">여기 정.말 맛있습니다</td>
+                <td colspan="2" th:text="${review.content}"></td>
             </tr>
         </table>
-        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}" th:onclick="editPopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">수정</button>
-        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}" th:onclick="deletePopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">삭제</button>
+        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}"
+                th:onclick="editPopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">수정
+        </button>
+        <button type="submit" th:reviewId="${review.id}" th:restaurantId="${restaurant.id}"
+                th:onclick="deletePopup(this.getAttribute('restaurantId'), this.getAttribute('reviewId'));">삭제
+        </button>
     </div>
 </footer>
 </body>
