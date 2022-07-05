@@ -89,6 +89,11 @@ public class RestaurantController {
         return "restaurants/searchForm";
     }
 
+    @GetMapping("search")
+    public String redirectSearchRestaurantsForm() {
+        return "redirect:/";
+    }
+
     /**
      * 검색
      */

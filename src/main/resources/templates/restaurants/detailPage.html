@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/detail_style.css" th:href="@{/css/detail_style.css}">
+    <link rel="preload stylesheet" href="../../static/css/detail_style.css" th:href="@{/css/detail_style.css}">
     <title>상세정보</title>
     <script th:inline="javascript">
         function validateEmpty() {
@@ -42,7 +42,7 @@
                 <h3 th:text="${restaurant.getLunchMenuPrice()}"></h3>
             </div>
             <div>
-                <h4>점심 추천</h4>
+                <h4>저녁 추천</h4>
                 <h3 th:text="${restaurant.getDinnerMenuName()}"></h3>
                 <h3 th:text="${restaurant.getDinnerMenuPrice()}"></h3>
             </div>
